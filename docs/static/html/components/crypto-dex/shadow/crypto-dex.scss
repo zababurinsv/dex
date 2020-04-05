@@ -108,7 +108,8 @@ section{
           p.preview{
             @include h3();
             margin: 0;
-            text-align-last: center;
+            text-align-last: left;
+            padding-left: 0.5vw;
           }
           width: 51%;
           box-sizing: border-box;
