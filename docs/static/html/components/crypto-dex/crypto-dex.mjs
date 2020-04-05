@@ -1,5 +1,6 @@
 import dex from '/static/html/components/component_modules/dex/dex.mjs'
 import classDex from '/static/html/components/component_modules/dex/dex_c.mjs'
+import Waves from '/static/html/components/component_modules/waves/waves.mjs'
 customElements.define('crypto-dex',
     class extends HTMLElement {
         static get observedAttributes () {
@@ -684,14 +685,11 @@ customElements.define('crypto-dex',
                 })
             async function modules (obj) {
                 let methods = await classDex()
-
+                let waves = await Waves()
                 let relation = {}
                 relation['w'] = 100
                 relation['u'] = 100
                 relation['e'] = 100
-                relation['s'] = {}
-                relation['c'] = {}
-
 
                 obj['this'].shadowRoot.querySelector('#Waves').addEventListener('input',async (e)=>{
                     relation['w'] =  e.target.value
@@ -703,35 +701,59 @@ customElements.define('crypto-dex',
                     relation['e'] =  e.target.value
                 })
 
-                let wavesEuro = await dex['get']({type:'wavesEuro'}, obj)
-                let euroWaves = wavesEuro
-                let wavesUsd = await dex['get']({type:'wavesUsd'}, obj)
-                let usdWaves = wavesUsd
-                let euroUsd = await dex['get']({type:'eurUsd'}, obj)
-                let usdEuro =  euroUsd
-                const wvsAmount = 10 ** 8;
-                const wvsPrice = 10 ** 6;
+                let description = {
+                    wavesEuro:{
+                        amountAsset:'WAVES',
+                        priceAsset:'Gtb1WRznfchDnTh37ezoDTJ4wcoKaRsKqKjJjy7nm2zU',
+                        tickSize:undefined,
+                        assetId:'Gtb1WRznfchDnTh37ezoDTJ4wcoKaRsKqKjJjy7nm2zU'
+                    },
+                    wavesUsd:{
+                        amountAsset:'WAVES',
+                        priceAsset:'DG2xFkPdDwKUoBkzGAhQtLpSGzfXLiCYPEzeKH2Ad24p',
+                        tickSize:undefined
+                    },
+                    euroUsd:{
+                        amountAsset:'DG2xFkPdDwKUoBkzGAhQtLpSGzfXLiCYPEzeKH2Ad24p',
+                        priceAsset:'Gtb1WRznfchDnTh37ezoDTJ4wcoKaRsKqKjJjy7nm2zU',
+                        tickSize:undefined
+                    },
+                    details:{},
+                    assetId:['Gtb1WRznfchDnTh37ezoDTJ4wcoKaRsKqKjJjy7nm2zU','DG2xFkPdDwKUoBkzGAhQtLpSGzfXLiCYPEzeKH2Ad24p']
+                }
+
+                for(let item of description['assetId']){
+                    let itemDetails = await waves.details(item)
+                    description['details'][`${item}`] = (await waves.details(item))['decimals']
+                }
+                description['details'][`WAVES`] = 8
+                // let wavesEuro = await dex['get']({type:'wavesEuro',pair:description['wavesEuro']}, obj)
+                // let euroWaves = wavesEuro
+                // let wavesUsd = await  dex['get']({type:'wavesUsd',pair:description['wavesUsd']}, obj)
+                // let usdWaves = wavesUsd
+                // let euroUsd =  await  dex['get']({type:'eurUsd',pair:description['euroUsd']}, obj)
+                // let usdEuro =  euroUsd
+
                 // console.assert(false, wavesEuro)
                 // console.log('~~~1~~~~~',eurUsd)
                 // console.log('~~~~~2~~~',wavesUsd)
                 // console.assert(false, wavesEuro)
                 // console.log(wavesUsd['bids'][i]['amount']/wvsAmount)
+
+                let priceAssetDecimals =  {}
+                let amountAssetDecimals = {}
                 let timerId = setTimeout(async  function tick() {
+                    let wavesEuro = await dex['get']({type:'wavesEuro',pair:description['wavesEuro']}, obj)
+                    let euroWaves = wavesEuro
+                    let wavesUsd = await  dex['get']({type:'wavesUsd',pair:description['wavesUsd']}, obj)
+                    let usdWaves = wavesUsd
+                    let euroUsd =  await  dex['get']({type:'eurUsd',pair:description['euroUsd']}, obj)
+                    let usdEuro =  euroUsd
 
-                    let Dex ={}
-                    Dex['wavesEuro'] ={}
-                    Dex['wavesUsd'] = {}
-                    Dex['eurUsd'] = {}
-                    let amount ={}
-                    let count = 0
-                    let price = {}
-                    let amountLast = {}
-                    let relationFee = {}
-                    let transaction = {}
-
-                     // relation = await methods.buy(wavesUsd, relation['u'], relation, 'wavesUsd')
-                    // methods.sell(wavesEuro)
-                    // methods.buy(usdEuro)
+                    relation = await methods.buy(wavesUsd, relation['u'], relation, 'wavesUsd')
+                     // relation = await methods.sell(wavesEuro, relation['w'], relation, 'wavesEuro')
+                     //    relation = await methods.buy(usdEuro, relation['e'], relation, 'usdEuro')
+                    // console.log('--->', relation)
 
                     // methods.buy(wavesEuro)
                     // relation = await methods.sell(wavesUsd, relation['w'], relation, 'wavesUsd')
@@ -750,37 +772,49 @@ customElements.define('crypto-dex',
                     // methods.buy(wavesEuro)
 
                     // methods.buy(usdEuro)
-                    relation = await methods.sell(usdWaves, relation['u'], relation, 'usdWaves')
-                    console.log('--->', relation)
+                    // relation = await methods.sell(usdWaves, relation['u'], relation, 'usdWaves')
+                    // console.log('--->', relation)
                     // methods.buy(euroWaves)
 
                     for(let i=0; i < 10;i++){
                         if(wavesEuro['asks'][i] === undefined){
                         }else{
-                            obj['this'].shadowRoot.querySelector('#wavesEuroAsk').children[i].innerText = `${wavesEuro['asks'][i]['price']/wvsPrice}`
+                            priceAssetDecimals =  description['details'][`${wavesEuro['pair']['priceAsset']}`]
+                            amountAssetDecimals = description['details'][`${wavesEuro['pair']['amountAsset']}`]
+                            obj['this'].shadowRoot.querySelector('#wavesEuroAsk').children[i].innerText = `${ waves.denormalize(wavesEuro['asks'][i]['price'],priceAssetDecimals, amountAssetDecimals ) }`
                         }
                         if(wavesEuro['bids'][i] === undefined){
                         }else{
-                            obj['this'].shadowRoot.querySelector('#wavesEuroBid').children[i].innerText = `${wavesEuro['bids'][i]['price']/wvsPrice}`
+                            priceAssetDecimals =  description['details'][`${wavesEuro['pair']['priceAsset']}`]
+                            amountAssetDecimals = description['details'][`${wavesEuro['pair']['amountAsset']}`]
+                            obj['this'].shadowRoot.querySelector('#wavesEuroBid').children[i].innerText = `${ waves.denormalize(wavesEuro['bids'][i]['price'],priceAssetDecimals, amountAssetDecimals ) }`
                         }
 
                         if(wavesUsd['asks'][i] === undefined){
                         }else{
-                            obj['this'].shadowRoot.querySelector('#wavesUsdAsk').children[i].innerText = `${wavesUsd['asks'][i]['price']/wvsPrice}`
+                            priceAssetDecimals =  description['details'][`${wavesUsd['pair']['priceAsset']}`]
+                            amountAssetDecimals = description['details'][`${wavesUsd['pair']['amountAsset']}`]
+                            obj['this'].shadowRoot.querySelector('#wavesUsdAsk').children[i].innerText = `${ waves.denormalize(wavesUsd['asks'][i]['price'],priceAssetDecimals,amountAssetDecimals ) }`
                         }
                         if(wavesUsd['bids'][i] === undefined){
                         }else{
-                            obj['this'].shadowRoot.querySelector('#wavesUsdBid').children[i].innerText = `${wavesUsd['bids'][i]['price']/wvsPrice}`
+                            priceAssetDecimals =  description['details'][`${wavesUsd['pair']['priceAsset']}`]
+                            amountAssetDecimals = description['details'][`${wavesUsd['pair']['amountAsset']}`]
+                            obj['this'].shadowRoot.querySelector('#wavesUsdBid').children[i].innerText =  `${ waves.denormalize(wavesUsd['bids'][i]['price'],priceAssetDecimals,amountAssetDecimals ) }`
                         }
 
                         if(euroUsd['asks'][i] === undefined){
                         }else{
-                            obj['this'].shadowRoot.querySelector('#euroUsdAsk').children[i].innerText = `${euroUsd['asks'][i]['price']/wvsPrice}`
+                            priceAssetDecimals =  description['details'][`${euroUsd['pair']['priceAsset']}`]
+                            amountAssetDecimals = description['details'][`${euroUsd['pair']['amountAsset']}`]
+                            obj['this'].shadowRoot.querySelector('#euroUsdAsk').children[i].innerText =  `${ waves.denormalize(euroUsd['asks'][i]['price'],priceAssetDecimals, amountAssetDecimals) }`
                         }
                         if(euroUsd['bids'][i] === undefined){
 
                         }else{
-                            obj['this'].shadowRoot.querySelector('#euroUsdBid').children[i].innerText = `${euroUsd['bids'][i]['price']/wvsPrice}`
+                            priceAssetDecimals =  description['details'][`${euroUsd['pair']['priceAsset']}`]
+                            amountAssetDecimals = description['details'][`${euroUsd['pair']['amountAsset']}`]
+                            obj['this'].shadowRoot.querySelector('#euroUsdBid').children[i].innerText = `${ waves.denormalize(euroUsd['bids'][i]['price'],priceAssetDecimals, amountAssetDecimals ) }`
                         }
 
 

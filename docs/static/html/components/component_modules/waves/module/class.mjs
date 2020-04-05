@@ -9,12 +9,24 @@ let Class = class Waves {
         this.faucet = this.faucet.bind(this)
         this.transfer = this.transfer.bind(this)
         this.waitForTx = this.waitForTx.bind(this)
+        this.details = this.details.bind(this)
+        this.denormalize = this.denormalize.bind(this)
         this.end = this.end.bind(this)
         document.addEventListener('typeScript-end', this.end)
     }
+    denormalize(price, priceAssetDecimals, amountAssetDecimals){
+        let wvsPrice = 10 ** (priceAssetDecimals - amountAssetDecimals + 8)
+        return price/wvsPrice
+    }
     balance(id){
         return new Promise(async (resolve, reject)=>{
-         let balance = await fetch(`http://testnodes.wavesnodes.com/addresses/balance/${id}`)
+         let balance = await fetch(`https://testnodes.wavesnodes.com/addresses/balance/${id}`)
+            resolve(await balance.json())
+        })
+    }
+    details(assetId){
+        return new Promise(async (resolve, reject)=>{
+            let balance = await fetch(`https://nodes.wavesnodes.com/assets/details/${assetId}`)
             resolve(await balance.json())
         })
     }
