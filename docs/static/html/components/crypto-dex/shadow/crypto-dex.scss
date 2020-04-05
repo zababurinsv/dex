@@ -100,18 +100,28 @@ section{
         flex-grow: 1;
         background-color: white;
         div.info{
+          @include border();
+          overflow: hidden;
           h3{
             @include h3();
           }
-          width: 40%;
+          width: 51%;
           box-sizing: border-box;
           @include display(column, nowrap,stretch, center, stretch);
 
           div{
             width: 100%;
-            p{
-              text-align: left;
-              text-align-last: left;
+            div.infoTimestamp{
+              display: flex;
+              flex-direction: row;
+              text-overflow: ellipsis;
+              p{
+                text-align: left;
+                text-align-last: left;
+                text-overflow: ellipsis;
+                box-sizing: border-box;
+                padding: 0.25vw;
+              }
             }
           }
         }
@@ -132,10 +142,9 @@ section{
             div.bid, div.ask{
               display: flex;
               flex-direction: column;
-              background-color: #00d6b2;
+              @include border();
               div.item{
 
-                background-color: #6c757d;
               }
             }
           }

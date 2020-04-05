@@ -2,16 +2,20 @@
 <section>
     <div id = "graph">
         <div id="itemWavesEuro" class="itemBid">
-            <label><input type="number" min="0" max="24000" id="Waves" />Waves</label>
+            <label><input type="number" min="0" max="24000" id="Waves" value="10" />Waves</label>
             <div class="content">
                 <div class="info">
                     <h3>Waves/Euro</h3>
                     <div>
-                        <p>timestamp</p>
-                        <div id="wavesEuroTimestamp"></div>
-                        <p>Delta</p>
-                        <div id="wavesEuroDelta"></div>
-                        <p>~~~~~~~~~~~~</p>
+                        <div class="infoTimestamp">
+                            <p>Time:</p>
+                            <p id="wavesEuroTimestamp"></p>
+                        </div>
+                        <div class="infoTimestamp">
+                            <p>Delta:</p>
+                            <p id="wavesEuroDelta"></p>
+                        </div>
+                        <hr/>
                         <div style="color: green" id="sew"></div>
                         <div  style="color: green"  id="cwe"></div>
                         <div style="color: fuchsia" id="swe"></div>
@@ -54,16 +58,20 @@
             </div>
         </div>
         <div id="itemEuroUsd" class="itemBid">
-            <label><input type="number" min="0" max="24000" id="Usd" />Usd</label>
+            <label><input type="number" min="0" max="24000" id="Usd" value="10"  />Usd</label>
             <div class="content">
                 <div class="info">
                     <h3>Euro/Usd</h3>
                     <div>
-                        <p>timestamp</p>
-                        <div id="euroUsdTimestamp"></div>
-                        <p>Delta</p>
-                        <div id="euroUsdDelta"></div>
-                        <p>~~~~~~~~~~~~</p>
+                        <div class="infoTimestamp">
+                            <p>Time: </p>
+                            <p id="euroUsdTimestamp"></p>
+                        </div>
+                        <div class="infoTimestamp">
+                            <p>Delta:</p>
+                            <p id="euroUsdDelta"></p>
+                        </div>
+                        <hr/>
                         <div style="color: red"  id="sue"></div>
                         <div style="color: fuchsia" id="ceu"></div>
                         <div style="color: red"  id="seu"></div>
@@ -105,23 +113,25 @@
             </div>
         </div>
         <div id="itemWavesUsd" class="itemBid">
-            <label><input type="number" min="0" max="24000" id="Euro" />Euro</label>
+            <label><input type="number" min="0" max="24000" id="Euro" value="10"  />Euro</label>
             <div class="content">
 
                 <div class="info">
                     <h3>Waves/Usd</h3>
                     <div>
-                        <p>timestamp</p>
-                        <div id="wavesUsdTimestamp"></div>
-                        <p>Delta</p>
-                        <div id="wavesUsdDelta"></div>
-                        <p>~~~~~~~~~~~~</p>
+                        <div class="infoTimestamp">
+                            <p>Time:</p>
+                            <p id="wavesUsdTimestamp"></p>
+                        </div>
+                        <div class="infoTimestamp">
+                            <p>Delta:</p>
+                            <p id="wavesUsdDelta"></p>
+                        </div>
+                        <hr/>
                         <div  style="color: fuchsia"  id="swu"></div>
                         <div  style="color: red"  id="cuw"></div>
                         <div  style="color: green"  id="suw"></div>
-
                         <div  style="color: green"id="cwu"></div>
-
                     </div>
                 </div>
                 <div id="wavesUsd" class="glass">

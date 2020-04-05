@@ -724,47 +724,45 @@ customElements.define('crypto-dex',
                     let amountLast = {}
                     let relationFee = {}
                     let transaction = {}
+
                     for(let i=0; i < 10;i++){
-                        // console.assert(false,   obj['this'].shadowRoot.querySelector('#wavesEuroAsk'))
+                        if(wavesEuro['asks'][i] === undefined){
+                        }else{
+                            obj['this'].shadowRoot.querySelector('#wavesEuroAsk').children[i].innerText = `${wavesEuro['asks'][i]['price']/wvsPrice}`
+                        }
+                        if(wavesEuro['bids'][i] === undefined){
+                        }else{
+                            obj['this'].shadowRoot.querySelector('#wavesEuroBid').children[i].innerText = `${wavesEuro['bids'][i]['price']/wvsPrice}`
+                        }
 
-                        // if(wavesEuro['asks'][i] === undefined){
-                        // }else{
-                        //     obj['this'].shadowRoot.querySelector('#wavesEuroAsk').children[i].innerText = `${wavesEuro['asks'][i][0]}`
-                        // }
-                        // if(wavesEuro['bids'][i] === undefined){
-                        // }else{
-                        //     obj['this'].shadowRoot.querySelector('#wavesEuroBid').children[i].innerText = `${wavesEuro['bids'][i][0]}`
-                        // }
-                        //
-                        //
-                        // if(wavesUsd['asks'][i] === undefined){
-                        // }else{
-                        //     obj['this'].shadowRoot.querySelector('#wavesUsdAsk').children[i].innerText = `${wavesUsd['asks'][i][0]}`
-                        // }
-                        // if(wavesUsd['bids'][i] === undefined){
-                        // }else{
-                        //     obj['this'].shadowRoot.querySelector('#wavesUsdBid').children[i].innerText = `${wavesUsd['bids'][i][0]}`
-                        // }
-                        //
-                        //
-                        // if(eurUsd['asks'][i] === undefined){
-                        // }else{
-                        //     obj['this'].shadowRoot.querySelector('#euroUsdAsk').children[i].innerText = `${eurUsd['asks'][i][0]}`
-                        // }
-                        // if(eurUsd['bids'][i] === undefined){
-                        //
-                        // }else{
-                        //     obj['this'].shadowRoot.querySelector('#euroUsdBid').children[i].innerText = `${eurUsd['bids'][i][0]}`
-                        // }
-                    //
+                        if(wavesUsd['asks'][i] === undefined){
+                        }else{
+                            obj['this'].shadowRoot.querySelector('#wavesUsdAsk').children[i].innerText = `${wavesUsd['asks'][i]['price']/wvsPrice}`
+                        }
+                        if(wavesUsd['bids'][i] === undefined){
+                        }else{
+                            obj['this'].shadowRoot.querySelector('#wavesUsdBid').children[i].innerText = `${wavesUsd['bids'][i]['price']/wvsPrice}`
+                        }
+
+                        if(eurUsd['asks'][i] === undefined){
+                        }else{
+                            obj['this'].shadowRoot.querySelector('#euroUsdAsk').children[i].innerText = `${eurUsd['asks'][i]['price']/wvsPrice}`
+                        }
+                        if(eurUsd['bids'][i] === undefined){
+
+                        }else{
+                            obj['this'].shadowRoot.querySelector('#euroUsdBid').children[i].innerText = `${eurUsd['bids'][i]['price']/wvsPrice}`
+                        }
+
+
+                        obj['this'].shadowRoot.querySelector('#wavesEuroTimestamp').innerText = wavesEuro['timestamp']
+                        obj['this'].shadowRoot.querySelector('#wavesEuroDelta').innerText = Date.now() - wavesEuro['timestamp']
+                        obj['this'].shadowRoot.querySelector('#wavesUsdTimestamp').innerText = wavesUsd['timestamp']
+                        obj['this'].shadowRoot.querySelector('#wavesUsdDelta').innerText = Date.now() - wavesUsd['timestamp']
+                        obj['this'].shadowRoot.querySelector('#euroUsdTimestamp').innerText = eurUsd['timestamp']
+                        obj['this'].shadowRoot.querySelector('#euroUsdDelta').innerText = Date.now() - eurUsd['timestamp']
                     }
-                    // wavesUsd['bids'][0]['amount']/wvsAmount
-
-
-                    // console.log(wavesUsd['bids'][i]['amount']/wvsAmount)
-
-
-                timerId = setTimeout(tick, 3000); // (*)
+                timerId = setTimeout(tick, 3000);
                 }, 3000);
             }
         }
