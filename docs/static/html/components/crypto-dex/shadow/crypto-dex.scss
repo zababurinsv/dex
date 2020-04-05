@@ -102,17 +102,22 @@ section{
         flex-grow: 1;
         background-color: white;
         div.info{
-          @include border();
+          //@include border();
           overflow: hidden;
-          h3{
+          padding: 0;
+          p.preview{
             @include h3();
+            margin: 0;
+            text-align-last: center;
           }
           width: 51%;
           box-sizing: border-box;
           @include display(column, nowrap,stretch, center, stretch);
 
-          div{
+          div.wrapper{
+            @include border();
             width: 100%;
+            height: 100%;
             div.infoTimestamp{
               display: flex;
               flex-direction: row;
