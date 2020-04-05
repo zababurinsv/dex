@@ -120,12 +120,23 @@ section{
           @include display(row, nowrap,space-between, center, stretch);
 
           div{
+            display: flex;
+            flex-direction: column;
             align-self: stretch;
             flex-grow: 1;
             p{
               @include h3();
               margin: 0;
               text-align-last: center;
+            }
+            div.bid, div.ask{
+              display: flex;
+              flex-direction: column;
+              background-color: #00d6b2;
+              div.item{
+
+                background-color: #6c757d;
+              }
             }
           }
         }

@@ -696,14 +696,10 @@ customElements.define('crypto-dex',
                     relation['w'] =  e.target.value
                 })
                 obj['this'].shadowRoot.querySelector('#Usd').addEventListener('input',async (e)=>{
-
                     relation['u'] =  e.target.value
-
                 })
                 obj['this'].shadowRoot.querySelector('#Euro').addEventListener('input',async (e)=>{
-
                     relation['e'] =  e.target.value
-
                 })
 
                 let wavesEuro = await dex['get']({type:'wavesEuro'}, obj)
@@ -715,208 +711,57 @@ customElements.define('crypto-dex',
                 // console.log('~~~1~~~~~',eurUsd)
                 // console.log('~~~~~2~~~',wavesUsd)
                 // console.assert(false, wavesEuro)
-
+                // console.log(wavesUsd['bids'][i]['amount']/wvsAmount)
                 let timerId = setTimeout(async  function tick() {
 
-
+                    let Dex ={}
+                    Dex['wavesEuro'] ={}
+                    Dex['wavesUsd'] = {}
+                    Dex['eurUsd'] = {}
                     let amount ={}
                     let count = 0
-
                     let price = {}
                     let amountLast = {}
                     let relationFee = {}
                     let transaction = {}
-                let verify = true
-                for(let i =0; i < 10;i++){
-                    switch (i) {
-                        case 0:
-                            while(verify){
-                                amount = wavesEuro['bids'][i]['amount']
+                    for(let i=0; i < 10;i++){
+                        // console.assert(false,   obj['this'].shadowRoot.querySelector('#wavesEuroAsk'))
 
-
-                                // console.log(wavesUsd['bids'][i]['amount']/wvsAmount)
-                                // console.assert(false, wavesUsd['bids'][i]['price']/wvsPrice)
-                                if(amount < 10){
-                                    count = count++
-                                }else{
-
-                                    amount = wavesEuro['bids'][i + count]['amount']/wvsAmount
-                                    relation['s']['ew'] = ( relation['e'] /  wavesEuro['bids'][i][0]).toFixed(2)
-                                    amountLast =  parseInt(relation['s']['ew'] * wavesEuro['bids'][i + count][0], 10).toFixed(2)
-                                    transaction[0] = {}
-                                    transaction[0]['amount'] = amountLast
-                                    transaction[0]['course'] = wavesEuro['bids'][i + count][0]
-                                    price = wavesEuro['bids'][i + count][0]
-                                    verify = false
-
-                                }
-                            }
-                            obj['this'].shadowRoot.querySelector('#sew').innerText = `${wavesEuro['bids'][i][0]}[${amount}[(${relation['s']['ew']})${amountLast}}]]`
-                            relationFee  = relation['s']['ew'] -0.04
-                            relationFee = relationFee.toFixed(2)
-                            verify = true
-                            count = 0
-                            amount = parseInt(wavesUsd['bids'][i][1], 10)
-                            amount = amount.toFixed(2)
-                            amountLast = relationFee
-                            while(verify){
-                                amount = parseInt(wavesUsd['bids'][i + count][1])
-                                if(amount < 10){
-                                    count = count++
-                                }else{
-                                    amount = parseInt(wavesUsd['bids'][i + count][1])
-                                    relation['s']['wu'] = ( relationFee * wavesUsd['bids'][i+count][0]).toFixed(2)
-                                    amountLast = relationFee
-                                    transaction[1] = {}
-                                    transaction[1]['amount'] = amountLast
-                                    transaction[1]['course'] = wavesUsd['bids'][i+count][0]
-                                    price = wavesUsd['bids'][i + count][0]
-                                    verify = false
-
-                                }
-                            }
-                            obj['this'].shadowRoot.querySelector('#swu').innerText = `${price}[${amount}[(${relation['s']['wu']})${amountLast}}]]`
-                            count = 0
-                            amount = 0
-                            amountLast = 0
-                            verify = true
-                            while(verify){
-                                amount = parseInt(eurUsd['asks'][i + count][1])
-                                if(amount < 10){
-                                    count = count++
-                                }else{
-                                    amount = parseInt(eurUsd['asks'][i + count][1])
-                                    relation['s']['ue'] = (relation['s']['wu'] / eurUsd['asks'][i+count][0]).toFixed(2)
-                                    amountLast = relation['s']['wu']
-                                    transaction[2] = {}
-                                    transaction[2]['amount'] = amountLast
-                                    transaction[2]['course'] = eurUsd['asks'][i + count][0]
-                                    transaction[3] = {}
-                                    transaction[3]['amount'] = relation['s']['ue']
-                                    price = eurUsd['asks'][i + count][0]
-                                    verify = false
-
-                                }
-                            }
-                            obj['this'].shadowRoot.querySelector('#sue').innerText = `${price}[${amount}[(${relation['s']['ue']})${amountLast}}]]`
-                            if(  transaction[3]['amount']-transaction[0]['amount'] > 0 ){
-                                let itemsDex =  await fetch(`http://localhost:3006/dex`, {
-                                    method: 'GET'
-                                })
-                                itemsDex = await itemsDex.json()
-                                if(itemsDex.length > 0){
-                                }else{
-
-                                    transaction['state'] = 0
-                                    let formData  = new FormData();
-                                    formData.append('id', Date.now());
-                                    formData.append('object', 'ewue');
-                                    formData.append('dex', JSON.stringify(transaction));
-
-                                    let query =  await fetch(`http://localhost:3006/dex`, {
-                                        method: 'POST',
-                                        body: formData
-                                    })
-                                    query = await query.json()
-                                }
-
-
-                                obj['this'].shadowRoot.querySelector('#total').innerText = `true ${transaction[0]['amount']}-${transaction[1]['amount']}-${transaction[2]['amount']}-${transaction[3]['amount']}`
-                            }else{
-
-
-                                let itemsDex =  await fetch(`http://localhost:3006/dex`, {
-                                    method: 'GET'
-                                })
-                                itemsDex = await itemsDex.json()
-                                if(itemsDex.length > 0){
-                                }else{
-
-                                    transaction['state'] = 0
-                                    let formData  = new FormData();
-                                    formData.append('id', Date.now());
-                                    formData.append('object', 'ewue');
-                                    formData.append('dex', JSON.stringify(transaction));
-
-                                    let query =  await fetch(`http://localhost:3006/dex`, {
-                                        method: 'POST',
-                                        body: formData
-                                    })
-                                    query = await query.json()
-                                }
-
-
-
-                                obj['this'].shadowRoot.querySelector('#total').innerText = `false ${transaction[0]['amount']}-${transaction[1]['amount']}-${transaction[2]['amount']}-${transaction[3]['amount']}`
-                            }
-
-                            // console.assert(false, transaction)
-                            // relation['s']['ew'] =   (relation['e'] / wavesEuro['asks'][i][0]).toFixed(2)
-                            // obj['this'].shadowRoot.querySelector('#sew').innerText = relation['s']['ew']
-                            // relation['s']['wu'] = (relation['s']['ew'] *  wavesUsd['bids'][i][0]).toFixed(2)
-                            // obj['this'].shadowRoot.querySelector('#swu').innerText = relation['s']['wu']
-                            // relation['s']['ue'] = (relation['s']['wu'] /eurUsd['asks'][i][0]).toFixed(2)
-                            // obj['this'].shadowRoot.querySelector('#sue').innerText = relation['s']['ue']
-
-
-                            // relation['c']['we'] = (relation['w'] * wavesEuro['bids'][i][0]).toFixed(2)
-                            // obj['this'].shadowRoot.querySelector('#cwe').innerText = relation['c']['we']
-                            // relation['c']['eu'] = (relation['c']['we'] * eurUsd['asks'][i][0]).toFixed(2)
-                            // obj['this'].shadowRoot.querySelector('#ceu').innerText =  relation['c']['eu']
-                            // relation['c']['uw'] = (relation['c']['eu'] * wavesUsd['bids'][i][0]).toFixed(2)
-                            // obj['this'].shadowRoot.querySelector('#cuw').innerText =  relation['c']['uw']
-                            //
-                            //
-                            // relation['c']['wu'] = (relation['w'] * wavesUsd['bids'][i][0]).toFixed(2)
-                            // obj['this'].shadowRoot.querySelector('#cwu').innerText = relation['c']['wu']
-                            // relation['c']['ue'] = (relation['c']['wu'] * wavesEuro['asks'][i][0]).toFixed(2)
-                            // obj['this'].shadowRoot.querySelector('#cue').innerText = relation['c']['ue']
-                            // relation['c']['ew'] = (relation['c']['ue'] * wavesEuro['bids'][i][0]).toFixed(2)
-                            // obj['this'].shadowRoot.querySelector('#cew').innerText = relation['c']['ew']
-                            break
-                        case 1:
-                            break
-                        default:
-                            break
-
+                        // if(wavesEuro['asks'][i] === undefined){
+                        // }else{
+                        //     obj['this'].shadowRoot.querySelector('#wavesEuroAsk').children[i].innerText = `${wavesEuro['asks'][i][0]}`
+                        // }
+                        // if(wavesEuro['bids'][i] === undefined){
+                        // }else{
+                        //     obj['this'].shadowRoot.querySelector('#wavesEuroBid').children[i].innerText = `${wavesEuro['bids'][i][0]}`
+                        // }
+                        //
+                        //
+                        // if(wavesUsd['asks'][i] === undefined){
+                        // }else{
+                        //     obj['this'].shadowRoot.querySelector('#wavesUsdAsk').children[i].innerText = `${wavesUsd['asks'][i][0]}`
+                        // }
+                        // if(wavesUsd['bids'][i] === undefined){
+                        // }else{
+                        //     obj['this'].shadowRoot.querySelector('#wavesUsdBid').children[i].innerText = `${wavesUsd['bids'][i][0]}`
+                        // }
+                        //
+                        //
+                        // if(eurUsd['asks'][i] === undefined){
+                        // }else{
+                        //     obj['this'].shadowRoot.querySelector('#euroUsdAsk').children[i].innerText = `${eurUsd['asks'][i][0]}`
+                        // }
+                        // if(eurUsd['bids'][i] === undefined){
+                        //
+                        // }else{
+                        //     obj['this'].shadowRoot.querySelector('#euroUsdBid').children[i].innerText = `${eurUsd['bids'][i][0]}`
+                        // }
+                    //
                     }
-                    if(wavesEuro['asks'][i] === undefined){
-                    }else{
-                        obj['this'].shadowRoot.querySelector('#wavesEuroAsk').children[i].innerText = `${wavesEuro['asks'][i][0]}`
-                    }
-                    if(wavesEuro['bids'][i] === undefined){
-                    }else{
-                        obj['this'].shadowRoot.querySelector('#wavesEuroBid').children[i].innerText = `${wavesEuro['bids'][i][0]}`
-                    }
+                    // wavesUsd['bids'][0]['amount']/wvsAmount
 
 
-                    if(wavesUsd['asks'][i] === undefined){
-                    }else{
-                        obj['this'].shadowRoot.querySelector('#wavesUsdAsk').children[i].innerText = `${wavesUsd['asks'][i][0]}`
-                    }
-                    if(wavesUsd['bids'][i] === undefined){
-                    }else{
-                        obj['this'].shadowRoot.querySelector('#wavesUsdBid').children[i].innerText = `${wavesUsd['bids'][i][0]}`
-                    }
-
-
-                    if(eurUsd['asks'][i] === undefined){
-                    }else{
-                        obj['this'].shadowRoot.querySelector('#euroUsdAsk').children[i].innerText = `${eurUsd['asks'][i][0]}`
-                    }
-                    if(eurUsd['bids'][i] === undefined){
-
-                    }else{
-                        obj['this'].shadowRoot.querySelector('#euroUsdBid').children[i].innerText = `${eurUsd['bids'][i][0]}`
-                    }
-
-                }
-            obj['this'].shadowRoot.querySelector('#wavesEuroTimestamp').innerText = wavesEuro['timestamp']
-            obj['this'].shadowRoot.querySelector('#wavesEuroDelta').innerText = Date.now() - wavesEuro['timestamp']
-            obj['this'].shadowRoot.querySelector('#wavesUsdTimestamp').innerText = wavesUsd['timestamp']
-            obj['this'].shadowRoot.querySelector('#wavesUsdDelta').innerText = Date.now() - wavesUsd['timestamp']
-            obj['this'].shadowRoot.querySelector('#euroUsdTimestamp').innerText = eurUsd['timestamp']
-            obj['this'].shadowRoot.querySelector('#euroUsdDelta').innerText = Date.now() - eurUsd['timestamp']
+                    // console.log(wavesUsd['bids'][i]['amount']/wvsAmount)
 
 
                 timerId = setTimeout(tick, 3000); // (*)
