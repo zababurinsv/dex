@@ -685,12 +685,10 @@ customElements.define('crypto-dex',
             async function modules (obj) {
                 let methods = await classDex()
 
-                console.assert(false, methods)
                 let relation = {}
-                relation['w'] = 10
-                relation['u'] = 10
-                relation['e'] = 10
-                relation['fee'] = 0.003
+                relation['w'] = 100
+                relation['u'] = 100
+                relation['e'] = 100
                 relation['s'] = {}
                 relation['c'] = {}
 
@@ -731,29 +729,30 @@ customElements.define('crypto-dex',
                     let relationFee = {}
                     let transaction = {}
 
-                    methods.buy(wavesUsd)
-                    methods.sell(wavesEuro)
-                    methods.buy(usdEuro)
+                     // relation = await methods.buy(wavesUsd, relation['u'], relation, 'wavesUsd')
+                    // methods.sell(wavesEuro)
+                    // methods.buy(usdEuro)
 
-                    methods.buy(wavesEuro)
-                    methods.sell(wavesUsd)
-                    methods.buy(euroUsd)
+                    // methods.buy(wavesEuro)
+                    // relation = await methods.sell(wavesUsd, relation['w'], relation, 'wavesUsd')
+                    // methods.buy(euroUsd)
 
-                    methods.buy(euroWaves)
-                    methods.sell(euroUsd)
-                    methods.buy(wavesUsd)
+                    // relation = await methods.buy(euroWaves,relation['w'], relation)
+                    // methods.sell(euroUsd)
+                    // relation = await methods.buy(wavesUsd, relation['u'], relation, 'wavesUsd')
 
-                    methods.buy(usdWaves)
-                    methods.sell(usdEuro)
-                    methods.buy(wavesEuro)
+                    // methods.buy(euroUsd)
+                    // methods.sell(euroWaves)
+                    // relation = await methods.buy(usdWaves, relation['w'], relation, 'usdWaves')
 
-                    methods.buy(euroUsd)
-                    methods.sell(euroWaves)
-                    methods.buy(usdWaves)
+                    // relation = await methods.buy(usdWaves, relation['w'], relation, 'usdWaves')
+                    // methods.sell(usdEuro)
+                    // methods.buy(wavesEuro)
 
-                    methods.buy(usdEuro)
-                    methods.sell(usdWaves)
-                    methods.buy(euroWaves)
+                    // methods.buy(usdEuro)
+                    relation = await methods.sell(usdWaves, relation['u'], relation, 'usdWaves')
+                    console.log('--->', relation)
+                    // methods.buy(euroWaves)
 
                     for(let i=0; i < 10;i++){
                         if(wavesEuro['asks'][i] === undefined){
@@ -774,14 +773,14 @@ customElements.define('crypto-dex',
                             obj['this'].shadowRoot.querySelector('#wavesUsdBid').children[i].innerText = `${wavesUsd['bids'][i]['price']/wvsPrice}`
                         }
 
-                        if(eurUsd['asks'][i] === undefined){
+                        if(euroUsd['asks'][i] === undefined){
                         }else{
-                            obj['this'].shadowRoot.querySelector('#euroUsdAsk').children[i].innerText = `${eurUsd['asks'][i]['price']/wvsPrice}`
+                            obj['this'].shadowRoot.querySelector('#euroUsdAsk').children[i].innerText = `${euroUsd['asks'][i]['price']/wvsPrice}`
                         }
-                        if(eurUsd['bids'][i] === undefined){
+                        if(euroUsd['bids'][i] === undefined){
 
                         }else{
-                            obj['this'].shadowRoot.querySelector('#euroUsdBid').children[i].innerText = `${eurUsd['bids'][i]['price']/wvsPrice}`
+                            obj['this'].shadowRoot.querySelector('#euroUsdBid').children[i].innerText = `${euroUsd['bids'][i]['price']/wvsPrice}`
                         }
 
 
@@ -789,8 +788,8 @@ customElements.define('crypto-dex',
                         obj['this'].shadowRoot.querySelector('#wavesEuroDelta').innerText = Date.now() - wavesEuro['timestamp']
                         obj['this'].shadowRoot.querySelector('#wavesUsdTimestamp').innerText = wavesUsd['timestamp']
                         obj['this'].shadowRoot.querySelector('#wavesUsdDelta').innerText = Date.now() - wavesUsd['timestamp']
-                        obj['this'].shadowRoot.querySelector('#euroUsdTimestamp').innerText = eurUsd['timestamp']
-                        obj['this'].shadowRoot.querySelector('#euroUsdDelta').innerText = Date.now() - eurUsd['timestamp']
+                        obj['this'].shadowRoot.querySelector('#euroUsdTimestamp').innerText = euroUsd['timestamp']
+                        obj['this'].shadowRoot.querySelector('#euroUsdDelta').innerText = Date.now() - euroUsd['timestamp']
                     }
                 timerId = setTimeout(tick, 3000);
                 }, 3000);
