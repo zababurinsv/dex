@@ -687,10 +687,6 @@ customElements.define('crypto-dex',
                 let methods = await classDex()
                 let waves = await Waves()
                 let relation = {}
-                relation['w'] = 100
-                relation['u'] = 100
-                relation['e'] = 100
-
                 obj['this'].shadowRoot.querySelector('#Waves').addEventListener('input',async (e)=>{
                     relation['w'] =  e.target.value
                 })
@@ -727,7 +723,12 @@ customElements.define('crypto-dex',
                     description['details'][`${item}`] = (await waves.details(item))['decimals']
                 }
                 description['details'][`WAVES`] = 8
-                // let wavesEuro = await dex['get']({type:'wavesEuro',pair:description['wavesEuro']}, obj)
+
+                relation['w'] = 100
+                relation['u'] = 100
+                relation['e'] = 100
+                relation['decimals'] = description['details']
+                    // let wavesEuro = await dex['get']({type:'wavesEuro',pair:description['wavesEuro']}, obj)
                 // let euroWaves = wavesEuro
                 // let wavesUsd = await  dex['get']({type:'wavesUsd',pair:description['wavesUsd']}, obj)
                 // let usdWaves = wavesUsd
@@ -751,9 +752,9 @@ customElements.define('crypto-dex',
                     let usdEuro =  euroUsd
 
                     relation = await methods.buy(wavesUsd, relation['u'], relation, 'wavesUsd')
-                     // relation = await methods.sell(wavesEuro, relation['w'], relation, 'wavesEuro')
-                     //    relation = await methods.buy(usdEuro, relation['e'], relation, 'usdEuro')
-                    // console.log('--->', relation)
+                    relation = await methods.sell(wavesEuro, relation['w'], relation, 'wavesEuro')
+                    relation = await methods.buy(usdEuro, relation['e'], relation, 'usdEuro')
+                    console.log('--->', relation)
 
                     // methods.buy(wavesEuro)
                     // relation = await methods.sell(wavesUsd, relation['w'], relation, 'wavesUsd')
