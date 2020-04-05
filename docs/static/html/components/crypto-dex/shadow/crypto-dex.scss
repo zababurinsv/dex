@@ -86,6 +86,7 @@ section{
       @include border();
       width: calc(100vw / 3.5);
       min-height: calc(100vw / 4);
+      flex-grow: 1;
       label{
         @include border();
         width: 100%;
