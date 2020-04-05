@@ -1,22 +1,24 @@
 import fs from "fs";
 import path from "path";
 let __dirname = path.dirname(process.argv[1]);
+import dotenv from "dotenv"
+dotenv.config()
 import express from "express";
 import cors from "cors";
 import Enqueue from "express-enqueue";
 import compression from "compression";
-import {promisify} from "util";
-import dotenv from "dotenv"
-dotenv.config()
 const highWaterMark =  2;
 import whitelist from './whitelist/whitelist.mjs'
 import config from './config.mjs'
 import mongo from "./db/mongo/mongo.mjs";
+import formidableMiddleware from "express-formidable";
+
 const account = `/3N8n4Lc8BMsPPyVHJXTivQWs7ER61bB7wQn`
 
 let app = express();
 app.use(compression())
 app.use(cors({ credentials: true }));
+app.use(formidableMiddleware());
 const queue = new Enqueue({
     concurrentWorkers: 4,
     maxSize: 200,
