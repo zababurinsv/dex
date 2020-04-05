@@ -1,0 +1,135 @@
+@import "/home/sergey/Desktop/telegram/css/fonts_new.scss";
+@import "/home/sergey/Desktop/telegram/css/util/media_new.scss";
+@import "/home/sergey/Desktop/telegram/css/util/interface";
+@mixin h3(){
+  @include border();
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: inset 0vw 0vw 1vw 0px #7694f4;
+  box-sizing: border-box;
+  text-align: center;
+  font-family: Roboto, serif;
+  @include fonts(4);
+  text-align-last: left;
+  margin: 0;
+}
+@mixin disabledSelect(){
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently
+                                not supported by any browser */
+}
+@mixin padding(){
+  box-sizing: border-box;
+  padding: 1vw;
+}
+
+@mixin border-bottom() {
+  width: 100%;
+  box-shadow: inset 0vw 0vw 1vw 0px #7694f4;
+  box-sizing: border-box;
+  padding: 0.25vw;
+  text-align: center;
+  background-color: transparent;
+  position: relative;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  text-align-last:center;
+}
+@mixin border() {
+  width: 100%;
+  box-shadow: inset 0vw 0vw 1vw 0px #7694f4;
+  box-sizing: border-box;
+  padding: 0.25vw;
+  text-align: center;
+  background-color: transparent;
+  position: relative;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  text-align-last:center;
+}
+
+@mixin sectionInput() {
+  box-sizing: border-box;
+  text-align: center;
+  background-color: transparent;
+  position: relative;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  text-align-last:center;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+:host{
+  width: 100%;
+  margin: auto;
+  margin-bottom: 3vw;
+}
+section{
+  @include disabledSelect();
+  @include display(column, nowrap, space-evenly, center, stretch);
+  div#graph{
+    @include display(row, nowrap, space-between, center, stretch);
+
+    div.itemBid{
+      @include display(column, nowrap,stretch, center, stretch);
+      @include border();
+      width: calc(100vw / 3.5);
+      min-height: calc(100vw / 4);
+      label{
+        @include border();
+        width: 100%;
+        text-align-last: start;
+
+        input{
+          margin-right: 1vw;
+        }
+      }
+      div.content{
+        @include display(row, nowrap,space-between, center, stretch);
+        flex-grow: 1;
+        background-color: white;
+        div.info{
+          h3{
+            @include h3();
+          }
+          width: 40%;
+          box-sizing: border-box;
+          @include display(column, nowrap,stretch, center, stretch);
+
+          div{
+            width: 100%;
+            p{
+              text-align: left;
+              text-align-last: left;
+            }
+          }
+        }
+        div.glass{
+          flex-grow: 1;
+          @include display(row, nowrap,space-between, center, stretch);
+
+          div{
+            align-self: stretch;
+            flex-grow: 1;
+            p{
+              @include h3();
+              margin: 0;
+              text-align-last: center;
+            }
+          }
+        }
+      }
+    }
+  }
+}
