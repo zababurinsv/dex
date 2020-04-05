@@ -1,4 +1,5 @@
 import dex from '/static/html/components/component_modules/dex/dex.mjs'
+import classDex from '/static/html/components/component_modules/dex/dex_c.mjs'
 customElements.define('crypto-dex',
     class extends HTMLElement {
         static get observedAttributes () {
@@ -682,12 +683,14 @@ customElements.define('crypto-dex',
                         })
                 })
             async function modules (obj) {
+                let methods = await classDex()
 
+                console.assert(false, methods)
                 let relation = {}
                 relation['w'] = 10
                 relation['u'] = 10
                 relation['e'] = 10
-                relation['commission'] = 0.003
+                relation['fee'] = 0.003
                 relation['s'] = {}
                 relation['c'] = {}
 
@@ -703,8 +706,11 @@ customElements.define('crypto-dex',
                 })
 
                 let wavesEuro = await dex['get']({type:'wavesEuro'}, obj)
+                let euroWaves = wavesEuro
                 let wavesUsd = await dex['get']({type:'wavesUsd'}, obj)
-                let eurUsd = await dex['get']({type:'eurUsd'}, obj)
+                let usdWaves = wavesUsd
+                let euroUsd = await dex['get']({type:'eurUsd'}, obj)
+                let usdEuro =  euroUsd
                 const wvsAmount = 10 ** 8;
                 const wvsPrice = 10 ** 6;
                 // console.assert(false, wavesEuro)
@@ -724,6 +730,30 @@ customElements.define('crypto-dex',
                     let amountLast = {}
                     let relationFee = {}
                     let transaction = {}
+
+                    methods.buy(wavesUsd)
+                    methods.sell(wavesEuro)
+                    methods.buy(usdEuro)
+
+                    methods.buy(wavesEuro)
+                    methods.sell(wavesUsd)
+                    methods.buy(euroUsd)
+
+                    methods.buy(euroWaves)
+                    methods.sell(euroUsd)
+                    methods.buy(wavesUsd)
+
+                    methods.buy(usdWaves)
+                    methods.sell(usdEuro)
+                    methods.buy(wavesEuro)
+
+                    methods.buy(euroUsd)
+                    methods.sell(euroWaves)
+                    methods.buy(usdWaves)
+
+                    methods.buy(usdEuro)
+                    methods.sell(usdWaves)
+                    methods.buy(euroWaves)
 
                     for(let i=0; i < 10;i++){
                         if(wavesEuro['asks'][i] === undefined){

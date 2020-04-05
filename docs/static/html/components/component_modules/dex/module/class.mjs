@@ -1,39 +1,46 @@
 import colorlog from '/static/html/components/component_modules/colorLog/colorLog.mjs'
 import queue from '/static/html/components/component_modules/queue/queue.mjs'
 import bundle from '/static/html/components/component_modules/waves/module/waves-bundle.mjs'
+let object = {}
 let Class = class Waves {
-    constructor(self) {
-        this.bank = this.bank.bind(this)
-        this.balance = this.balance.bind(this)
-        this.wallet = this.wallet.bind(this)
-        this.faucet = this.faucet.bind(this)
-        this.transfer = this.transfer.bind(this)
-        this.waitForTx = this.waitForTx.bind(this)
+    constructor() {
+        this.getPrice = this.getPrice.bind(this)
+        this.buy = this.buy.bind(this)
+        this.sell = this.sell.bind(this)
         this.end = this.end.bind(this)
-        document.addEventListener('typeScript-end', this.end)
+        document.addEventListener('typeScript-end-dex', this.end)
     }
-    balance(id){
-        return new Promise(async (resolve, reject)=>{
-         let balance = await fetch(`http://testnodes.wavesnodes.com/addresses/balance/${id}`)
-            resolve(await balance.json())
-        })
+    buy(first, second){
+
+        while(verify){
+            amount = wavesEuro['bids'][i]['amount']
+
+
+            // console.log(wavesUsd['bids'][i]['amount']/wvsAmount)
+            // console.assert(false, wavesUsd['bids'][i]['price']/wvsPrice)
+            if(amount < 10){
+                count = count++
+            }else{
+
+                amount = wavesEuro['bids'][i + count]['amount']/wvsAmount
+                relation['s']['ew'] = ( relation['e'] /  wavesEuro['bids'][i][0]).toFixed(2)
+                amountLast =  parseInt(relation['s']['ew'] * wavesEuro['bids'][i + count][0], 10).toFixed(2)
+                transaction[0] = {}
+                transaction[0]['amount'] = amountLast
+                transaction[0]['course'] = wavesEuro['bids'][i + count][0]
+                price = wavesEuro['bids'][i + count][0]
+                verify = false
+
+            }
+        }
+
+        return ''
     }
-    transfer(console = true,property='a',color = 'black', substrat={_:'button'},relation='transfer'  ){
-        return queue(console, property,color,substrat,relation)
+    sell(console = true,property='a',color = 'black', substrat={_:'button'},relation='transfer'  ){
+        return ''
     }
-    faucet(console = true,property='a',color = 'black', substrat={_:'button'},relation='faucet'  ){
-        return queue(console, property,color,substrat,relation)
-    }
-    bank(console = true,property='a',color = 'black', substrat={_:'button'},relation='bank'  ){
-        return queue(console, property,color,substrat,relation)
-    }
-    wallet(console = true,property='a',color = 'black', substrat={_:'player'},relation='wallet'  ){
-        return queue(console, property,color,substrat,relation)
-    }
-    waitForTx(id, node){
-        return  new Promise(async (resolve, reject) => {
-            resolve(bundle['default']['transactions']['waitForTx'](id, node))
-        })
+    getPrice(console = true,property='a',color = 'black', substrat={_:'button'},relation='faucet'  ){
+        return ''
     }
     end(event){
         queue(event['detail']['console'], '~end',event['detail']['color'],event['detail']['substrate'],event['detail']['relation']).then((data)=>{
