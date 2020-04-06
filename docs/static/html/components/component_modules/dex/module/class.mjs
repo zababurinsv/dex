@@ -24,6 +24,45 @@ let Class = class Waves {
             let count = 0
             let outAmount = undefined
             switch (name) {
+                case 'wavesEuro':
+                    while(verify){
+                        if(count >= 10){
+                            verify = false
+                            obj['buy(wavesEuro)'] = undefined
+                        }else{
+                            let bidAmount = {}
+                            let bidPrice = {}
+                            let askAmount = {}
+                            let askPrice = {}
+                            if(pair['asks'][count] === undefined){
+                                obj['buy(wavesEuro)'] = undefined
+                                verify = false
+
+                            }else{
+
+                                bidAmount = pair['bids'][count]['amount']/object['amount']
+                                bidPrice = this.denormalize(pair['bids'][count]['price'],obj['decimals'][`${ pair['pair']['priceAsset'] }`],obj['decimals'][`${ pair['pair']['amountAsset'] }`])
+                                askAmount = pair['asks'][count]['amount']/object['amount']
+                                askPrice = this.denormalize(pair['asks'][count]['price'],obj['decimals'][`${ pair['pair']['priceAsset'] }`],obj['decimals'][`${ pair['pair']['amountAsset'] }`])
+                                outAmount = amount/askPrice -object['fee']
+                                console.log('result1 --->', amount/askPrice -object['fee'], '----->', count)
+                                console.log('result2 --->', amount/bidPrice -object['fee'], '----->', count)
+                                // console.log('bidPrice --->', bidPrice,'askPrice --->',askPrice, 'count--->',count)
+                               // console.log('----->', askAmount, outAmount)
+                                if((askAmount - outAmount) <= 0){
+                                    console.warn('невозможно купить','askAmount:',askAmount,'outAmount:',outAmount )
+                                    count++
+                                }else{
+                                    obj['buy(wavesEuro)'] = amount/askPrice -object['fee']
+                                    obj['buy(wavesEuro)'] = this.fix(obj['buy(wavesEuro)'])
+                                    verify = false
+                                }
+
+                            }
+                        }
+                    }
+                    resolve(obj)
+                    break
                 case 'wavesUsd':
                     while(verify){
                         if(count >= 10){
@@ -136,6 +175,47 @@ let Class = class Waves {
                     }
                     resolve(obj)
                     break
+                case 'euroUsd':
+                    while(verify){
+                        if(count >= 10){
+                            verify = false
+                            obj['buy(euroUsd)'] = undefined
+                        }else{
+                            let bidAmount = undefined
+                            let bidPrice = undefined
+                            let askAmount = undefined
+                            let askPrice = undefined
+                            if(pair['asks'][count] === undefined){
+                                obj['buy(euroUsd)'] = undefined
+                                verify = false
+                            }else{
+                                if(pair['bids'][count] !== undefined){
+                                    bidAmount = pair['bids'][count]['amount']/object['amount']
+                                    bidPrice = this.denormalize(pair['bids'][count]['price'],obj['decimals'][`${ pair['pair']['priceAsset'] }`],obj['decimals'][`${ pair['pair']['amountAsset'] }`])
+                                }
+                                    askAmount = pair['asks'][count]['amount']/object['amount']
+                                    askPrice = this.denormalize(pair['asks'][count]['price'],obj['decimals'][`${ pair['pair']['priceAsset'] }`],obj['decimals'][`${ pair['pair']['amountAsset'] }`])
+
+                                    outAmount = amount/askPrice
+                                    console.log('result1 --->', amount/askPrice, '----->', count)
+                                    console.log('result2 --->', amount/bidPrice, '----->', count)
+                                    console.log('askAmount --->', askAmount,'outAmount --->',outAmount, 'count--->',count)
+
+                                // console.assert(false,  pair['asks'][count], askAmount)
+                                if((askAmount - outAmount) <= 0){
+                                    console.warn('невозможно купить', 'askAmount:', askAmount,'amount:',outAmount )
+                                    count++
+                                }else{
+                                    obj['buy(euroUsd)'] = amount/askPrice - object['fee']
+                                    obj['buy(euroUsd)'] = this.fix(obj['buy(euroUsd)'])
+                                    verify = false
+                                }
+                            }
+
+                        }
+                    }
+                    resolve(obj)
+                    break
                 default:
                     console.warn('имя не обрабатывается --->', name)
                     break
@@ -171,10 +251,9 @@ let Class = class Waves {
                                 bidPrice = this.denormalize(pair['bids'][count]['price'],obj['decimals'][`${ pair['pair']['priceAsset'] }`],obj['decimals'][`${ pair['pair']['amountAsset'] }`])
                                 askAmount = pair['asks'][count]['amount']/object['amount']
                                 askPrice = this.denormalize(pair['asks'][count]['price'],obj['decimals'][`${ pair['pair']['priceAsset'] }`],obj['decimals'][`${ pair['pair']['amountAsset'] }`])
-
                                 outAmount = amount*bidPrice
-                                // console.log('result1 --->',amount*bidPrice, '----->', count)
-                                // console.log('result2 --->',amount*askPrice, '----->', count)
+                                console.log('result1 --->',amount*bidPrice, '----->', count)
+                                console.log('result2 --->',amount*askPrice, '----->', count)
                                 // console.log('bidPrice --->', bidPrice,'askPrice --->',askPrice, 'count--->',count)
 
                                 if((bidAmount - amount) <= 0){
