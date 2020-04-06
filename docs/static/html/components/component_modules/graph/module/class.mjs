@@ -11,6 +11,8 @@ let Class = class Graph {
         this.generateDataArrays = this.generateDataArrays.bind(this)
         this.addEventListener = this.addEventListener.bind(this)
         this.clearPreviousGame = this.clearPreviousGame.bind(this)
+        this.addDataPoint = this.addDataPoint.bind(this)
+        
         document.addEventListener('typeScript-end-graph', this.end)
     }
     drawChart(view = true,property='a',color = 'black', substrate={_:'button'},relation='transfer' ){
@@ -127,7 +129,6 @@ let Class = class Graph {
         let gameControls = substrate.this.shadowRoot.querySelector('#game-controls')
     
         startEndGame.addEventListener('click',async ()=>{
-          
             if(module.isGameInProgress) { // end current game
                 startEndGame.classList.remove("btn-danger")
                 startEndGame.classList.add("btn-success")
@@ -140,32 +141,44 @@ let Class = class Graph {
             }
             else { // initiate game
                 if(module.remainingDataPoints.length>0) {
-                    if(module.gameHistory.history.length>0) { clearPreviousGame(); }
-                    $("#start-end-game").removeClass("btn-success").addClass("btn-danger");
-                    $("#refresh-btn").prop("disabled", true);
-                    if(isGamePaused) { $("#play-pause").click(); }
-                    $("#game-controls").css("opacity", 1);
-                    isGameInProgress = !isGameInProgress;
+                    if(module.gameHistory.history.length>0) { this.clearPreviousGame(module); }
+                    startEndGame.classList.remove("btn-success")
+                    startEndGame.classList.add("btn-danger")
+                    refreshBtn.disabled = true
+          
+                    if(module.isGamePaused) { playPause.click() }
+                    gameControls.style.opacity = '1'
+                    module.isGameInProgress = !module.isGameInProgress;
                 }
                 else {
-                    $("#refresh-btn").addClass("tada");
-                    setTimeout(function(){ $("#refresh-btn").removeClass("tada"); }, 1000);
+                    refreshBtn.classList.add("tada")
+                    setTimeout(function(){
+                        refreshBtn.classList.remove("tada")
+                        }, 1000);
                 }
             }
         })
-        $("#data-speed-input").on("input", function() {
-            $(this).attr("style",`--val: ${$(this).val()};`);
-            dataFlowIntervalTimer = Math.round((10/$(this).val())*1000);
-            if(!isGamePaused) {
-                clearInterval(dataFlowIntervalFunction);
-                dataFlowIntervalFunction = setInterval(() => addDataPoint(), dataFlowIntervalTimer);
-                }
-            });
-        })
+            dataSpeedInput.addEventListener('input', async (e)=>{
+                module.dataFlowIntervalTimer = Math.round((10/e.currentTarget.value)*1000);
+                    if(!module.isGamePaused) {
+                        clearInterval(module.dataFlowIntervalFunction);
+                        module.dataFlowIntervalFunction = setInterval(() => addDataPoint(), dataFlowIntervalTimer);
+                        }
+                    });
+            })
+        // $("#data-speed-input").on("input", function() {
+        //     $(this).attr("style",`--val: ${$(this).val()};`);
+        //     dataFlowIntervalTimer = Math.round((10/$(this).val())*1000);
+        //     if(!isGamePaused) {
+        //         clearInterval(dataFlowIntervalFunction);
+        //         dataFlowIntervalFunction = setInterval(() => addDataPoint(), dataFlowIntervalTimer);
+        //         }
+        //     });
+        // })
     }
-    clearPreviousGame(){
+    clearPreviousGame(module){
         return new Promise(async (resolve, reject) => {
-            gameHistory = {
+            module.gameHistory = {
                 cashBalance: initialCashBalance,
                 openPositions: 0,
                 equity: initialCashBalance,
@@ -204,6 +217,21 @@ let Class = class Graph {
             }
     
         })
+    }
+    addDataPoint() {
+        if(remainingDataPoints.length>0) {
+            chart.series[0].addPoint(remainingDataPoints.shift()); // addPoint(options [,redraw] [,shift])
+            if(remainingDataPoints.length<+$("#expiry").attr("max")) {
+                $("#expiry").attr("max", remainingDataPoints.length);
+                $("#expiry").blur();
+            }
+            checkForExpiredOpenPositions();
+        }
+        else { // Game Over...
+            if(isGameInProgress){ $("#start-end-game").click(); }
+            else { $("#play-pause").click(); }
+            $("#play-pause").prop("disabled", true);
+        }
     }
     end(event){
         queue(event['detail']['console'], '~end',event['detail']['color'],event['detail']['substrate'],event['detail']['relation']).then((data)=>{
