@@ -2,10 +2,10 @@
 <section>
     <div id = "graph">
         <div id="itemWavesEuro" class="itemBid">
-            <label><input type="number" min="0" max="24000" id="Waves" value="100" />Waves</label>
+            <label for="left"><input type="number" min="0" max="24000" id="left" value="100" /></label>
             <div class="content">
                 <div class="info">
-                    <p class="preview">Waves/Euro</p>
+                    <p id="preview-left" class="preview"></p>
                     <div class="wrapper">
                         <div class="infoTimestamp">
                             <p>Time:</p>
@@ -58,10 +58,10 @@
             </div>
         </div>
         <div id="itemEuroUsd" class="itemBid">
-            <label><input type="number" min="0" max="24000" id="Usd" value="100"  />Usd</label>
+            <label for="center"><input type="number" min="0" max="24000" id="center" value="100"  /></label>
             <div class="content">
                 <div class="info">
-                    <p class="preview">Euro/Usd</p>
+                    <p id="preview-center" class="preview"></p>
                     <div class="wrapper">
                         <div class="infoTimestamp">
                             <p>Time: </p>
@@ -113,11 +113,10 @@
             </div>
         </div>
         <div id="itemWavesUsd" class="itemBid">
-            <label><input type="number" min="0" max="24000" id="Euro" value="100"  />Euro</label>
+            <label for="right"><input type="number" min="0" max="24000" id="right" value="100"  /></label>
             <div class="content">
-
                 <div class="info">
-                    <p class="preview">Waves/Usd</p>
+                    <p id="preview-right" class="preview"></p>
                     <div class="wrapper">
                         <div class="infoTimestamp">
                             <p>Time:</p>

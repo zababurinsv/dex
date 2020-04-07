@@ -162,7 +162,7 @@ let Class = class Graph {
                 module.dataFlowIntervalTimer = Math.round((10/e.currentTarget.value)*1000);
                     if(!module.isGamePaused) {
                         clearInterval(module.dataFlowIntervalFunction);
-                        module.dataFlowIntervalFunction = setInterval(() => addDataPoint(), dataFlowIntervalTimer);
+                        module.dataFlowIntervalFunction = setInterval(() => this.addDataPoint(module), module.dataFlowIntervalTimer);
                         }
                     });
             })
@@ -218,11 +218,11 @@ let Class = class Graph {
     
         })
     }
-    addDataPoint() {
-        if(remainingDataPoints.length>0) {
-            chart.series[0].addPoint(remainingDataPoints.shift()); // addPoint(options [,redraw] [,shift])
+    addDataPoint(module) {
+        if(module.remainingDataPoints.length>0) {
+            module.chart.series[0].addPoint(module.remainingDataPoints.shift()); // addPoint(options [,redraw] [,shift])
             if(remainingDataPoints.length<+$("#expiry").attr("max")) {
-                $("#expiry").attr("max", remainingDataPoints.length);
+                $("#expiry").attr("max", module.remainingDataPoints.length);
                 $("#expiry").blur();
             }
             checkForExpiredOpenPositions();

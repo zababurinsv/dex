@@ -76,111 +76,127 @@
   margin: auto;
   margin-bottom: 3vw;
 }
-body {
-  height: 97vh;
-  width: 100vw;
-  overflow-x: hidden;
+section {
   color: #ccc;
   background-color: #333;
-}
-button, button:hover, button:active, button:focus, button:visited, .btn, .btn:hover, .btn:active, .btn:focus, .btn:visited {
-  text-decoration: none !important;
-  outline: none !important;
+  div#chart-section-container {
+    position: relative;
+    height: 70%;
+    width: 98vw;
+    margin: auto;
+    div#loader-section {
+      padding: 40px 0 30px 0;
+
+      div#loader {
+        border: 30px solid #faf3d1;
+        border-top: 30px solid #f0ad4e;
+        border-radius: 50%;
+        width: 10vw;
+        height: 10vw;
+        animation: spin 1.5s linear infinite;
+        margin: auto;
+      }
+      p#loader-text {
+        margin-top: 15px;
+        font-size: 26px;
+        color: #faf3d1;
+      }
+    }
+    div.chart-buttons-container {
+      position: absolute;
+      background-color: transparent;
+      display: none;
+      top: 0;
+      z-index: 1;
+
+      button, button:hover, button:active, button:focus, button:visited, .btn, .btn:hover, .btn:active, .btn:focus, .btn:visited {
+        text-decoration: none !important;
+        outline: none !important;
+      }
+      input#data-speed-input {
+        -webkit-appearance: none;
+        position: absolute;
+        background-color: transparent;
+        width: 120px;
+        height: 20px;
+        top: 4px;
+        right: 60px;
+        --min: 1;
+        --max: 20;
+        --px: 1px;
+        --range: calc(var(--max) - var(--min));
+        --ratio: calc((var(--val) - var(--min))/var(--range));
+        --sx: calc((var(--ratio)*120+ 10)*var(--px));
+        &:focus{
+          outline: none;
+        }
+        &::-webkit-slider-runnable-track{
+          background: linear-gradient(#ccc, #ccc) var(--sx) 100% no-repeat #f0ad4e;
+        }
+        &::-webkit-slider-runnable-track{
+          box-sizing: border-box;
+          border: none;
+          width: 120px;
+          height: 5px;
+          background: #ccc;
+        }
+        &::-webkit-slider-thumb{
+          margin-top: -8px;
+          box-sizing: border-box;
+          border: none;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: #f0ad4e;
+        }
+        &::-webkit-slider-thumb{
+          -webkit-appearance: none;
+        }
+      }
+      div#container{
+        width: 100%;
+      }
+    }
+    div.chart-buttons-container button {
+      border-radius: 0;
+      font-size: 14px;
+    }
+    div#chart-buttons-container-left {
+      left: 0;
+    }
+    div#chart-buttons-container-right {
+      right: 0;
+    }
+  }
+  #game-controls {
+    width: 95%;
+    margin: 8px auto 0 auto;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+  }
 }
 
+
 /* chart-section-container */
-#chart-section-container {
-  position: relative;
-  height: 70%;
-  min-height: 335px;
-  width: 95%;
-  margin: 5px auto;
-}
-#loader-section {
-  padding: 40px 0 30px 0;
-}
-.chart-buttons-container {
-  position: absolute;
-  background-color: transparent;
-  display: none;
-  top: 0;
-  z-index: 1;
-}
-.chart-buttons-container button {
-  border-radius: 0;
-  font-size: 14px;
-}
-#chart-buttons-container-left {
-  left: 0;
-}
-#chart-buttons-container-right {
-  right: 0;
-}
-#data-speed-input {
-  position: absolute;
-  background-color: transparent;
-  width: 120px;
-  height: 20px;
-  top: 4px;
-  right: 60px;
-  --min: 1;
-  --max: 20;
-  --px: 1px;
-  --range: calc(var(--max) - var(--min));
-  --ratio: calc((var(--val) - var(--min))/var(--range));
-  --sx: calc((var(--ratio)*120+ 10)*var(--px));
-}
-#data-speed-input:focus { outline: none; }
-#data-speed-input, #data-speed-input::-webkit-slider-thumb { -webkit-appearance: none; }
-#data-speed-input::-webkit-slider-runnable-track {
-  box-sizing: border-box;
-  border: none;
-  width: 120px;
-  height: 5px;
-  background: #ccc;
-}
-#data-speed-input::-webkit-slider-runnable-track {
-  background: linear-gradient(#ccc, #ccc) var(--sx) 100% no-repeat #f0ad4e;
-}
-#data-speed-input::-webkit-slider-thumb {
-  margin-top: -8px;
-  box-sizing: border-box;
-  border: none;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #f0ad4e;
-}
-#loader {
-  border: 30px solid #faf3d1;
-  border-top: 30px solid #f0ad4e;
-  border-radius: 50%;
-  width: 250px;
-  height: 250px;
-  animation: spin 1.5s linear infinite;
-  margin: auto;
-}
+
+
+
+
+
+
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-#loader-text {
-  margin-top: 15px;
-  font-size: 26px;
-  color: #faf3d1;
-}
+
 #container {
   width: 100%;
   height: 100%;
 }
 
 /* game-controls */
-#game-controls {
-  width: 95%;
-  margin: 8px auto 0 auto;
-  opacity: 0.5;
-  transition: opacity 0.2s;
-}
+
 #game-controls .row .panel {
   position: relative;
   color: #333;
@@ -392,7 +408,7 @@ span.input-group-addon {
   #chart-section-container { margin-top: 15px; }
 }
 @media (max-width: 768px) {
-  body { height: 100vh; }
+  section { height: 100vh; }
   #chart-section-container { height: 50%; margin-bottom: 2px; }
   #loader { width: 200px; height: 200px; }
   #loader-text { font-size: 22px; }

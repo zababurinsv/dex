@@ -687,43 +687,65 @@ customElements.define('crypto-dex',
                 let methods = await classDex()
                 let waves = await Waves()
                 let relation = {}
-                obj['this'].shadowRoot.querySelector('#Waves').addEventListener('input',async (e)=>{
+                obj['this'].shadowRoot.querySelector('#left').addEventListener('input',async (e)=>{
                     relation['w'] =  e.target.value
                 })
-                obj['this'].shadowRoot.querySelector('#Usd').addEventListener('input',async (e)=>{
+                obj['this'].shadowRoot.querySelector('#center').addEventListener('input',async (e)=>{
                     relation['u'] =  e.target.value
                 })
-                obj['this'].shadowRoot.querySelector('#Euro').addEventListener('input',async (e)=>{
+                obj['this'].shadowRoot.querySelector('#right').addEventListener('input',async (e)=>{
                     relation['e'] =  e.target.value
                 })
 
                 let description = {
                     wavesEuro:{
                         amountAsset:'WAVES',
-                        priceAsset:'Gtb1WRznfchDnTh37ezoDTJ4wcoKaRsKqKjJjy7nm2zU',
+                        priceAsset:'474jTeYx2r2Va35794tCScAXWJG9hU2HcgxzMowaZUnu',
                         tickSize:undefined,
-                        assetId:'Gtb1WRznfchDnTh37ezoDTJ4wcoKaRsKqKjJjy7nm2zU'
+                    },
+                    euroUsd:{
+                        amountAsset:'DG2xFkPdDwKUoBkzGAhQtLpSGzfXLiCYPEzeKH2Ad24p',
+                        priceAsset:'474jTeYx2r2Va35794tCScAXWJG9hU2HcgxzMowaZUnu',
+                        tickSize:undefined
                     },
                     wavesUsd:{
                         amountAsset:'WAVES',
                         priceAsset:'DG2xFkPdDwKUoBkzGAhQtLpSGzfXLiCYPEzeKH2Ad24p',
                         tickSize:undefined
                     },
-                    euroUsd:{
-                        amountAsset:'DG2xFkPdDwKUoBkzGAhQtLpSGzfXLiCYPEzeKH2Ad24p',
-                        priceAsset:'Gtb1WRznfchDnTh37ezoDTJ4wcoKaRsKqKjJjy7nm2zU',
-                        tickSize:undefined
-                    },
                     details:{},
-                    assetId:['Gtb1WRznfchDnTh37ezoDTJ4wcoKaRsKqKjJjy7nm2zU','DG2xFkPdDwKUoBkzGAhQtLpSGzfXLiCYPEzeKH2Ad24p']
+                    name:{},
+                    assetId:['474jTeYx2r2Va35794tCScAXWJG9hU2HcgxzMowaZUnu','DG2xFkPdDwKUoBkzGAhQtLpSGzfXLiCYPEzeKH2Ad24p']
                 }
 
                 for(let item of description['assetId']){
                     let itemDetails = await waves.details(item)
                     description['details'][`${item}`] = (await waves.details(item))['decimals']
+                    description['name'][`${item}`] = (await waves.details(item))['name']
                 }
                 description['details'][`WAVES`] = 8
-
+                description['name'][`WAVES`] = `WAVES`
+    
+    
+                for(let key in description){
+                          switch (key) {
+                              case 'wavesEuro':
+                                  obj['this'].shadowRoot.querySelector('[for="left"]').insertAdjacentHTML('beforeend', `${description['name'][`${description[key]['amountAsset']}`]}`)
+                                  obj['this'].shadowRoot.querySelector('#preview-left').innerText =`${description['name'][`${description[key]['amountAsset']}`]}/${description['name'][`${description[key]['priceAsset']}`]}`
+                                  break
+                              case 'euroUsd':
+                                  obj['this'].shadowRoot.querySelector('[for="center"]').insertAdjacentHTML('beforeend', `${description['name'][`${description[key]['priceAsset']}`]}`)
+                                  obj['this'].shadowRoot.querySelector('#preview-center').innerText =`${description['name'][`${description[key]['amountAsset']}`]}/${description['name'][`${description[key]['priceAsset']}`]}`
+                                  break
+                              case 'wavesUsd':
+                                  obj['this'].shadowRoot.querySelector('[for="right"]').insertAdjacentHTML('beforeend', `${description['name'][`${description[key]['priceAsset']}`]}`)
+                                  obj['this'].shadowRoot.querySelector('#preview-right').innerText =`${description['name'][`${description[key]['amountAsset']}`]}/${description['name'][`${description[key]['priceAsset']}`]}`
+                                  break
+                              default:
+                                  break
+                          }
+                }
+                
                 relation['w'] = 100
                 relation['u'] = 100
                 relation['e'] = 100

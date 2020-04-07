@@ -1,6 +1,6 @@
 <template>
 <section>
-    <!-- partial:index.partial.html -->
+    <div style="background-color: #333; height: 0.5vw;width: 100%" ></div>
     <div id="chart-section-container">
 
         <div id="loader-section" class="text-center">
@@ -9,18 +9,24 @@
         </div>
 
         <div class="chart-buttons-container" id="chart-buttons-container-left">
-            <button id="start-end-game" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-off"></i></button>
-            <button id="refresh-btn" class="btn btn-warning btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
-            <button id="show-hide-asset" class="btn btn-warning btn-sm"><i class="glyphicon glyphicon-eye-open"></i></button>
+            <button id="start-end-game" class="btn btn-success btn-sm">
+                <img src="/static/html/components/crypto-graph/images/power.svg">
+            </button>
+            <button id="refresh-btn" class="btn btn-warning btn-sm">
+             <img src="/static/html/components/crypto-graph/images/repeat.svg">
+            </button>
+            <button id="show-hide-asset" class="btn btn-warning btn-sm">
+             <img src="/static/html/components/crypto-graph/images/eye.svg">
+            </button>
         </div>
 
         <div class="chart-buttons-container" id="chart-buttons-container-right">
             <input id="data-speed-input" type="range" min="1" max="20" step="1" value="10" style="--val: 10;">
-            <button id="play-pause" class="btn btn-warning btn-sm"><i class="glyphicon glyphicon-play"></i></button>
+            <button id="play-pause" class="btn btn-warning btn-sm">
+                <img src="/static/html/components/crypto-graph/images/play.svg">
+            </button>
         </div>
-
-        <div id="container"></div>
-
+            <div id="container"></div>
     </div>
 
     <div id="game-controls" class="text-center">
