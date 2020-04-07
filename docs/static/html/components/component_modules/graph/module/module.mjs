@@ -42,7 +42,8 @@ export default ()=>{
             isGamePaused:isGamePaused,
             isAssetHidden:isAssetHidden,
             isGameInProgress:isGameInProgress,
-            gameHistory:gameHistory
+            gameHistory:gameHistory,
+            initialCashBalance:initialCashBalance
         })
     })
 }

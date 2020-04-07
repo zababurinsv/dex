@@ -12,7 +12,7 @@ let Class = class Graph {
         this.addEventListener = this.addEventListener.bind(this)
         this.clearPreviousGame = this.clearPreviousGame.bind(this)
         this.addDataPoint = this.addDataPoint.bind(this)
-        
+        this.numberToText = this.numberToText.bind(this)
         document.addEventListener('typeScript-end-graph', this.end)
     }
     drawChart(view = true,property='a',color = 'black', substrate={_:'button'},relation='transfer' ){
@@ -141,7 +141,7 @@ let Class = class Graph {
             }
             else { // initiate game
                 if(module.remainingDataPoints.length>0) {
-                    if(module.gameHistory.history.length>0) { this.clearPreviousGame(module); }
+                    if(module.gameHistory.history.length>0) { this.clearPreviousGame(module) }
                     startEndGame.classList.remove("btn-success")
                     startEndGame.classList.add("btn-danger")
                     refreshBtn.disabled = true
@@ -158,13 +158,13 @@ let Class = class Graph {
                 }
             }
         })
-            dataSpeedInput.addEventListener('input', async (e)=>{
-                module.dataFlowIntervalTimer = Math.round((10/e.currentTarget.value)*1000);
-                    if(!module.isGamePaused) {
-                        clearInterval(module.dataFlowIntervalFunction);
-                        module.dataFlowIntervalFunction = setInterval(() => this.addDataPoint(module), module.dataFlowIntervalTimer);
-                        }
-                    });
+        dataSpeedInput.addEventListener('input', async (e)=>{
+            module.dataFlowIntervalTimer = Math.round((10/e.currentTarget.value)*1000);
+                if(!module.isGamePaused) {
+                    clearInterval(module.dataFlowIntervalFunction);
+                    module.dataFlowIntervalFunction = setInterval(() => this.addDataPoint(module), module.dataFlowIntervalTimer);
+                    }
+                });
             })
         // $("#data-speed-input").on("input", function() {
         //     $(this).attr("style",`--val: ${$(this).val()};`);
@@ -179,9 +179,9 @@ let Class = class Graph {
     clearPreviousGame(module){
         return new Promise(async (resolve, reject) => {
             module.gameHistory = {
-                cashBalance: initialCashBalance,
+                cashBalance: module.initialCashBalance,
                 openPositions: 0,
-                equity: initialCashBalance,
+                equity: module.initialCashBalance,
                 totalBetsMatured: 0,
                 totalBetsWon: 0,
                 totalAmountWon: 0,
@@ -189,33 +189,53 @@ let Class = class Graph {
                 totalProfit: 0,
                 history: []
             };
-            $("#cash-balance").text(numberToText(gameHistory.cashBalance));
-            $("#open-positions").text(numberToText(gameHistory.openPositions));
-            $("#equity").text(numberToText(gameHistory.equity));
-            $("#win-rate").text(gameHistory.totalBetsWon + "/" + gameHistory.totalBetsMatured);
-            $("#average-profit").text("0");
-            $("#average-loss").text("0")
-            $("#total-profit").text("$0");
-            $("#betting-amount").attr("max", gameHistory.cashBalance);
-            $("#betting-amount").attr("value", 1000);
-            $("#betting-amount").val(1000);
-            $("#expiry").attr("max", 100);
-            $("#expiry").attr("value", 10);
-            $("#expiry").val(10);
-            $("#game-history table tbody").empty();
-            for(let i=1; i<=4; i++) {
-                $("#game-history table tbody").append(`<tr>
-                                              <td></td>
-                                              <td></td>
-                                              <td></td>
-                                              <td></td>
-                                              <td></td>
-                                              <td></td>
-                                              <td></td>
-                                              <td></td>
-                                            </tr>`);
-            }
+            let cashBalance = substrate.this.shadowRoot.querySelector('#cash-balance')
+            let openPositions = substrate.this.shadowRoot.querySelector('#open-positions')
+            let equity = substrate.this.shadowRoot.querySelector('#equity')
+            let winRate = substrate.this.shadowRoot.querySelector('#win-rate')
+            let averageProfit = substrate.this.shadowRoot.querySelector('#average-profit')
+            let averageLoss = substrate.this.shadowRoot.querySelector('#average-loss')
+            let totalProfit = substrate.this.shadowRoot.querySelector('#total-profit')
+            let bettingAmount = substrate.this.shadowRoot.querySelector('#betting-amount')
+            let expiry = substrate.this.shadowRoot.querySelector('#expiry')
+            let gameHistory = substrate.this.shadowRoot.querySelector('#game-history')
     
+            cashBalance.innerText = ''
+            cashBalance.innerText = this.numberToText(module.gameHistory.cashBalance)
+            openPositions.innerText = ''
+            openPositions.innerText =this.numberToText(module.gameHistory.openPositions)
+            equity.innerText = ''
+            equity.innerText = this.numberToText(module.gameHistory.equity)
+            winRate.innerText = ''
+            winRate.innerText = module.gameHistory.totalBetsWon + "/" + module.gameHistory.totalBetsMatured
+            averageProfit.innerText = ''
+            averageProfit.innerText = "0"
+            averageLoss.innerText = ''
+            averageLoss.innerText = "0"
+            totalProfit.innerText = ''
+            totalProfit.innerText = '$0'
+            bettingAmount.setAttribute('max', module.gameHistory.cashBalance)
+            bettingAmount.setAttribute('value', '1000')
+            bettingAmount.value = 1000
+            expiry.setAttribute('max','100')
+            expiry.setAttribute('value','10')
+            expiry.value = 10
+            let tbody = gameHistory.querySelector('tbody')
+            tbody.innerHTML = ''
+            for(let i=1; i<=4; i++) {
+                tbody.insertAdjacentHTML('beforeend',`
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                `)
+            }
         })
     }
     addDataPoint(module) {
@@ -231,6 +251,23 @@ let Class = class Graph {
             if(isGameInProgress){ $("#start-end-game").click(); }
             else { $("#play-pause").click(); }
             $("#play-pause").prop("disabled", true);
+        }
+    }
+    numberToText(num) {
+        if(Math.abs(num)<1000) return num.toString();
+        else {
+            const intAndDecPart = num.toString().split(".");
+            const intPart = intAndDecPart[0];
+            let res="";
+            let counter = 0;
+            for(let i=intPart.length-1; i>0; i--) {
+                res = intPart[i] + res;
+                counter++;
+                if(counter%3===0) res = "," + res;
+            }
+            res = intPart[0] + res;
+            if(intAndDecPart.length===2) return res+"."+intAndDecPart[1];
+            else return res;
         }
     }
     end(event){
