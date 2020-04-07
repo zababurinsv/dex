@@ -39,10 +39,9 @@ let Class = class Waves {
                                 verify = false
 
                             }else{
-
-                                bidAmount = pair['bids'][count]['amount']/object['amount']
+                                bidAmount = pair['bids'][count]['amount']/(10**obj['decimals'][`${ pair['pair']['priceAsset'] }`])
                                 bidPrice = this.denormalize(pair['bids'][count]['price'],obj['decimals'][`${ pair['pair']['priceAsset'] }`],obj['decimals'][`${ pair['pair']['amountAsset'] }`])
-                                askAmount = pair['asks'][count]['amount']/object['amount']
+                                askAmount = pair['asks'][count]['amount']/(10**obj['decimals'][`${ pair['pair']['amountAsset'] }`])
                                 askPrice = this.denormalize(pair['asks'][count]['price'],obj['decimals'][`${ pair['pair']['priceAsset'] }`],obj['decimals'][`${ pair['pair']['amountAsset'] }`])
                                 outAmount = amount/askPrice -object['fee']
                                 console.log('result1 --->', amount/askPrice -object['fee'], '----->', count)
@@ -78,20 +77,21 @@ let Class = class Waves {
                                 verify = false
 
                             }else{
-
-                                bidAmount = pair['bids'][count]['amount']/object['amount']
+                                
+                            
+                                bidAmount = pair['bids'][count]['amount']/(10**obj['decimals'][`${ pair['pair']['priceAsset'] }`])
                                 bidPrice = this.denormalize(pair['bids'][count]['price'],obj['decimals'][`${ pair['pair']['priceAsset'] }`],obj['decimals'][`${ pair['pair']['amountAsset'] }`])
-                                askAmount = pair['asks'][count]['amount']/object['amount']
+                                askAmount = pair['asks'][count]['amount']/(10**obj['decimals'][`${ pair['pair']['amountAsset'] }`])
                                 askPrice = this.denormalize(pair['asks'][count]['price'],obj['decimals'][`${ pair['pair']['priceAsset'] }`],obj['decimals'][`${ pair['pair']['amountAsset'] }`])
-                                outAmount = amount/askPrice -object['fee']
+                                outAmount = amount/askPrice
                                 console.log('result1 --->', amount/askPrice -object['fee'], '----->', count)
                                 console.log('result2 --->', amount/bidPrice -object['fee'], '----->', count)
-                                console.log('bidPrice --->', bidPrice,'askPrice --->',askPrice, 'count--->',count)
+                                console.log('askAmount --->', askAmount,'-','outAmount --->',outAmount, 'count--->',count)
                                 if((askAmount - outAmount) <= 0){
                                     console.warn('невозможно купить')
                                     count++
                                 }else{
-                                    obj['buy(wavesUsd)'] = amount/askPrice -object['fee']
+                                    obj['buy(wavesUsd)'] = amount/askPrice - object['fee']
                                     obj['buy(wavesUsd)'] = this.fix(obj['buy(wavesUsd)'])
                                     verify = false
                                 }
@@ -115,9 +115,9 @@ let Class = class Waves {
                                 obj['buy(usdWaves)'] = undefined
                                 verify = false
                             }else{
-                                bidAmount = pair['bids'][count]['amount']/object['amount']
+                                bidAmount = pair['bids'][count]['amount']/(10**obj['decimals'][`${ pair['pair']['priceAsset'] }`])
                                 bidPrice = this.denormalize(pair['bids'][count]['price'],obj['decimals'][`${ pair['pair']['priceAsset'] }`],obj['decimals'][`${ pair['pair']['amountAsset'] }`])
-                                askAmount = pair['asks'][count]['amount']/object['amount']
+                                askAmount = pair['asks'][count]['amount']/(10**obj['decimals'][`${ pair['pair']['amountAsset'] }`])
                                 askPrice = this.denormalize(pair['asks'][count]['price'],obj['decimals'][`${ pair['pair']['priceAsset'] }`],obj['decimals'][`${ pair['pair']['amountAsset'] }`])
                                 outAmount = amount*bidPrice
                                 console.log('result1 --->', amount*askPrice, '----->', count)
@@ -151,9 +151,9 @@ let Class = class Waves {
                                 obj['buy(usdEuro)'] = undefined
                                 verify = false
                             }else{
-                                bidAmount = pair['bids'][count]['amount']/object['amount']
+                                bidAmount = pair['bids'][count]['amount']/(10**obj['decimals'][`${ pair['pair']['priceAsset'] }`])
                                 bidPrice = this.denormalize(pair['bids'][count]['price'],obj['decimals'][`${ pair['pair']['priceAsset'] }`],obj['decimals'][`${ pair['pair']['amountAsset'] }`])
-                                askAmount = pair['asks'][count]['amount']/object['amount']
+                                askAmount = pair['asks'][count]['amount']/(10**obj['decimals'][`${ pair['pair']['amountAsset'] }`])
                                 askPrice = this.denormalize(pair['asks'][count]['price'],obj['decimals'][`${ pair['pair']['priceAsset'] }`],obj['decimals'][`${ pair['pair']['amountAsset'] }`])
 
                                 outAmount = amount*bidPrice
@@ -190,10 +190,11 @@ let Class = class Waves {
                                 verify = false
                             }else{
                                 if(pair['bids'][count] !== undefined){
-                                    bidAmount = pair['bids'][count]['amount']/object['amount']
+                                    bidAmount = pair['bids'][count]['amount']/(10**obj['decimals'][`${ pair['pair']['priceAsset'] }`])
                                     bidPrice = this.denormalize(pair['bids'][count]['price'],obj['decimals'][`${ pair['pair']['priceAsset'] }`],obj['decimals'][`${ pair['pair']['amountAsset'] }`])
+    
                                 }
-                                    askAmount = pair['asks'][count]['amount']/object['amount']
+                                    askAmount = pair['asks'][count]['amount']/(10**obj['decimals'][`${ pair['pair']['amountAsset'] }`])
                                     askPrice = this.denormalize(pair['asks'][count]['price'],obj['decimals'][`${ pair['pair']['priceAsset'] }`],obj['decimals'][`${ pair['pair']['amountAsset'] }`])
 
                                     outAmount = amount/askPrice
@@ -246,11 +247,12 @@ let Class = class Waves {
                                 verify = false
                                 obj['sell(wavesUsd)'] = undefined
                             }else{
-
-                                bidAmount = pair['bids'][count]['amount']/object['amount']
+    
+                                bidAmount = pair['bids'][count]['amount']/(10**obj['decimals'][`${ pair['pair']['priceAsset'] }`])
                                 bidPrice = this.denormalize(pair['bids'][count]['price'],obj['decimals'][`${ pair['pair']['priceAsset'] }`],obj['decimals'][`${ pair['pair']['amountAsset'] }`])
-                                askAmount = pair['asks'][count]['amount']/object['amount']
+                                askAmount = pair['asks'][count]['amount']/(10**obj['decimals'][`${ pair['pair']['amountAsset'] }`])
                                 askPrice = this.denormalize(pair['asks'][count]['price'],obj['decimals'][`${ pair['pair']['priceAsset'] }`],obj['decimals'][`${ pair['pair']['amountAsset'] }`])
+    
                                 outAmount = amount*bidPrice
                                 console.log('result1 --->',amount*bidPrice, '----->', count)
                                 console.log('result2 --->',amount*askPrice, '----->', count)
@@ -284,10 +286,11 @@ let Class = class Waves {
                                 obj['sell(usdWaves)'] = undefined
                                 verify = false
                             }else{
-                                bidAmount = pair['bids'][count]['amount']/object['amount']
+                                bidAmount = pair['bids'][count]['amount']/(10**obj['decimals'][`${ pair['pair']['priceAsset'] }`])
                                 bidPrice = this.denormalize(pair['bids'][count]['price'],obj['decimals'][`${ pair['pair']['priceAsset'] }`],obj['decimals'][`${ pair['pair']['amountAsset'] }`])
-                                askAmount = pair['asks'][count]['amount']/object['amount']
+                                askAmount = pair['asks'][count]['amount']/(10**obj['decimals'][`${ pair['pair']['amountAsset'] }`])
                                 askPrice = this.denormalize(pair['asks'][count]['price'],obj['decimals'][`${ pair['pair']['priceAsset'] }`],obj['decimals'][`${ pair['pair']['amountAsset'] }`])
+    
                                 outAmount = amount/askPrice
 
                                 console.log('result1 --->', amount/askPrice - object['fee'], '----->', count)
@@ -324,10 +327,11 @@ let Class = class Waves {
                                 obj['sell(wavesEuro)'] = undefined
                                 verify = false
                             }else{
-                                bidAmount = pair['bids'][count]['amount']/object['amount']
+                                bidAmount = pair['bids'][count]['amount']/(10**obj['decimals'][`${ pair['pair']['priceAsset'] }`])
                                 bidPrice = this.denormalize(pair['bids'][count]['price'],obj['decimals'][`${ pair['pair']['priceAsset'] }`],obj['decimals'][`${ pair['pair']['amountAsset'] }`])
-                                askAmount = pair['asks'][count]['amount']/object['amount']
+                                askAmount = pair['asks'][count]['amount']/(10**obj['decimals'][`${ pair['pair']['amountAsset'] }`])
                                 askPrice = this.denormalize(pair['asks'][count]['price'],obj['decimals'][`${ pair['pair']['priceAsset'] }`],obj['decimals'][`${ pair['pair']['amountAsset'] }`])
+    
                                 outAmount = amount*bidPrice
                                 console.log('result1 --->',amount*bidPrice, '----->', bidAmount)
                                 console.log('result2 --->',amount*askPrice, '----->', askAmount)
