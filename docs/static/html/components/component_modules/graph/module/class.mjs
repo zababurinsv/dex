@@ -13,6 +13,7 @@ let Class = class Graph {
         this.clearPreviousGame = this.clearPreviousGame.bind(this)
         this.addDataPoint = this.addDataPoint.bind(this)
         this.numberToText = this.numberToText.bind(this)
+        this.checkForExpiredOpenPositions = this.checkForExpiredOpenPositions.bind(this)
         document.addEventListener('typeScript-end-graph', this.end)
     }
     drawChart(view = true,property='a',color = 'black', substrate={_:'button'},relation='transfer' ){
@@ -239,18 +240,25 @@ let Class = class Graph {
         })
     }
     addDataPoint(module) {
+        let expiry = substrate.this.shadowRoot.querySelector('#expiry')
+        let playPause = substrate.this.shadowRoot.querySelector('#play-pause')
+        let startEndGame = substrate.this.shadowRoot.querySelector('#start-end-game')
         if(module.remainingDataPoints.length>0) {
-            module.chart.series[0].addPoint(module.remainingDataPoints.shift()); // addPoint(options [,redraw] [,shift])
-            if(remainingDataPoints.length<+$("#expiry").attr("max")) {
-                $("#expiry").attr("max", module.remainingDataPoints.length);
-                $("#expiry").blur();
+            module.chart.series[0].push(module.remainingDataPoints.shift()); // addPoint(options [,redraw] [,shift])
+            if(module.remainingDataPoints.length<+ expiry.getAttribute("max")) {
+                expiry.setAttribute('max', module.remainingDataPoints.length)
+                expiry.blur();
             }
-            checkForExpiredOpenPositions();
+            this.checkForExpiredOpenPositions();
         }
         else { // Game Over...
-            if(isGameInProgress){ $("#start-end-game").click(); }
-            else { $("#play-pause").click(); }
-            $("#play-pause").prop("disabled", true);
+            if(module.isGameInProgress){
+                startEndGame.click()
+            }
+            else {
+                playPause.click();
+            }
+            playPause.disabled = true;
         }
     }
     numberToText(num) {
@@ -268,6 +276,48 @@ let Class = class Graph {
             res = intPart[0] + res;
             if(intAndDecPart.length===2) return res+"."+intAndDecPart[1];
             else return res;
+        }
+    }
+    checkForExpiredOpenPositions() {
+        const currentIndex = displayedDataPoints.length-1;
+        const expiredIndexArray = []; // Currently expiring bets' indices (of gameHistory.history[])
+        gameHistory.history.forEach((elem,index) => { if(elem.expiryIndex===currentIndex) expiredIndexArray.push(index); });
+        if(expiredIndexArray.length>0) {
+            // const expiryPrice = displayedDataPoints[currentIndex][4];
+            let closedPositionsAmount = 0;
+            let closedPositionsProfit = 0;
+            for(let i=0; i<expiredIndexArray.length; i++) {
+                // gameHistory.history[expiredIndexArray[i]].expiryPrice = expiryPrice;
+                closedPositionsAmount+=gameHistory.history[expiredIndexArray[i]].bettingAmount;
+                closedPositionsProfit+=gameHistory.history[expiredIndexArray[i]].profit;
+                $("#bet-"+gameHistory.history[expiredIndexArray[i]].id+" td").eq(-2).text(numberToText(gameHistory.history[expiredIndexArray[i]].expiryPrice));
+                $("#bet-"+gameHistory.history[expiredIndexArray[i]].id+" td").eq(-1).text(numberToText(gameHistory.history[expiredIndexArray[i]].profit));
+                if(gameHistory.history[expiredIndexArray[i]].profit>0) {
+                    $("#bet-"+gameHistory.history[expiredIndexArray[i]].id).addClass("success");
+                    gameHistory.totalBetsWon++;
+                    gameHistory.totalAmountWon += gameHistory.history[expiredIndexArray[i]].profit;
+                }
+                else {
+                    $("#bet-"+gameHistory.history[expiredIndexArray[i]].id).addClass("danger");
+                    gameHistory.totalAmountLost += Math.abs(gameHistory.history[expiredIndexArray[i]].profit);
+                }
+            }
+            gameHistory.cashBalance += (closedPositionsAmount + closedPositionsProfit);
+            gameHistory.openPositions -= closedPositionsAmount;
+            gameHistory.equity = gameHistory.cashBalance + gameHistory.openPositions;
+            gameHistory.totalBetsMatured += expiredIndexArray.length;
+            gameHistory.totalProfit += closedPositionsProfit;
+            $("#cash-balance").text(numberToText(gameHistory.cashBalance));
+            $("#open-positions").text(numberToText(gameHistory.openPositions));
+            $("#equity").text(numberToText(gameHistory.equity));
+            $("#win-rate").text(gameHistory.totalBetsWon + "/" + gameHistory.totalBetsMatured);
+            if(gameHistory.totalBetsWon>0) { $("#average-profit").text(numberToText(round(gameHistory.totalAmountWon/gameHistory.totalBetsWon, 0))); }
+            if(gameHistory.totalBetsMatured-gameHistory.totalBetsWon>0) { $("#average-loss").text(numberToText(round(gameHistory.totalAmountLost/(gameHistory.totalBetsMatured-gameHistory.totalBetsWon), 0))); }
+            $("#total-profit").text(gameHistory.totalProfit>=0 ? "$" + numberToText(gameHistory.totalProfit) : "-$" + numberToText(Math.abs(gameHistory.totalProfit)));
+            $("#betting-amount").attr("max", gameHistory.cashBalance);
+            if(gameHistory.equity===0) { // Game Over...
+                if(isGameInProgress){ $("#start-end-game").click(); }
+            }
         }
     }
     end(event){
