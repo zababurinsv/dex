@@ -131,6 +131,10 @@ section{
                 padding: 0.25vw;
               }
             }
+            div.stat{
+              @include fonts(3);
+              font-family: Roboto,serif;
+            }
           }
         }
         div.glass{
@@ -159,5 +163,8 @@ section{
         }
       }
     }
+  }
+  div#total{
+    white-space: pre-wrap;
   }
 }

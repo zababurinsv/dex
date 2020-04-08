@@ -773,12 +773,14 @@ customElements.define('crypto-dex',
                     let euroUsd =  await  dex['get']({type:'eurUsd',pair:description['euroUsd']}, obj)
                     let usdEuro =  euroUsd
 
-                    relation = await methods.buy(wavesUsd, relation['w'], relation, 'wavesUsd')
-                    // relation = await methods.sell(wavesEuro, relation['buy(wavesUsd)'], relation, 'wavesEuro')
-                    // relation = await methods.buy(usdEuro, relation['sell(wavesEuro)'], relation, 'usdEuro')
-                    // obj['this'].shadowRoot.querySelector('#fbwu').innerHTML = `a[(${relation['u']}*)${relation['buy(wavesUsd)']}]`
-                    // obj['this'].shadowRoot.querySelector('#fswe').innerHTML = `a[(${relation['buy(wavesUsd)']}*)${relation['sell(wavesEuro)']}]`
-                    // obj['this'].shadowRoot.querySelector('#fbue').innerHTML = `a[(${relation['sell(wavesEuro)']}*)${relation['buy(usdEuro)']}]`
+                    relation = await methods.buy(wavesUsd, relation['u'], relation, 'wavesUsd')
+                    obj['this'].shadowRoot.querySelector('#fbwu').innerHTML = `${description['name'][`${wavesUsd.pair.priceAsset}`]}=>${description['name'][`${wavesUsd.pair.amountAsset}`]}[(${relation['u']}*)${relation['buy(wavesUsd)']}]`
+    
+                    relation = await methods.sell(wavesEuro, relation['buy(wavesUsd)'], relation, 'wavesEuro')
+                    obj['this'].shadowRoot.querySelector('#fswe').innerHTML = `${description['name'][`${wavesEuro.pair.priceAsset}`]}=>${description['name'][`${wavesEuro.pair.amountAsset}`]}[(${relation['buy(wavesUsd)']}*)${relation['sell(wavesEuro)']}]`
+    
+                    relation = await methods.buy(usdEuro, relation['sell(wavesEuro)'], relation, 'usdEuro')
+                    obj['this'].shadowRoot.querySelector('#fbue').innerHTML = `${description['name'][`${usdEuro.pair.amountAsset}`]}=>${description['name'][`${usdEuro.pair.priceAsset}`]}[(${relation['sell(wavesEuro)']}*)${relation['buy(usdEuro)']}]`
 
                     // relation = await methods.buy(wavesEuro, relation['e'], relation, 'wavesEuro')
                     // obj['this'].shadowRoot.querySelector('#fbwe').innerHTML = `a[(${relation['e']}*)${relation['buy(wavesEuro)']}]`
@@ -786,6 +788,13 @@ customElements.define('crypto-dex',
                     // obj['this'].shadowRoot.querySelector('#fswu').innerHTML = `a[(${relation['buy(wavesEuro)']}*)${relation['sell(wavesUsd)']}]`
                     //
                     // relation = await methods.buy(euroUsd,relation['u'], relation, 'euroUsd')
+    
+                    relation.timestamp = Date.now()
+                    if((relation['buy(usdEuro)'] - relation['u']) > 0){
+                        obj['this'].shadowRoot.querySelector('#total').insertAdjacentHTML('beforeend',`
+                          
+                            <p>${JSON.stringify(relation, null, 2)}</p> `)
+                    }
                     console.log('--->',relation )
                     // methods.buy(euroUsd)
 
