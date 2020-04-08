@@ -684,8 +684,11 @@ customElements.define('crypto-graph',
             async function modules (obj) {
                 let graph = await Graph()
 
-                graph.drawChart(true, 'create charts','6',obj, 'graph')
-                graph.addEventListener(true, 'create charts','6',obj, 'graph')
+                graph.drawChart(true, 'create charts','6',obj, 'graph').then((module)=>{
+                    
+                    graph.addEventListener(true, module,'6',obj, 'graph')
+                })
+                
                 // console.assert(false, graph)
 
             }

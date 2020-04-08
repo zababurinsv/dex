@@ -18,7 +18,12 @@ let Class = class Graph {
     }
     drawChart(view = true,property='a',color = 'black', substrate={_:'button'},relation='transfer' ){
         return new Promise(async (resolve, reject) => {
-            let module = await Module()
+            let module = {}
+            if(relation === 'graphInLine'){
+                module = property
+            }else{
+                module = await Module()
+            }
             substrate.this.shadowRoot.querySelector('#container').style.display = 'none'
             substrate.this.shadowRoot.querySelector('.chart-buttons-container').style.display = 'none'
             substrate.this.shadowRoot.querySelector('#loader-section').style.display = 'flex'
@@ -75,7 +80,7 @@ let Class = class Graph {
             container.style.display ='flex';
             chartButtonsContainerLeft.style.display ='flex';
             chartButtonsContainerRight.style.display ='flex';
-            resolve(true)
+            resolve(module)
         })
     }
     getGraph(module){
@@ -115,20 +120,67 @@ let Class = class Graph {
     }
     addEventListener(view = true,property='a',color = 'black', substrate={_:'button'},relation='transfer' ){
         return new Promise(async (resolve, reject) => {
-        let module = await Module()
+        let module = property
         let startEndGame = substrate.this.shadowRoot.querySelector('#start-end-game')
         let showHideAsset = substrate.this.shadowRoot.querySelector('#show-hide-asset')
         let playPause = substrate.this.shadowRoot.querySelector('#play-pause')
         let refreshBtn = substrate.this.shadowRoot.querySelector('#refresh-btn')
         let dataSpeedInput = substrate.this.shadowRoot.querySelector('#data-speed-input')
-    
-    
+        
         let bettingAmount = substrate.this.shadowRoot.querySelector('#betting-amount')
         let expiry = substrate.this.shadowRoot.querySelector('#expiry')
         let buySellButtons = substrate.this.shadowRoot.querySelector('#buy-sell-buttons')
     
         let gameControls = substrate.this.shadowRoot.querySelector('#game-controls')
     
+    
+            showHideAsset.addEventListener('click', async (event)=>{
+                if(module.isAssetHidden) {
+                    showHideAsset.src = '/static/html/components/crypto-graph/images/eyeSlash.svg'
+                    $("#show-hide-asset i").removeClass("glyphicon-eye-open").addClass("glyphicon-eye-close");
+                    $(".highcharts-title").css("opacity", 1);
+                    chart.series[0].update({name: asset.toUpperCase()}, false);
+                }
+                else {
+                    $("#show-hide-asset i").removeClass("glyphicon-eye-close").addClass("glyphicon-eye-open");
+                    $(".highcharts-title").css("opacity", 0);
+                    chart.series[0].update({name: 'Series 1'}, false);
+                }
+                isAssetHidden = !isAssetHidden;
+                
+            })
+            refreshBtn.addEventListener('click', async (event)=>{
+                if(module.gameHistory.history.length>0) {
+                    this.clearPreviousGame(module, substrate);
+                }
+               await this.drawChart(true, module ,'4',substrate , 'graphInLine' );
+                if(!module.isGamePaused) {
+                    playPause.click();
+                }
+                else {
+                    if(playPause.disabled === true) {
+                        playPause.disabled = false;
+                    }
+                }
+            })
+            // Handle "play-pause" click
+            playPause.addEventListener('click', async ()=>{
+                if(module.isGamePaused) { // Continue data flow
+    
+                    playPause.querySelector('img').src ='/static/html/components/crypto-graph/images/pause.svg'
+                    // $("#play-pause i").removeClass("glyphicon-play").addClass("glyphicon-pause");
+                    module.dataFlowIntervalFunction = setInterval(() => this.addDataPoint(module, substrate), module.dataFlowIntervalTimer);
+                }
+                else { // Pause data flow
+                    playPause.querySelector('img').src ='/static/html/components/crypto-graph/images/play.svg'
+                    // $("#play-pause i").removeClass("glyphicon-pause").addClass("glyphicon-play");
+                    clearInterval(module.dataFlowIntervalFunction);
+                }
+                module.isGamePaused = !module.isGamePaused;
+            })
+
+        
+            
         startEndGame.addEventListener('click',async ()=>{
             if(module.isGameInProgress) { // end current game
                 startEndGame.classList.remove("btn-danger")
@@ -142,7 +194,7 @@ let Class = class Graph {
             }
             else { // initiate game
                 if(module.remainingDataPoints.length>0) {
-                    if(module.gameHistory.history.length>0) { this.clearPreviousGame(module) }
+                    if(module.gameHistory.history.length>0) { this.clearPreviousGame(module, substrate) }
                     startEndGame.classList.remove("btn-success")
                     startEndGame.classList.add("btn-danger")
                     refreshBtn.disabled = true
@@ -163,7 +215,7 @@ let Class = class Graph {
             module.dataFlowIntervalTimer = Math.round((10/e.currentTarget.value)*1000);
                 if(!module.isGamePaused) {
                     clearInterval(module.dataFlowIntervalFunction);
-                    module.dataFlowIntervalFunction = setInterval(() => this.addDataPoint(module), module.dataFlowIntervalTimer);
+                    module.dataFlowIntervalFunction = setInterval(() => this.addDataPoint(module, substrate), module.dataFlowIntervalTimer);
                     }
                 });
             })
@@ -177,7 +229,7 @@ let Class = class Graph {
         //     });
         // })
     }
-    clearPreviousGame(module){
+    clearPreviousGame(module, substrate){
         return new Promise(async (resolve, reject) => {
             module.gameHistory = {
                 cashBalance: module.initialCashBalance,
@@ -239,17 +291,17 @@ let Class = class Graph {
             }
         })
     }
-    addDataPoint(module) {
+    addDataPoint(module, substrate) {
         let expiry = substrate.this.shadowRoot.querySelector('#expiry')
         let playPause = substrate.this.shadowRoot.querySelector('#play-pause')
         let startEndGame = substrate.this.shadowRoot.querySelector('#start-end-game')
         if(module.remainingDataPoints.length>0) {
-            module.chart.series[0].push(module.remainingDataPoints.shift()); // addPoint(options [,redraw] [,shift])
-            if(module.remainingDataPoints.length<+ expiry.getAttribute("max")) {
+            module.chart.series[0].addPoint(module.remainingDataPoints.shift()); // addPoint(options [,redraw] [,shift])
+            if(module.remainingDataPoints.length <+ expiry.getAttribute("max")) {
                 expiry.setAttribute('max', module.remainingDataPoints.length)
                 expiry.blur();
             }
-            this.checkForExpiredOpenPositions();
+            this.checkForExpiredOpenPositions(module, substrate);
         }
         else { // Game Over...
             if(module.isGameInProgress){
@@ -278,45 +330,53 @@ let Class = class Graph {
             else return res;
         }
     }
-    checkForExpiredOpenPositions() {
-        const currentIndex = displayedDataPoints.length-1;
+    checkForExpiredOpenPositions(module, substrate) {
+        const currentIndex = module.displayedDataPoints.length-1;
         const expiredIndexArray = []; // Currently expiring bets' indices (of gameHistory.history[])
-        gameHistory.history.forEach((elem,index) => { if(elem.expiryIndex===currentIndex) expiredIndexArray.push(index); });
+        module.gameHistory.history.forEach((elem,index) => { if(elem.expiryIndex === currentIndex) expiredIndexArray.push(index); });
+       console.assert(false)
         if(expiredIndexArray.length>0) {
             // const expiryPrice = displayedDataPoints[currentIndex][4];
             let closedPositionsAmount = 0;
             let closedPositionsProfit = 0;
             for(let i=0; i<expiredIndexArray.length; i++) {
                 // gameHistory.history[expiredIndexArray[i]].expiryPrice = expiryPrice;
-                closedPositionsAmount+=gameHistory.history[expiredIndexArray[i]].bettingAmount;
-                closedPositionsProfit+=gameHistory.history[expiredIndexArray[i]].profit;
-                $("#bet-"+gameHistory.history[expiredIndexArray[i]].id+" td").eq(-2).text(numberToText(gameHistory.history[expiredIndexArray[i]].expiryPrice));
-                $("#bet-"+gameHistory.history[expiredIndexArray[i]].id+" td").eq(-1).text(numberToText(gameHistory.history[expiredIndexArray[i]].profit));
-                if(gameHistory.history[expiredIndexArray[i]].profit>0) {
-                    $("#bet-"+gameHistory.history[expiredIndexArray[i]].id).addClass("success");
-                    gameHistory.totalBetsWon++;
-                    gameHistory.totalAmountWon += gameHistory.history[expiredIndexArray[i]].profit;
-                }
-                else {
-                    $("#bet-"+gameHistory.history[expiredIndexArray[i]].id).addClass("danger");
-                    gameHistory.totalAmountLost += Math.abs(gameHistory.history[expiredIndexArray[i]].profit);
-                }
-            }
-            gameHistory.cashBalance += (closedPositionsAmount + closedPositionsProfit);
-            gameHistory.openPositions -= closedPositionsAmount;
-            gameHistory.equity = gameHistory.cashBalance + gameHistory.openPositions;
-            gameHistory.totalBetsMatured += expiredIndexArray.length;
-            gameHistory.totalProfit += closedPositionsProfit;
-            $("#cash-balance").text(numberToText(gameHistory.cashBalance));
-            $("#open-positions").text(numberToText(gameHistory.openPositions));
-            $("#equity").text(numberToText(gameHistory.equity));
-            $("#win-rate").text(gameHistory.totalBetsWon + "/" + gameHistory.totalBetsMatured);
-            if(gameHistory.totalBetsWon>0) { $("#average-profit").text(numberToText(round(gameHistory.totalAmountWon/gameHistory.totalBetsWon, 0))); }
-            if(gameHistory.totalBetsMatured-gameHistory.totalBetsWon>0) { $("#average-loss").text(numberToText(round(gameHistory.totalAmountLost/(gameHistory.totalBetsMatured-gameHistory.totalBetsWon), 0))); }
-            $("#total-profit").text(gameHistory.totalProfit>=0 ? "$" + numberToText(gameHistory.totalProfit) : "-$" + numberToText(Math.abs(gameHistory.totalProfit)));
-            $("#betting-amount").attr("max", gameHistory.cashBalance);
-            if(gameHistory.equity===0) { // Game Over...
-                if(isGameInProgress){ $("#start-end-game").click(); }
+                closedPositionsAmount+=module.gameHistory.history[expiredIndexArray[i]].bettingAmount;
+                closedPositionsProfit+=module.gameHistory.history[expiredIndexArray[i]].profit;
+    
+                let text1 = this.numberToText(module.gameHistory.history[expiredIndexArray[i]].expiryPrice)
+                let text2 = this.numberToText(module.gameHistory.history[expiredIndexArray[i]].profit)
+                let bet = substrate.shadowRoot.querySelectorAll(`#bet-${module.gameHistory.history[expiredIndexArray[i]].id}td`)
+                
+                console.assert(false, bet)
+                let bet2 = substrate.shadowRoot.querySelector(`#bet-${module.gameHistory.history[expiredIndexArray[i]].id}td`)
+                // $("#bet-"+gameHistory.history[expiredIndexArray[i]].id+" td").eq(-2).text();
+                // $("#bet-"+gameHistory.history[expiredIndexArray[i]].id+" td").eq(-1).text();
+                // if(gameHistory.history[expiredIndexArray[i]].profit>0) {
+                //     $("#bet-"+gameHistory.history[expiredIndexArray[i]].id).addClass("success");
+                //     gameHistory.totalBetsWon++;
+                //     gameHistory.totalAmountWon += gameHistory.history[expiredIndexArray[i]].profit;
+                // }
+                // else {
+                //     $("#bet-"+gameHistory.history[expiredIndexArray[i]].id).addClass("danger");
+                //     gameHistory.totalAmountLost += Math.abs(gameHistory.history[expiredIndexArray[i]].profit);
+                // }
+            // }
+            // gameHistory.cashBalance += (closedPositionsAmount + closedPositionsProfit);
+            // gameHistory.openPositions -= closedPositionsAmount;
+            // gameHistory.equity = gameHistory.cashBalance + gameHistory.openPositions;
+            // gameHistory.totalBetsMatured += expiredIndexArray.length;
+            // gameHistory.totalProfit += closedPositionsProfit;
+            // $("#cash-balance").text(numberToText(gameHistory.cashBalance));
+            // $("#open-positions").text(numberToText(gameHistory.openPositions));
+            // $("#equity").text(numberToText(gameHistory.equity));
+            // $("#win-rate").text(gameHistory.totalBetsWon + "/" + gameHistory.totalBetsMatured);
+            // if(gameHistory.totalBetsWon>0) { $("#average-profit").text(numberToText(round(gameHistory.totalAmountWon/gameHistory.totalBetsWon, 0))); }
+            // if(gameHistory.totalBetsMatured-gameHistory.totalBetsWon>0) { $("#average-loss").text(numberToText(round(gameHistory.totalAmountLost/(gameHistory.totalBetsMatured-gameHistory.totalBetsWon), 0))); }
+            // $("#total-profit").text(gameHistory.totalProfit>=0 ? "$" + numberToText(gameHistory.totalProfit) : "-$" + numberToText(Math.abs(gameHistory.totalProfit)));
+            // $("#betting-amount").attr("max", gameHistory.cashBalance);
+            // if(gameHistory.equity===0) { // Game Over...
+            //     if(isGameInProgress){ $("#start-end-game").click(); }
             }
         }
     }
