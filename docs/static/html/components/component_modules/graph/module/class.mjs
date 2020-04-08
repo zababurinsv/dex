@@ -44,7 +44,7 @@ let Class = class Graph {
                                 {type: 'year',count: 1,text: '1y'},
                                 {type: 'all',text: 'All'}],
                             selected: window.innerWidth>768 ? 3 : 2,
-                            inputEnabled: false
+                            inputEnabled: true
                         },
                         title: {
                             text: module.asset,
@@ -126,7 +126,7 @@ let Class = class Graph {
         let playPause = substrate.this.shadowRoot.querySelector('#play-pause')
         let refreshBtn = substrate.this.shadowRoot.querySelector('#refresh-btn')
         let dataSpeedInput = substrate.this.shadowRoot.querySelector('#data-speed-input')
-        
+        let highchartsTitle = substrate.this.shadowRoot.querySelector('.highcharts-title')
         let bettingAmount = substrate.this.shadowRoot.querySelector('#betting-amount')
         let expiry = substrate.this.shadowRoot.querySelector('#expiry')
         let buySellButtons = substrate.this.shadowRoot.querySelector('#buy-sell-buttons')
@@ -136,17 +136,16 @@ let Class = class Graph {
     
             showHideAsset.addEventListener('click', async (event)=>{
                 if(module.isAssetHidden) {
-                    showHideAsset.src = '/static/html/components/crypto-graph/images/eyeSlash.svg'
-                    $("#show-hide-asset i").removeClass("glyphicon-eye-open").addClass("glyphicon-eye-close");
-                    $(".highcharts-title").css("opacity", 1);
-                    chart.series[0].update({name: asset.toUpperCase()}, false);
+                    showHideAsset.querySelector('img').src = '/static/html/components/crypto-graph/images/eyeSlash.svg'
+                    highchartsTitle.style.opacity = '1';
+                    module.chart.series[0].update({name: module.asset.toUpperCase()}, false);
                 }
                 else {
-                    $("#show-hide-asset i").removeClass("glyphicon-eye-close").addClass("glyphicon-eye-open");
-                    $(".highcharts-title").css("opacity", 0);
-                    chart.series[0].update({name: 'Series 1'}, false);
+                    showHideAsset.querySelector('img').src = '/static/html/components/crypto-graph/images/eye.svg'
+                    highchartsTitle.style.opacity = '0';
+                    module.chart.series[0].update({name: 'Series 1'}, false);
                 }
-                isAssetHidden = !isAssetHidden;
+                module.isAssetHidden = !module.isAssetHidden;
                 
             })
             refreshBtn.addEventListener('click', async (event)=>{
@@ -334,7 +333,6 @@ let Class = class Graph {
         const currentIndex = module.displayedDataPoints.length-1;
         const expiredIndexArray = []; // Currently expiring bets' indices (of gameHistory.history[])
         module.gameHistory.history.forEach((elem,index) => { if(elem.expiryIndex === currentIndex) expiredIndexArray.push(index); });
-       console.assert(false)
         if(expiredIndexArray.length>0) {
             // const expiryPrice = displayedDataPoints[currentIndex][4];
             let closedPositionsAmount = 0;
