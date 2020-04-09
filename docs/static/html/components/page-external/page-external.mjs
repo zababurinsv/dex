@@ -14,7 +14,14 @@ customElements.define('page-external',
         const shadow = this.attachShadow({mode: 'open'});
         shadow.innerHTML = `<div style="height:100%"><slot name="jason"></slot></div>`;
         this.style.width ="100%";
-        this.style.height ="259.5vw";
+  
+        if(this.dataset.height){
+          this.style.height =`${this.dataset.height}vw`;
+        }else{
+          this.style.height ="151vw";
+        }
+        
+    
         (async (obj)=>{
 
           // console.assert(false, this)
