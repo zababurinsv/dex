@@ -335,8 +335,10 @@ let Class = class Waves {
                                 obj['sell(usdWaves)'] = undefined
                                 verify = false
                             }else{
+                                if(pair['bids'][count] !== undefined){
                                 bidAmount = pair['bids'][count]['amount']/(10**obj['decimals'][`${ pair['pair']['priceAsset'] }`])
                                 bidPrice = this.denormalize(pair['bids'][count]['price'],obj['decimals'][`${ pair['pair']['priceAsset'] }`],obj['decimals'][`${ pair['pair']['amountAsset'] }`])
+                                }
                                 askAmount = pair['asks'][count]['amount']/(10**obj['decimals'][`${ pair['pair']['amountAsset'] }`])
                                 askPrice = this.denormalize(pair['asks'][count]['price'],obj['decimals'][`${ pair['pair']['priceAsset'] }`],obj['decimals'][`${ pair['pair']['amountAsset'] }`])
     
