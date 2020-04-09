@@ -933,38 +933,23 @@ customElements.define('crypto-dex',
                     // }
                     // methods.buy(euroUsd)
     
+                    
+                    // relation = await methods.buy(euroWaves, relation['w'], relation, 'euroWaves')
+                    // obj['this'].shadowRoot.querySelector('#sbew').innerHTML = `${description['name'][`${euroWaves.pair.priceAsset}`]}=>${description['name'][`${euroWaves.pair.amountAsset}`]}[(${relation['w']}*)${relation['buy(euroWaves)']}]`
+                    // relation = await methods.sell(euroUsd,relation['buy(euroWaves)'], relation, 'euroUsd')
+                    // obj['this'].shadowRoot.querySelector('#sseu').innerHTML = `${description['name'][`${euroUsd.pair.amountAsset}`]}=>${description['name'][`${euroUsd.pair.priceAsset}`]}[(${relation['buy(euroWaves)']}*)${relation['sell(euroUsd)']}]`
+                    // relation = await methods.buy(wavesUsd,relation['sell(euroUsd)'], relation, 'wavesUsd')
+                    // obj['this'].shadowRoot.querySelector('#sbwu').innerHTML = `${description['name'][`${wavesUsd.pair.priceAsset}`]}=>${description['name'][`${wavesUsd.pair.amountAsset}`]}[(${relation['sell(euroUsd)']}*)${relation['buy(wavesUsd)']}]`
     
     
+                    relation = await methods.buy(usdWaves, relation['w'], relation, 'usdWaves')
+                    obj['this'].shadowRoot.querySelector('#sbuw').innerHTML = `${description['name'][`${usdWaves.pair.amountAsset}`]}=>${description['name'][`${usdWaves.pair.priceAsset}`]}[(${relation['w']}*)${relation['buy(usdWaves)']}]`
+                    relation = await methods.sell(usdEuro,relation['buy(usdWaves)'], relation, 'usdEuro')
+                    obj['this'].shadowRoot.querySelector('#ssue').innerHTML = `${description['name'][`${usdEuro.pair.priceAsset}`]}=>${description['name'][`${usdEuro.pair.amountAsset}`]}[(${relation['buy(usdWaves)']}*)${relation['sell(usdEuro)']}]`
+                    relation = await methods.buy(wavesEuro,relation['sell(usdEuro)'], relation, 'wavesEuro')
+                    obj['this'].shadowRoot.querySelector('#sbwe').innerHTML = `${description['name'][`${wavesUsd.pair.priceAsset}`]}=>${description['name'][`${wavesUsd.pair.amountAsset}`]}[(${relation['sell(usdEuro)']}*)${relation['buy(wavesEuro)']}]`
     
     
-                    relation = await methods.buy(euroWaves, relation['w'], relation, 'euroWaves')
-                    obj['this'].shadowRoot.querySelector('#sbew').innerHTML = `${description['name'][`${euroWaves.pair.priceAsset}`]}=>${description['name'][`${euroWaves.pair.amountAsset}`]}[(${relation['w']}*)${relation['buy(euroWaves)']}]`
-                    
-                    relation = await methods.sell(euroUsd,relation['buy(euroWaves)'], relation, 'euroUsd')
-                    obj['this'].shadowRoot.querySelector('#sseu').innerHTML = `${description['name'][`${euroUsd.pair.amountAsset}`]}=>${description['name'][`${euroUsd.pair.priceAsset}`]}[(${relation['buy(euroWaves)']}*)${relation['sell(euroUsd)']}]`
-                   
-                    relation = await methods.buy(wavesUsd,relation['sell(euroUsd)'], relation, 'wavesUsd')
-                    obj['this'].shadowRoot.querySelector('#sbwu').innerHTML = `${description['name'][`${wavesUsd.pair.priceAsset}`]}=>${description['name'][`${wavesUsd.pair.amountAsset}`]}[(${relation['sell(euroUsd)']}*)${relation['buy(wavesUsd)']}]`
-                    
-                    
-                    
-                    // relation = await methods.buy(euroWaves,relation['w'], relation)
-                    // methods.sell(euroUsd)
-                    // relation = await methods.buy(wavesUsd, relation['u'], relation, 'wavesUsd')
-
-                    // methods.buy(euroUsd)
-                    // methods.sell(euroWaves)
-                    // relation = await methods.buy(usdWaves, relation['w'], relation, 'usdWaves')
-
-                    // relation = await methods.buy(usdWaves, relation['w'], relation, 'usdWaves')
-                    // methods.sell(usdEuro)
-                    // methods.buy(wavesEuro)
-
-                    // methods.buy(usdEuro)
-                    // relation = await methods.sell(usdWaves, relation['u'], relation, 'usdWaves')
-                    // console.log('--->', relation)
-                    // methods.buy(euroWaves)
-
                     for(let i=0; i < 10;i++){
                         if(wavesEuro['asks'][i] === undefined){
                         }else{
