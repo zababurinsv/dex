@@ -92,11 +92,14 @@ section{
     div.itemBid{
       @include display(column, nowrap,stretch, center, stretch);
       @include border();
+      border-radius: 0.5vw;
       width: calc(100vw / 3.5);
       min-height: calc(100vw / 4);
       flex-grow: 1;
       margin: 0.25vw;
       label{
+        border-top-right-radius: 0.5vw;
+        border-top-left-radius: 0.5vw;
         @include border();
         width: 100%;
         text-align-last: start;
@@ -149,6 +152,18 @@ section{
               cursor: pointer;
               margin-bottom: 0.5vw;
               outline: none;
+            }
+            div.result{
+              @include display(row, nowrap,space-between, space-between, stretch);
+              box-sizing: border-box;
+              padding: 0.25vw;
+              div.result-item{
+                background-color: #7694f473;
+                justify-content: space-between;
+                min-width: 2vw;
+                min-height: 2vw;
+                border-radius: 0.5vw;
+              }
             }
           }
         }

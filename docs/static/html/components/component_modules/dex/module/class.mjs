@@ -88,7 +88,7 @@ let Class = class Waves {
                                 outAmount = amount/askPrice
                                 // console.log('result1 --->', amount/askPrice -object['fee'], '----->', count)
                                 // console.log('result2 --->', amount/bidPrice -object['fee'], '----->', count)
-                                console.log('askAmount --->', askAmount,'-','bidAmount --->',bidAmount, 'count--->',count)
+                                // console.log('askAmount --->', askAmount,'-','bidAmount --->',bidAmount, 'count--->',count)
                                 if((askAmount - outAmount) <= 0){
                                     console.warn('невозможно купить wavesUsd','askAmount:',askAmount,'-', 'outAmount:', outAmount, 'count-->', count)
                                     count++
@@ -206,9 +206,9 @@ let Class = class Waves {
                                     askPrice = this.denormalize(pair['asks'][count]['price'],obj['decimals'][`${ pair['pair']['priceAsset'] }`],obj['decimals'][`${ pair['pair']['amountAsset'] }`])
 
                                     outAmount = amount/askPrice
-                                    console.log('result1 --->', amount/askPrice, '----->', count)
-                                    console.log('result2 --->', amount/bidPrice, '----->', count)
-                                    console.log('askAmount --->', askAmount,'outAmount --->',outAmount, 'count--->',count)
+                                    // console.log('result1 --->', amount/askPrice, '----->', count)
+                                    // console.log('result2 --->', amount/bidPrice, '----->', count)
+                                    // console.log('askAmount --->', askAmount,'outAmount --->',outAmount, 'count--->',count)
 
                                 // console.assert(false,  pair['asks'][count], askAmount)
                                 if((askAmount - outAmount) <= 0){
