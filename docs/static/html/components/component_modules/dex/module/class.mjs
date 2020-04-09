@@ -81,16 +81,16 @@ let Class = class Waves {
                             }else{
                                 
                             
-                                bidAmount = pair['bids'][count]['amount']/(10**obj['decimals'][`${ pair['pair']['priceAsset'] }`])
+                                bidAmount = pair['bids'][count]['amount']/(10**obj['decimals'][`${ pair['pair']['amountAsset'] }`])
                                 bidPrice = this.denormalize(pair['bids'][count]['price'],obj['decimals'][`${ pair['pair']['priceAsset'] }`],obj['decimals'][`${ pair['pair']['amountAsset'] }`])
                                 askAmount = pair['asks'][count]['amount']/(10**obj['decimals'][`${ pair['pair']['amountAsset'] }`])
                                 askPrice = this.denormalize(pair['asks'][count]['price'],obj['decimals'][`${ pair['pair']['priceAsset'] }`],obj['decimals'][`${ pair['pair']['amountAsset'] }`])
                                 outAmount = amount/askPrice
                                 // console.log('result1 --->', amount/askPrice -object['fee'], '----->', count)
                                 // console.log('result2 --->', amount/bidPrice -object['fee'], '----->', count)
-                                // console.log('askAmount --->', askAmount,'-','outAmount --->',outAmount, 'count--->',count)
+                                console.log('askAmount --->', askAmount,'-','bidAmount --->',bidAmount, 'count--->',count)
                                 if((askAmount - outAmount) <= 0){
-                                    // console.warn('wavesUsd невозможно купить','askAmount:',askAmount,'-', 'outAmount:', outAmount, 'count-->', count)
+                                    console.warn('невозможно купить wavesUsd','askAmount:',askAmount,'-', 'outAmount:', outAmount, 'count-->', count)
                                     count++
                                 }else{
                                     obj['buy(wavesUsd)'] = amount/askPrice - object['fee']
