@@ -688,37 +688,67 @@ customElements.define('crypto-dex',
                 let waves = await Waves()
                 let relation = {}
     
-                obj['this'].shadowRoot.querySelector('button.left-one').addEventListener('click',async (e)=>{
-                  let value =  obj['this'].shadowRoot.querySelector('#fswe').innerText
+                obj['this'].shadowRoot.querySelector('#fswe').addEventListener('click',async (event)=>{
+                    event.currentTarget.style.background = '#ffbe21'
+                    let value =  event.currentTarget.innerHTML
                     value = value.split('*')[0].split('(')[1]
                    await navigator.clipboard.writeText(value)
+                   let timer = setTimeout((event)=>{
+                        obj['this'].shadowRoot.querySelector('#fswe').style.background = 'transparent'
+                        clearTimeout(timer);
+                    }, 1000);
                 })
-                obj['this'].shadowRoot.querySelector('button.left-two').addEventListener('click',async (e)=>{
-                    let value =  obj['this'].shadowRoot.querySelector('#fbwe').innerText
+                obj['this'].shadowRoot.querySelector('#fbwe').addEventListener('click',async (event)=>{
+                    event.currentTarget.style.background = '#ffbe21'
+                    let value =  event.currentTarget.innerHTML
                     value = value.split('*')[0].split('(')[1]
                     await navigator.clipboard.writeText(value)
+                    let timer = setTimeout((event)=>{
+                        obj['this'].shadowRoot.querySelector('#fbwe').style.background = 'transparent'
+                        clearTimeout(timer);
+                    }, 1000);
                 })
-                obj['this'].shadowRoot.querySelector('button.center-one').addEventListener('click',async (e)=>{
-                    let value =  obj['this'].shadowRoot.querySelector('#fbue').innerText
+                obj['this'].shadowRoot.querySelector('#fbue').addEventListener('click',async (event)=>{
+                    event.currentTarget.style.background = '#ffbe21'
+                    let value =  event.currentTarget.innerHTML
                     value = value.split('*')[0].split('(')[1]
                     await navigator.clipboard.writeText(value)
+                    let timer = setTimeout((event)=>{
+                        obj['this'].shadowRoot.querySelector('#fbue').style.background = 'transparent'
+                        clearTimeout(timer);
+                    }, 1000);
                 })
-                obj['this'].shadowRoot.querySelector('button.center-two').addEventListener('click',async (e)=>{
-                    let value =  obj['this'].shadowRoot.querySelector('#fbeu').innerText
+                obj['this'].shadowRoot.querySelector('#fbeu').addEventListener('click',async (event)=>{
+                    event.currentTarget.style.background = '#ffbe21'
+                    let value =  event.currentTarget.innerHTML
                     value = value.split('*')[0].split('(')[1]
                     await navigator.clipboard.writeText(value)
+                    let timer = setTimeout((event)=>{
+                        obj['this'].shadowRoot.querySelector('#fbeu').style.background = 'transparent'
+                        clearTimeout(timer);
+                    }, 1000);
                 })
-                obj['this'].shadowRoot.querySelector('button.right-one').addEventListener('click',async (e)=>{
-                    let value =  obj['this'].shadowRoot.querySelector('#fbwu').innerText
+                obj['this'].shadowRoot.querySelector('#fbwu').addEventListener('click',async (event)=>{
+                    event.currentTarget.style.background = '#ffbe21'
+                    let value =  event.currentTarget.innerHTML
                     value = value.split('*')[0].split('(')[1]
                     await navigator.clipboard.writeText(value)
+                   
+                    let timer = setTimeout((event)=>{
+                        obj['this'].shadowRoot.querySelector('#fbwu').style.background = 'transparent'
+                        clearTimeout(timer);
+                    }, 1000);
                 })
-                obj['this'].shadowRoot.querySelector('button.right-two').addEventListener('click',async (e)=>{
-                    let value =  obj['this'].shadowRoot.querySelector('#fswu').innerText
+                obj['this'].shadowRoot.querySelector('#fswu').addEventListener('click',async (event)=>{
+                    event.currentTarget.style.background = '#ffbe21'
+                    let value =  event.currentTarget.innerHTML
                     value = value.split('*')[0].split('(')[1]
                     await navigator.clipboard.writeText(value)
+                    let timer = setTimeout((event)=>{
+                        obj['this'].shadowRoot.querySelector('#fswu').style.background = 'transparent'
+                        clearTimeout(timer);
+                    }, 1000);
                 })
-                
                 
                 obj['this'].shadowRoot.querySelector('#left').addEventListener('input',async (e)=>{
                     relation['w'] =  e.target.value
