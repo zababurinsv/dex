@@ -964,12 +964,58 @@ customElements.define('crypto-dex',
                     relation['sell(usdEuro)'] ={}
                     relation['buy(wavesEuro)'] = {}
     
-    
+                    if(relation['description']['ueu'][0] - relation['description']['ueu'][3] > 0){
+                        relation['description']['ueu'].push(new Date().toUTCString())
+                        relation['description']['ueu'].push('first')
+                        obj['this'].shadowRoot.querySelector('#total').insertAdjacentHTML('beforeend',`<p>${JSON.stringify(relation['description']['ueu'], null, 2)}</p>`)
+                        obj['this'].shadowRoot.querySelector('div.fbwu').style.background ='#f476b673'
+                        obj['this'].shadowRoot.querySelector('div.fswe').style.background ='#f476b673'
+                        obj['this'].shadowRoot.querySelector('div.fbue').style.background ='#f476b673'
+                    }else{
+                        obj['this'].shadowRoot.querySelector('div.fbwu').style.background ='#7694f473'
+                        obj['this'].shadowRoot.querySelector('div.fswe').style.background ='#7694f473'
+                        obj['this'].shadowRoot.querySelector('div.fbue').style.background ='#7694f473'
+                    }
+                    if(relation['description']['eue'][0] - relation['description']['eue'][3] < 0){
+                        relation['description']['eue'].push(new Date().toUTCString())
+                        relation['description']['ueu'].push('second')
+                        obj['this'].shadowRoot.querySelector('#total').insertAdjacentHTML('beforeend',`<p>${JSON.stringify(relation['description']['eue'], null, 2)}</p>`)
+                        obj['this'].shadowRoot.querySelector('div.fbwe').style.background ='#f476b673'
+                        obj['this'].shadowRoot.querySelector('div.fswu').style.background ='#f476b673'
+                        obj['this'].shadowRoot.querySelector('div.fbeu').style.background ='#f476b673'
+                    }else{
+                        obj['this'].shadowRoot.querySelector('div.fbwe').style.background ='#7694f473'
+                        obj['this'].shadowRoot.querySelector('div.fswu').style.background ='#7694f473'
+                        obj['this'].shadowRoot.querySelector('div.fbeu').style.background ='#7694f473'
+                    }
+                    if(relation['description']['wuw'][0] - relation['description']['wuw'][3] < 0){
+                        relation['description']['wuw'].push(new Date().toUTCString())
+                        relation['description']['ueu'].push('fird')
+                        obj['this'].shadowRoot.querySelector('#total').insertAdjacentHTML('beforeend',`<p>${JSON.stringify(relation['description']['wuw'], null, 2)}</p>`)
+                        obj['this'].shadowRoot.querySelector('div.sbew').style.background ='#f476b673'
+                        obj['this'].shadowRoot.querySelector('div.sseu').style.background ='#f476b673'
+                        obj['this'].shadowRoot.querySelector('div.sbwu').style.background ='#f476b673'
+                    }else{
+                        obj['this'].shadowRoot.querySelector('div.fbwe').style.background ='#7694f473'
+                        obj['this'].shadowRoot.querySelector('div.fswu').style.background ='#7694f473'
+                        obj['this'].shadowRoot.querySelector('div.fbeu').style.background ='#7694f473'
+                    }
+                    if(relation['description']['wew'][0] - relation['description']['wew'][3] < 0){
+                        relation['description']['wew'].push(new Date().toUTCString())
+                        relation['description']['ueu'].push('fourth')
+                        obj['this'].shadowRoot.querySelector('#total').insertAdjacentHTML('beforeend',`<p>${JSON.stringify(relation['description']['wew'], null, 2)}</p>`)
+                        obj['this'].shadowRoot.querySelector('div.sbuw').style.background ='#f476b673'
+                        obj['this'].shadowRoot.querySelector('div.ssue').style.background ='#f476b673'
+                        obj['this'].shadowRoot.querySelector('div.sbwe').style.background ='#f476b673'
+                    }else{
+                        obj['this'].shadowRoot.querySelector('div.sbuw').style.background ='#7694f473'
+                        obj['this'].shadowRoot.querySelector('div.ssue').style.background ='#7694f473'
+                        obj['this'].shadowRoot.querySelector('div.sbwe').style.background ='#7694f473'
+                    }
                     console.log('~~~~>>', relation)
                     // relation.timestamp =  new Date();
                     // if((relation['buy(usdEuro)'] - relation['u']) > 0){
-                    //     obj['this'].shadowRoot.querySelector('#total').insertAdjacentHTML('beforeend',`
-                    //          <p class="usdEuro">${JSON.stringify(relation, null, 2)}</p> `)
+
                     //  }
                     // if((relation['buy(euroUsd)'] - relation['e']) > 0){
                     //     obj['this'].shadowRoot.querySelector('#total').insertAdjacentHTML('beforeend',`

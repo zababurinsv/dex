@@ -195,6 +195,24 @@ section{
     }
   }
   div#total{
+    display: flex;
+    width: 100%;
     white-space: pre-wrap;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    box-shadow: inset 0vw 0vw 1vw 0px #7694f4;
+    box-sizing: border-box;
+    padding: 0.25vw;
+    margin: 0.25vw;
+    p{
+      display: flex;
+      min-width: 20vw;
+      box-sizing: border-box;
+      padding: 0.25vw;
+      margin: 1vw;
+      box-shadow: inset 0vw 0vw 1vw 0px #5090454a;
+      background-color: #76f4dd21;
+    }
   }
 }
