@@ -947,7 +947,7 @@ customElements.define('crypto-dex',
                     relation = await methods.sell(usdEuro,relation['buy(usdWaves)'], relation, 'usdEuro')
                     obj['this'].shadowRoot.querySelector('#ssue').innerHTML = `${description['name'][`${usdEuro.pair.priceAsset}`]}=>${description['name'][`${usdEuro.pair.amountAsset}`]}[(${relation['buy(usdWaves)']}*)${relation['sell(usdEuro)']}]`
                     relation = await methods.buy(wavesEuro,relation['sell(usdEuro)'], relation, 'wavesEuro')
-                    obj['this'].shadowRoot.querySelector('#sbwe').innerHTML = `${description['name'][`${wavesUsd.pair.priceAsset}`]}=>${description['name'][`${wavesUsd.pair.amountAsset}`]}[(${relation['sell(usdEuro)']}*)${relation['buy(wavesEuro)']}]`
+                    obj['this'].shadowRoot.querySelector('#sbwe').innerHTML = `${description['name'][`${wavesEuro.pair.priceAsset}`]}=>${description['name'][`${wavesEuro.pair.amountAsset}`]}[(${relation['sell(usdEuro)']}*)${relation['buy(wavesEuro)']}]`
     
     
                     for(let i=0; i < 10;i++){
