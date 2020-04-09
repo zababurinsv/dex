@@ -21,7 +21,15 @@
   -moz-user-select: none;      /* Firefox */
   -ms-user-select: none;       /* Internet Explorer/Edge */
   user-select: none;           /* Non-prefixed version, currently
-                                not supported by any browser */
+                               not supported by any browser */
+}
+@mixin disabledSelectText(){
+  -webkit-user-select: text;   /* Chrome/Safari/Opera */
+  -khtml-user-select: text;    /* Konqueror */
+  -moz-user-select: text;      /* Firefox */
+  -ms-user-select: text;       /* Internet Explorer/Edge */
+  user-select: text;           /* Non-prefixed version, currently
+                               not supported by any browser */
 }
 @mixin padding(){
   box-sizing: border-box;
@@ -76,7 +84,7 @@
   margin-bottom: 3vw;
 }
 section{
-  @include disabledSelect();
+  @include disabledSelectText();
   @include display(column, nowrap, space-evenly, center, stretch);
   div#graph{
     @include display(row, nowrap, space-between, center, stretch);
@@ -92,7 +100,7 @@ section{
         @include border();
         width: 100%;
         text-align-last: start;
-
+        @include disabledSelect();
         input{
           margin-right: 1vw;
         }
@@ -166,5 +174,20 @@ section{
   }
   div#total{
     white-space: pre-wrap;
+  }
+  div#menu{
+    @include display(row, nowrap, space-between, center, stretch);
+    div.item{
+      @include display(column, nowrap, space-evenly, center, stretch);
+      flex-grow: 1;
+      margin: 1vw;
+      button.button{
+        @include border();
+        box-sizing: border-box;
+        padding: 1vw;
+        margin: 1vw;
+        cursor: pointer;
+      }
+    }
   }
 }
