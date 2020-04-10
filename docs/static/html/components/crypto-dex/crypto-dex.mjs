@@ -966,7 +966,7 @@ customElements.define('crypto-dex',
     
                  
                  
-                    if(relation['description']['ueu'][0] - relation['description']['ueu'][3] > 0){
+                    if(relation['description']['ueu'][0] - relation['description']['ueu'][3] < 0){
                         relation['description']['ueu'].push(new Date().toString())
                         relation['description']['ueu'].push('first')
                         obj['this'].shadowRoot.querySelector('#total').insertAdjacentHTML('beforeend',`<p>${JSON.stringify(relation['description']['ueu'], null, 2)}</p>`)
