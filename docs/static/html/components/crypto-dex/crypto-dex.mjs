@@ -689,7 +689,7 @@ customElements.define('crypto-dex',
                 let relation = {}
     
                 obj['this'].shadowRoot.querySelector('#fswe').addEventListener('click',async (event)=>{
-                    event.currentTarget.style.background = '#ffbe21'
+                    event.currentTarget.style.background = '#faf671'
                     let value =  event.currentTarget.innerHTML
                     value = value.split('*')[0].split('(')[1]
                    await navigator.clipboard.writeText(value)
@@ -699,7 +699,7 @@ customElements.define('crypto-dex',
                     }, 250);
                 })
                 obj['this'].shadowRoot.querySelector('#fbwe').addEventListener('click',async (event)=>{
-                    event.currentTarget.style.background = '#ffbe21'
+                    event.currentTarget.style.background = '#faf671'
                     let value =  event.currentTarget.innerHTML
                     value = value.split('*')[0].split('(')[1]
                     await navigator.clipboard.writeText(value)
@@ -709,7 +709,7 @@ customElements.define('crypto-dex',
                     }, 250);
                 })
                 obj['this'].shadowRoot.querySelector('#fbue').addEventListener('click',async (event)=>{
-                    event.currentTarget.style.background = '#ffbe21'
+                    event.currentTarget.style.background = '#faf671'
                     let value =  event.currentTarget.innerHTML
                     value = value.split('*')[0].split('(')[1]
                     await navigator.clipboard.writeText(value)
@@ -719,7 +719,7 @@ customElements.define('crypto-dex',
                     }, 250);
                 })
                 obj['this'].shadowRoot.querySelector('#fbeu').addEventListener('click',async (event)=>{
-                    event.currentTarget.style.background = '#ffbe21'
+                    event.currentTarget.style.background = '#faf671'
                     let value =  event.currentTarget.innerHTML
                     value = value.split('*')[0].split('(')[1]
                     await navigator.clipboard.writeText(value)
@@ -729,7 +729,7 @@ customElements.define('crypto-dex',
                     }, 250);
                 })
                 obj['this'].shadowRoot.querySelector('#fbwu').addEventListener('click',async (event)=>{
-                    event.currentTarget.style.background = '#ffbe21'
+                    event.currentTarget.style.background = '#faf671'
                     let value =  event.currentTarget.innerHTML
                     value = value.split('*')[0].split('(')[1]
                     await navigator.clipboard.writeText(value)
@@ -740,7 +740,7 @@ customElements.define('crypto-dex',
                     }, 250);
                 })
                 obj['this'].shadowRoot.querySelector('#fswu').addEventListener('click',async (event)=>{
-                    event.currentTarget.style.background = '#ffbe21'
+                    event.currentTarget.style.background = '#faf671'
                     let value =  event.currentTarget.innerHTML
                     value = value.split('*')[0].split('(')[1]
                     await navigator.clipboard.writeText(value)
@@ -751,7 +751,7 @@ customElements.define('crypto-dex',
                 })
                 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 obj['this'].shadowRoot.querySelector('#sbew').addEventListener('click',async (event)=>{
-                    event.currentTarget.style.background = '#ffbe21'
+                    event.currentTarget.style.background = '#faf671'
                     let value =  event.currentTarget.innerHTML
                     value = value.split('*')[0].split('(')[1]
                     await navigator.clipboard.writeText(value)
@@ -761,7 +761,7 @@ customElements.define('crypto-dex',
                     }, 250);
                 })
                 obj['this'].shadowRoot.querySelector('#sbwe').addEventListener('click',async (event)=>{
-                    event.currentTarget.style.background = '#ffbe21'
+                    event.currentTarget.style.background = '#faf671'
                     let value =  event.currentTarget.innerHTML
                     value = value.split('*')[0].split('(')[1]
                     await navigator.clipboard.writeText(value)
@@ -771,7 +771,7 @@ customElements.define('crypto-dex',
                     }, 250);
                 })
                 obj['this'].shadowRoot.querySelector('#sseu').addEventListener('click',async (event)=>{
-                    event.currentTarget.style.background = '#ffbe21'
+                    event.currentTarget.style.background = '#faf671'
                     let value =  event.currentTarget.innerHTML
                     value = value.split('*')[0].split('(')[1]
                     await navigator.clipboard.writeText(value)
@@ -781,7 +781,7 @@ customElements.define('crypto-dex',
                     }, 250);
                 })
                 obj['this'].shadowRoot.querySelector('#ssue').addEventListener('click',async (event)=>{
-                    event.currentTarget.style.background = '#ffbe21'
+                    event.currentTarget.style.background = '#faf671'
                     let value =  event.currentTarget.innerHTML
                     value = value.split('*')[0].split('(')[1]
                     await navigator.clipboard.writeText(value)
@@ -791,7 +791,7 @@ customElements.define('crypto-dex',
                     }, 250);
                 })
                 obj['this'].shadowRoot.querySelector('#sbwu').addEventListener('click',async (event)=>{
-                    event.currentTarget.style.background = '#ffbe21'
+                    event.currentTarget.style.background = '#faf671'
                     let value =  event.currentTarget.innerHTML
                     value = value.split('*')[0].split('(')[1]
                     await navigator.clipboard.writeText(value)
@@ -801,7 +801,7 @@ customElements.define('crypto-dex',
                     }, 250);
                 })
                 obj['this'].shadowRoot.querySelector('#sbuw').addEventListener('click',async (event)=>{
-                    event.currentTarget.style.background = '#ffbe21'
+                    event.currentTarget.style.background = '#faf671'
                     let value =  event.currentTarget.innerHTML
                     value = value.split('*')[0].split('(')[1]
                     await navigator.clipboard.writeText(value)
@@ -996,9 +996,9 @@ customElements.define('crypto-dex',
                         obj['this'].shadowRoot.querySelector('div.sseu').style.background ='#f476b673'
                         obj['this'].shadowRoot.querySelector('div.sbwu').style.background ='#f476b673'
                     }else{
-                        obj['this'].shadowRoot.querySelector('div.fbwe').style.background ='#7694f473'
-                        obj['this'].shadowRoot.querySelector('div.fswu').style.background ='#7694f473'
-                        obj['this'].shadowRoot.querySelector('div.fbeu').style.background ='#7694f473'
+                        obj['this'].shadowRoot.querySelector('div.sbew').style.background ='#7694f473'
+                        obj['this'].shadowRoot.querySelector('div.sseu').style.background ='#7694f473'
+                        obj['this'].shadowRoot.querySelector('div.sbwu').style.background ='#7694f473'
                     }
                     if(relation['description']['wew'][0] - relation['description']['wew'][3] < 0){
                         relation['description']['wew'].push(new Date().toUTCString())
