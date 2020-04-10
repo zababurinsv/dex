@@ -425,11 +425,11 @@ let Class = class Waves {
                                 bidPrice = this.denormalize(pair['bids'][count]['price'],obj['decimals'][`${ pair['pair']['priceAsset'] }`],obj['decimals'][`${ pair['pair']['amountAsset'] }`])
                                 
                                 outAmount = amount*bidPrice
-                                // console.log('result1 --->', amount*askPrice, '----->', count)
-                                // console.log('result2 --->', amount*bidPrice, '----->', count)
+                                console.log('result1 --->', amount*askPrice, '----->', count)
+                                console.log('result2 --->', amount*bidPrice, '----->', count, obj['fee']['euro'])
                                 // console.log('askAmount --->', askAmount,'-','outAmount --->',outAmount,'bidAmount--->',bidAmount, 'count--->', count)
-                                // console.log('bidAmount --->', bidAmount,'askAmount --->',askAmount, 'count--->',count)
-                                if((bidAmount - outAmount) <= 0){
+                                console.log('bidAmount --->', bidAmount,'askAmount --->',askAmount, 'count--->',count)
+                                if((bidAmount - amount) <= 0){
                                     console.warn('невозможно купить euroUsd','bidAmount:',bidAmount,'-', 'outAmount:',outAmount, 'count-->', count)
                                     count++
                                 }else{
