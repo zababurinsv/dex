@@ -978,7 +978,7 @@ customElements.define('crypto-dex',
                     }
                     if(relation['description']['eue'][0] - relation['description']['eue'][3] < 0){
                         relation['description']['eue'].push(new Date().toUTCString())
-                        relation['description']['ueu'].push('second')
+                        relation['description']['eue'].push('second')
                         obj['this'].shadowRoot.querySelector('#total').insertAdjacentHTML('beforeend',`<p>${JSON.stringify(relation['description']['eue'], null, 2)}</p>`)
                         obj['this'].shadowRoot.querySelector('div.fbwe').style.background ='#f476b673'
                         obj['this'].shadowRoot.querySelector('div.fswu').style.background ='#f476b673'
@@ -990,7 +990,7 @@ customElements.define('crypto-dex',
                     }
                     if(relation['description']['wuw'][0] - relation['description']['wuw'][3] < 0){
                         relation['description']['wuw'].push(new Date().toUTCString())
-                        relation['description']['ueu'].push('fird')
+                        relation['description']['wuw'].push('fird')
                         obj['this'].shadowRoot.querySelector('#total').insertAdjacentHTML('beforeend',`<p>${JSON.stringify(relation['description']['wuw'], null, 2)}</p>`)
                         obj['this'].shadowRoot.querySelector('div.sbew').style.background ='#f476b673'
                         obj['this'].shadowRoot.querySelector('div.sseu').style.background ='#f476b673'
@@ -1002,7 +1002,7 @@ customElements.define('crypto-dex',
                     }
                     if(relation['description']['wew'][0] - relation['description']['wew'][3] < 0){
                         relation['description']['wew'].push(new Date().toUTCString())
-                        relation['description']['ueu'].push('fourth')
+                        relation['description']['wew'].push('fourth')
                         obj['this'].shadowRoot.querySelector('#total').insertAdjacentHTML('beforeend',`<p>${JSON.stringify(relation['description']['wew'], null, 2)}</p>`)
                         obj['this'].shadowRoot.querySelector('div.sbuw').style.background ='#f476b673'
                         obj['this'].shadowRoot.querySelector('div.ssue').style.background ='#f476b673'
