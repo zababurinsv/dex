@@ -146,12 +146,13 @@ section{
               @include fonts(3);
               font-family: Roboto,serif;
               box-sizing: border-box;
-              padding: 0;
               background: transparent;
               border: none;
               cursor: pointer;
               margin-bottom: 0.5vw;
               outline: none;
+              border-radius: 0.25vw;
+              padding: 0.25vw;
             }
             div.result{
               @include display(row, nowrap,space-between, space-between, stretch);

@@ -696,7 +696,7 @@ customElements.define('crypto-dex',
                    let timer = setTimeout((event)=>{
                         obj['this'].shadowRoot.querySelector('#fswe').style.background = 'transparent'
                         clearTimeout(timer);
-                    }, 1000);
+                    }, 250);
                 })
                 obj['this'].shadowRoot.querySelector('#fbwe').addEventListener('click',async (event)=>{
                     event.currentTarget.style.background = '#ffbe21'
@@ -706,7 +706,7 @@ customElements.define('crypto-dex',
                     let timer = setTimeout((event)=>{
                         obj['this'].shadowRoot.querySelector('#fbwe').style.background = 'transparent'
                         clearTimeout(timer);
-                    }, 1000);
+                    }, 250);
                 })
                 obj['this'].shadowRoot.querySelector('#fbue').addEventListener('click',async (event)=>{
                     event.currentTarget.style.background = '#ffbe21'
@@ -716,7 +716,7 @@ customElements.define('crypto-dex',
                     let timer = setTimeout((event)=>{
                         obj['this'].shadowRoot.querySelector('#fbue').style.background = 'transparent'
                         clearTimeout(timer);
-                    }, 1000);
+                    }, 250);
                 })
                 obj['this'].shadowRoot.querySelector('#fbeu').addEventListener('click',async (event)=>{
                     event.currentTarget.style.background = '#ffbe21'
@@ -726,7 +726,7 @@ customElements.define('crypto-dex',
                     let timer = setTimeout((event)=>{
                         obj['this'].shadowRoot.querySelector('#fbeu').style.background = 'transparent'
                         clearTimeout(timer);
-                    }, 1000);
+                    }, 250);
                 })
                 obj['this'].shadowRoot.querySelector('#fbwu').addEventListener('click',async (event)=>{
                     event.currentTarget.style.background = '#ffbe21'
@@ -737,7 +737,7 @@ customElements.define('crypto-dex',
                     let timer = setTimeout((event)=>{
                         obj['this'].shadowRoot.querySelector('#fbwu').style.background = 'transparent'
                         clearTimeout(timer);
-                    }, 1000);
+                    }, 250);
                 })
                 obj['this'].shadowRoot.querySelector('#fswu').addEventListener('click',async (event)=>{
                     event.currentTarget.style.background = '#ffbe21'
@@ -747,7 +747,7 @@ customElements.define('crypto-dex',
                     let timer = setTimeout((event)=>{
                         obj['this'].shadowRoot.querySelector('#fswu').style.background = 'transparent'
                         clearTimeout(timer);
-                    }, 1000);
+                    }, 250);
                 })
                 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 obj['this'].shadowRoot.querySelector('#sbew').addEventListener('click',async (event)=>{
@@ -758,7 +758,7 @@ customElements.define('crypto-dex',
                     let timer = setTimeout((event)=>{
                         obj['this'].shadowRoot.querySelector('#sbew').style.background = 'transparent'
                         clearTimeout(timer);
-                    }, 1000);
+                    }, 250);
                 })
                 obj['this'].shadowRoot.querySelector('#sbwe').addEventListener('click',async (event)=>{
                     event.currentTarget.style.background = '#ffbe21'
@@ -768,7 +768,7 @@ customElements.define('crypto-dex',
                     let timer = setTimeout((event)=>{
                         obj['this'].shadowRoot.querySelector('#sbwe').style.background = 'transparent'
                         clearTimeout(timer);
-                    }, 1000);
+                    }, 250);
                 })
                 obj['this'].shadowRoot.querySelector('#sseu').addEventListener('click',async (event)=>{
                     event.currentTarget.style.background = '#ffbe21'
@@ -778,7 +778,7 @@ customElements.define('crypto-dex',
                     let timer = setTimeout((event)=>{
                         obj['this'].shadowRoot.querySelector('#sseu').style.background = 'transparent'
                         clearTimeout(timer);
-                    }, 1000);
+                    }, 250);
                 })
                 obj['this'].shadowRoot.querySelector('#ssue').addEventListener('click',async (event)=>{
                     event.currentTarget.style.background = '#ffbe21'
@@ -788,7 +788,7 @@ customElements.define('crypto-dex',
                     let timer = setTimeout((event)=>{
                         obj['this'].shadowRoot.querySelector('#ssue').style.background = 'transparent'
                         clearTimeout(timer);
-                    }, 1000);
+                    }, 250);
                 })
                 obj['this'].shadowRoot.querySelector('#sbwu').addEventListener('click',async (event)=>{
                     event.currentTarget.style.background = '#ffbe21'
@@ -798,7 +798,7 @@ customElements.define('crypto-dex',
                     let timer = setTimeout((event)=>{
                         obj['this'].shadowRoot.querySelector('#sbwu').style.background = 'transparent'
                         clearTimeout(timer);
-                    }, 1000);
+                    }, 250);
                 })
                 obj['this'].shadowRoot.querySelector('#sbuw').addEventListener('click',async (event)=>{
                     event.currentTarget.style.background = '#ffbe21'
@@ -808,7 +808,7 @@ customElements.define('crypto-dex',
                     let timer = setTimeout((event)=>{
                         obj['this'].shadowRoot.querySelector('#sbuw').style.background = 'transparent'
                         clearTimeout(timer);
-                    }, 1000);
+                    }, 250);
                 })
                 obj['this'].shadowRoot.querySelector('#left').addEventListener('input',async (e)=>{
                     relation['w'] =  e.target.value
