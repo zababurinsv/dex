@@ -964,8 +964,10 @@ customElements.define('crypto-dex',
                     relation['sell(usdEuro)'] ={}
                     relation['buy(wavesEuro)'] = {}
     
-                    if(relation['description']['ueu'][0] - relation['description']['ueu'][3] < 0){
-                        relation['description']['ueu'].push(new Date().toUTCString())
+                 
+                 
+                    if(relation['description']['ueu'][0] - relation['description']['ueu'][3] > 0){
+                        relation['description']['ueu'].push(new Date().toString())
                         relation['description']['ueu'].push('first')
                         obj['this'].shadowRoot.querySelector('#total').insertAdjacentHTML('beforeend',`<p>${JSON.stringify(relation['description']['ueu'], null, 2)}</p>`)
                         obj['this'].shadowRoot.querySelector('div.fbwu').style.background ='#f476b673'
@@ -977,7 +979,7 @@ customElements.define('crypto-dex',
                         obj['this'].shadowRoot.querySelector('div.fbue').style.background ='#7694f473'
                     }
                     if(relation['description']['eue'][0] - relation['description']['eue'][3] < 0){
-                        relation['description']['eue'].push(new Date().toUTCString())
+                        relation['description']['eue'].push(new Date().toString())
                         relation['description']['eue'].push('second')
                         obj['this'].shadowRoot.querySelector('#total').insertAdjacentHTML('beforeend',`<p>${JSON.stringify(relation['description']['eue'], null, 2)}</p>`)
                         obj['this'].shadowRoot.querySelector('div.fbwe').style.background ='#f476b673'
@@ -989,7 +991,7 @@ customElements.define('crypto-dex',
                         obj['this'].shadowRoot.querySelector('div.fbeu').style.background ='#7694f473'
                     }
                     if(relation['description']['wuw'][0] - relation['description']['wuw'][3] < 0){
-                        relation['description']['wuw'].push(new Date().toUTCString())
+                        relation['description']['wuw'].push(new Date().toString())
                         relation['description']['wuw'].push('fird')
                         obj['this'].shadowRoot.querySelector('#total').insertAdjacentHTML('beforeend',`<p>${JSON.stringify(relation['description']['wuw'], null, 2)}</p>`)
                         obj['this'].shadowRoot.querySelector('div.sbew').style.background ='#f476b673'
@@ -1001,7 +1003,7 @@ customElements.define('crypto-dex',
                         obj['this'].shadowRoot.querySelector('div.sbwu').style.background ='#7694f473'
                     }
                     if(relation['description']['wew'][0] - relation['description']['wew'][3] < 0){
-                        relation['description']['wew'].push(new Date().toUTCString())
+                        relation['description']['wew'].push(new Date().toString())
                         relation['description']['wew'].push('fourth')
                         obj['this'].shadowRoot.querySelector('#total').insertAdjacentHTML('beforeend',`<p>${JSON.stringify(relation['description']['wew'], null, 2)}</p>`)
                         obj['this'].shadowRoot.querySelector('div.sbuw').style.background ='#f476b673'
