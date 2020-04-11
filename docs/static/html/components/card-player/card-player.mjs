@@ -1,4 +1,4 @@
-customElements.define('player-faucet',
+customElements.define('card-player',
     class extends HTMLElement {
         static get observedAttributes () {
             return ['feed']
@@ -681,29 +681,8 @@ customElements.define('player-faucet',
                         })
                 })
             async function modules (obj) {
-                
-                let players = obj['this'].querySelectorAll('card-player')
-                let items = obj['this']['shadowRoot'].querySelector('#items')
-                for(let item of players){
-                    items.insertAdjacentHTML('beforeend',`
-<div id="${item.slot}" class="item ">
-    <slot name="${item.slot}"></slot>
-</div>`)
-                }
-                let target = obj['this'];
-                const config = {
-                    childList: true
-                };
-                const callback = function(mutationsList, observer) {
-                    for (let mutation of mutationsList) {
-                        if (mutation.type === 'childList') {
-                            console.log('A child node has been added or removed.');
-                            
-                        }
-                    }
-                };
-                const observer = new MutationObserver(callback);
-                observer.observe(target, config);
+            
+            
             }
         }
     })

@@ -12,9 +12,10 @@ customElements.define('page-external',
       constructor () {
         super();
         const shadow = this.attachShadow({mode: 'open'});
-        shadow.innerHTML = `<div><slot name="jason"></slot></div>
+        shadow.innerHTML = `
+<div id="external"><slot name="jason"></slot></div>
 <style>
-div{
+div#external{
     box-shadow: inset 0vw 0vw 1vw 0px #7694f4;
     border-radius: 0.5vw;
     height:100%;

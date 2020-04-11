@@ -81,38 +81,47 @@
 :host{
   width: 100%;
   margin: auto;
+  margin: 1vw;
+  align-self: start;
 }
-section#player-faucet{
+section.card-player{
   @include disabledSelectText();
-  @include display(row, nowrap, start, stretch, stretch);
-  div#wrapper{
-    display: flex;
-    flex-direction: column;
-    div#faucet{
-      display: flex;
-      align-self: start;
+  @include display(column, nowrap,stretch, center, stretch);
+  flex-grow: 1;
+  align-self: stretch;
+  box-sizing: border-box;
+  border-radius: 0.5vw;
+  box-shadow: inset 0vw 0vw 1vw 0px #7694f4;
+  padding: 1vw;
+  div.main{
+    @include display(row, nowrap, flex-start, center, stretch);
+    div.avatar{
+      width: 15vw;
+      height: 15vw;
+      img.avatar{
+        width: 100%;
+        height: auto;
+        box-sizing: border-box;
+        box-shadow: inset 0vw 0vw 1vw 0px #7694f4;
+        border-radius: 50%;
+      }
     }
-    div#info{
-      box-sizing: border-box;
-      margin: 0.25vw;
-      border-radius: 0.5vw;
-      box-shadow: inset 0vw 0vw 1vw 0px #7694f4;
-      height: 100%;
-    }
-  }
-
-  div#items{
-    @include display(column, nowrap,stretch, center, stretch);
-    flex-grow: 1;
-    align-self: stretch;
-    box-sizing: border-box;
-    border-radius: 0.5vw;
-    box-shadow: inset 0vw 0vw 1vw 0px #7694f4;
-    margin: 0.25vw;
-    div.item{
-      @include display(row, nowrap, space-evenly, center, stretch);
-      flex-basis: 3vw;
+    div.info{
+      @include display(column, nowrap, space-between, stretch, stretch);
       flex-grow: 1;
+      padding: 1vw;
+      div.item{
+        @include fonts(7);
+        font-family: Roboto,serif;
+
+        ul.item__funds, ul.item__assets{
+          margin: 0;
+          li.item__funds, li.item__assets{
+            list-style-type: none;
+          }
+
+        }
+      }
     }
   }
 }
