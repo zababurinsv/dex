@@ -730,10 +730,8 @@ customElements.define('page-external',
           this.NodeList = this.childNodes
           this.NodeList.prototype = Array.prototype
           this.HTMLElement = window.HTMLElement
-
           let Jason = await loader('./static/html/components/component_modules/cell-index/jason.mjs','Jason')
           let ST = await loader('./static/html/components/component_modules/cell-index/st.mjs','ST')
-          let dragula = await loader('https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js','dragula')
           let url = {}
           if(obj.this.dataset.url){
             url =  obj.this.dataset.url
