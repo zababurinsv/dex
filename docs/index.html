@@ -25,12 +25,14 @@
         </lacerta-preview>
     </varan-header>
     <div id="components">
-        <page-external data-url="http://localhost:4444/import" data-height=23.5></page-external>
+        <page-external data-url="http://localhost:4444/import" data-height=24></page-external>
 <!--        <crypto-graph slot="left"></crypto-graph>-->
 <!--        <crypto-graph slot="center"></crypto-graph>-->
 <!--        <crypto-graph slot="right"></crypto-graph>-->
         <crypto-dex></crypto-dex>
-        <page-external data-url="http://localhost:8020/import" data-height=37  data-width=30></page-external>
+        <player-faucet>
+            <page-external slot ="faucet" data-url="http://localhost:8020/import" data-height=37  data-width=30></page-external>
+        </player-faucet>
     </div>
     <hr>
     <div id="info">
@@ -50,6 +52,7 @@
 <script type="module" src="./static/html/components/varan-footer/varan-footer.mjs" async></script>
 <script type="module" src="./static/html/components/crypto-dex/crypto-dex.mjs" async></script>
 <script type="module" src="./static/html/components/crypto-graph/crypto-graph.mjs" async></script>
+<script type="module" src="./static/html/components/player-faucet/player-faucet.mjs" async></script>
 <script type="module" src="./static/html/components/page-external/page-external.mjs" async></script>
 <script type="module">
     import tests from '/static/html/components/component_modules/tests/tests.mjs'
