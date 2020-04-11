@@ -13,14 +13,16 @@ customElements.define('page-external',
         super();
         const shadow = this.attachShadow({mode: 'open'});
         shadow.innerHTML = `<div style="height:100%"><slot name="jason"></slot></div>`;
-        this.style.width ="100%";
-  
         if(this.dataset.height){
           this.style.height =`${this.dataset.height}vw`;
         }else{
-          this.style.height ="151vw";
+          this.style.height ="auto";
         }
-        
+        if(this.dataset.width){
+          this.style.width =`${this.dataset.width}vw`;
+        }else{
+          this.style.width ="100%";
+        }
     
         (async (obj)=>{
 
