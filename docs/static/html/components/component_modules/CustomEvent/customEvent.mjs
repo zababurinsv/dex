@@ -6,7 +6,7 @@ export default (view = true,property='',color = 'black', substrate={},relation='
         })
         document.dispatchEvent( new CustomEvent(`${relation}`, {
             detail: {
-                '/':'waves',
+                '/':relation,
                 view: view,
                 property:property,
                 color:color,

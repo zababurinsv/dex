@@ -72,6 +72,12 @@ app.delete('/delete-item', cors(corsOptions), async (req, res) => {
 
 app.use( express.static('docs'));
 app.use( express.static('static'));
+
+app.options('/import', cors(corsOptions))
+app.get('/import', async (req, res) => {
+    res.sendFile('/docs/import.html', { root: __dirname });
+})
+
 app.options('/*', cors(corsOptions))
 app.get('/*', async (req, res) => {
     res.sendFile('/docs/index.html', { root: __dirname });
