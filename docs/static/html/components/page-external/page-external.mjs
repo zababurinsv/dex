@@ -19,6 +19,8 @@ div#external{
     box-shadow: inset 0vw 0vw 1vw 0px #7694f4;
     border-radius: 0.5vw;
     height:100%;
+    box-sizing: border-box;
+    padding: 1vw;
 }
 </style>`;
        

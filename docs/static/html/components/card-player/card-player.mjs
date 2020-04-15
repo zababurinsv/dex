@@ -57,13 +57,13 @@ customElements.define('card-player',
                         switch (obj['state'][state]) {
                             case 'shadow':
                                 if (obj['verify']['preset'] === true) {
-                                    obj[`path-style-${obj['state'][state]}-preset`] = `@import '/static/html/components/${obj['component']}/template/${name}.css';`
+                                    obj[`path-style-${obj['state'][state]}-preset`] = `@import '/static/html/components/${obj['component']}/template/css/${obj['component']}-${obj['this'].getAttribute('preset')}.css';`
                                 }
                                 styleS.innerText = obj[`path-style-${obj['state'][state]}`] + obj[`path-style-${obj['state'][state]}-preset`]
                                 break
                             case 'light':
                                 if (obj['verify']['preset'] === true) {
-                                    obj[`path-style-${obj['state'][state]}-preset`] = `@import '/static/html/components/${obj['component']}/template/${name}.css';`
+                                    obj[`path-style-${obj['state'][state]}-preset`] = `@import '/static/html/components/${obj['component']}/template/css/${obj['component']}-${obj['this'].getAttribute('preset')}.css';`
                                 }
                                 styleL.innerText = obj[`path-style-${obj['state'][state]}`] + obj[`path-style-${obj['state'][state]}-preset`]
                                 break
@@ -478,23 +478,13 @@ customElements.define('card-player',
             function template (obj, type) {
                 return new Promise(function (resolve, reject) {
                     obj['verify'] = []
-
-                    if (!obj['this'].getAttribute('preset')) {
+                    if (obj['this'].hasAttribute('preset') === false) {
                         obj['path-template'] = `/static/html/components/${obj['component']}/${obj['component']}.html`
                         obj['verify']['preset'] = false
                     } else {
-                        switch(obj['this'].getAttribute('preset')){
-                            case 'default':
-                                obj['path-template'] = `/static/html/components/${obj['component']}/template/${obj['component']}.html`
-                                obj['preset'] = `${obj['this'].getAttribute('preset')}`
-                                obj['verify']['preset'] = true
-                                break
-                            default:
-                                obj['path-template'] = `/static/html/components/${obj['component']}/template/${obj['this'].getAttribute('preset')}.html`
-                                obj['preset'] = `${obj['this'].getAttribute('preset')}`
-                                obj['verify']['preset'] = true
-                                break
-                        }
+                        obj['path-template'] = `/static/html/components/${obj['component']}/template/${obj['component']}-${obj['this'].getAttribute('preset')}.html`
+                        obj['preset'] = `${obj['this'].getAttribute('preset')}`
+                        obj['verify']['preset'] = true
                     }
                     fetch(obj['path-template'])
                         .then(function (response) {
