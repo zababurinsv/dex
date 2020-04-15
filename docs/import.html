@@ -29,7 +29,9 @@
     import Post from '/static/html/components/component_modules/postMessage/postMessage.mjs'
     window.onload = async () =>{
         let post = await Post('waves-game')
-        post.listener('http://localhost:7030')
+        // post.listener('http://localhost:7030')
+        post.iframeListener('http://localhost:6040')
+
     }
 </script>
 <style>
