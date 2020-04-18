@@ -11,7 +11,7 @@
 <!--        <crypto-graph slot="right"></crypto-graph>-->
 <!--<crypto-dex></crypto-dex>-->
 <player-faucet>
-    <page-external slot ="faucet" data-url="http://localhost:8020/import" data-height=38  data-width=30></page-external>
+    <page-external slot ="faucet" data-url="http://localhost:8020/import" data-height=37.6  data-width=30></page-external>
     <card-player slot="player-2df5hhjf" preset="full"></card-player>
     <card-player slot="player-2dfdfsg5hhjf" preset="full"></card-player>
     <card-player slot="player-2dfd5hhjf" preset="full"></card-player>
@@ -26,13 +26,33 @@
 <script type="module" src="./static/html/components/player-faucet/player-faucet.mjs" async></script>
 <script type="module" src="./static/html/components/page-external/page-external.mjs" async></script>
 <script type="module">
-    import Post from '/static/html/components/component_modules/postMessage/postMessage.mjs'
-    window.onload = async () =>{
-        let post = await Post('waves-game')
-        // post.listener('http://localhost:7030')
-        post.iframeListener('http://localhost:6040')
-
-    }
+    import emoji from '/static/html/components/component_modules/emoji/emoji.mjs'
+    import white from '/static/html/components/component_modules/white/white.mjs'
+    import events from '/static/html/components/component_modules/CustomEvent/index.mjs'
+    import iframe from '/static/html/components/component_modules/iframe/iframe.mjs'
+    window.addEventListener ("message", async (event) => {
+        if(white.includes(event.origin)){
+            iframe.setPort2(event.origin, event.ports[0],(event)=>{
+                console.log(`<<<<< request waves-game ${emoji('fire')}`, event.data)
+                iframe.getPort2(event.data.property).postMessage({
+                        view:true,
+                        propery:`${emoji('fire')} blockchain-dex response >>>>>`,
+                        color:event.data.color,
+                        substrate:{},
+                        relation:event.data.relation
+                    })
+            })
+            console.log(`<<<<< request waves-game ${emoji('fire')}`,event.data)
+            let response = await events.customEvent(event.data.view,event.data.property,event.data.color,event.data.substrate,event.data.relation)
+            iframe.getPort2(event.origin).postMessage({
+                view:true,
+                propery:`${emoji('fire')} blockchain-dex response >>>>>`,
+                color:event.data.color,
+                substrate:{},
+                relation:event.data.relation
+            });
+        }
+    })
 </script>
 <style>
     body{

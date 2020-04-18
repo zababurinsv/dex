@@ -1,4 +1,5 @@
 import loader from '/static/html/components/component_modules/loader/loader.mjs'
+import iframe from '/static/html/components/component_modules/iframe/iframe.mjs'
 if (!Object.keys) {
   Object.keys = function (o) {
     if (o !== Object(o)) { throw new TypeError('Object.keys called on a non-object') }
@@ -15,12 +16,15 @@ customElements.define('page-external',
         shadow.innerHTML = `
 <div id="external"><slot name="jason"></slot></div>
 <style>
+:host(.hidden){
+display: none;
+}
+:host{
+
+}
 div#external{
-    box-shadow: inset 0vw 0vw 1vw 0px #7694f4;
     border-radius: 0.5vw;
     height:100%;
-    box-sizing: border-box;
-    padding: 1vw;
 }
 </style>`;
        
@@ -34,11 +38,8 @@ div#external{
         }else{
           this.style.width ="100%";
         }
-    
+        
         (async (obj)=>{
-
-          // console.assert(false, this)
-
           obj['function'] = {}
           obj['function']['create'] = function ($root) {
             return new Promise(function (resolve, reject) {
@@ -774,24 +775,15 @@ div#external{
           })
           this.app = app
           obj['function']['create'](obj)
-          // let iframe = obj['this'].querySelector('iframe')
-          // iframe.onload = function () {
-          //
-          //   if(iframe.src ==='http://localhost:5008/'){
-          //     console.log('~~~~~~~~~~', iframe.postMessage)
-          //   }
-          // }
-          // let observer = {}
-          // let config = { attributes: true, childList: true, characterData: true }
-          //
-          // observer = new MutationObserver(function (mutations) {
-          //   mutations.forEach(function (mutation) {
-          //     let event = new CustomEvent('loadIframe', { })
-          //     document.dispatchEvent(event)
-          //   })
-          // })
-          // observer.observe(obj['this'], config)
-          // document.addEventListener('loadIframe', function (event) {})
+            let channel = new MessageChannel();
+            let host = this.dataset.url.replace('/import','')
+            let ifr = obj['this'].querySelector('iframe')
+            iframe.set(host, ifr, channel, obj['this'])
+            ifr.onload = function () {
+              document.dispatchEvent( new CustomEvent(`iframe`,{
+                detail:host
+              }))
+            }
         })(this)
       }
     })

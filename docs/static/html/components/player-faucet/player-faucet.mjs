@@ -682,13 +682,17 @@ customElements.define('player-faucet',
                 })
             async function modules (obj) {
                 
+                document.addEventListener('object-player',async (event)=>{
+                    event.detail.callback('true')
+                })
+                
                 let players = obj['this'].querySelectorAll('card-player')
                 let items = obj['this']['shadowRoot'].querySelector('#items')
                 for(let item of players){
                     items.insertAdjacentHTML('beforeend',`
-<div id="${item.slot}" class="item ">
-    <slot name="${item.slot}"></slot>
-</div>`)
+                        <div id="${item.slot}" class="item ">
+                            <slot name="${item.slot}"></slot>
+                        </div>`)
                 }
                 let target = obj['this'];
                 const config = {
