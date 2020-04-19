@@ -1,9 +1,4 @@
 import store from '/static/html/components/component_modules/staticProperty/staticProperty.mjs'
-import mainConfig from '/static/html/components/component_modules/matcher/matcher/this/database/config/index.mjs'
-import conf from '/static/html/components/component_modules/matcher/matcher/this/database/config/index.mjs'
-import isEmpty from '/static/html/components/component_modules/isEmpty/isEmpty.mjs'
-import emoji from '/static/html/components/component_modules/emoji/emoji.mjs'
-import customEvents from '/static/html/components/component_modules/CustomEvent/callback.mjs'
 customElements.define('waves-game',
     class extends HTMLElement {
         static get observedAttributes () {

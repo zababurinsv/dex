@@ -85,9 +85,15 @@
 section#player-faucet{
   @include disabledSelectText();
   @include display(row, nowrap, start, stretch, stretch);
+  box-sizing: border-box;
+  padding: 1vw;
   div#wrapper{
     display: flex;
     flex-direction: column;
+    box-shadow: inset 0vw 0vw 1vw 0px #7694f4;
+    border-radius: 0.5vw;
+    box-sizing: border-box;
+    padding: 1vw;
     div#faucet{
       display: flex;
       align-self: start;
@@ -108,13 +114,20 @@ section#player-faucet{
     box-sizing: border-box;
     border-radius: 0.5vw;
     //box-shadow: inset 0vw 0vw 1vw 0px #7694f4;
-    margin: 0.25vw;
+    margin: 0 0.25vw;
     div.item{
       @include display(row, nowrap, space-evenly, center, stretch);
       flex-basis: 3vw;
       width: 100%;
+      margin-bottom: 0.5vw;
+      &:last-child{
+        margin-bottom: 0;
+      }
       //flex-grow: 1;
       //flex-grow: 1;
+    }
+    div#decoration{
+      @include display(column, wrap,start, center, stretch);
     }
   }
 }

@@ -695,6 +695,14 @@ customElements.define('player-faucet',
                 
                 let players = obj['this'].querySelectorAll('card-player')
                 let items = obj['this']['shadowRoot'].querySelector('#items')
+               
+                // for(let i = 0; i < players.length;i++){
+                //     console.log('ddddddddddddd',players[i])
+                //     items.insertAdjacentHTML('beforeend',`
+                //         <div id="${players[i].slot}" class="item ">
+                //             <slot name="${players[i].slot}"></slot>
+                //         </div>`)
+                // }
                 for(let item of players){
                     items.insertAdjacentHTML('beforeend',`
                         <div id="${item.slot}" class="item ">

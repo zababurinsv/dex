@@ -1,9 +1,7 @@
 import Waves from '/static/html/components/component_modules/waves/waves.mjs'
 import actions from '/static/html/components/component_modules/relation/waves.mjs'
 import emoji from '/static/html/components/component_modules/emoji/emoji.mjs';
-import customEvents from '/static/html/components/component_modules/CustomEvent/customEvent.mjs'
-import listener from '/static/html/components/component_modules/CustomEvent/listener.mjs'
-import callback from '/static/html/components/component_modules/CustomEvent/callback.mjs'
+import events from '/static/html/components/component_modules/CustomEvent/index.mjs'
 let waves =  Waves()
 export default {
     get:{
