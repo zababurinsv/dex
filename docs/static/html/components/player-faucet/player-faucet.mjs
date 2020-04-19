@@ -683,6 +683,13 @@ customElements.define('player-faucet',
             async function modules (obj) {
                 
                 document.addEventListener('object-player',async (event)=>{
+                    
+                    for(let item of event.detail.substrate.player){
+    
+                        console.log('~~~~~',item)
+                    }
+                   
+                    
                     event.detail.callback('true')
                 })
                 

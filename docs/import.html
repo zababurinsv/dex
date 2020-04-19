@@ -32,8 +32,9 @@
     import iframe from '/static/html/components/component_modules/iframe/iframe.mjs'
     window.addEventListener ("message", async (event) => {
         if(white.includes(event.origin)){
-            iframe.setPort2(event.origin, event.ports[0],(event)=>{
-                console.log(`<<<<< request waves-game ${emoji('fire')}`, event.data)
+            iframe.setPort2(event.origin, event.ports[0],async (event)=>{
+                console.log(`<<<<< request blockchain-dex ${emoji('fire')}`, event.data)
+                let response = await events.customEvent(event.data.view,event.data.property,event.data.color,event.data.substrate,event.data.relation)
                 iframe.getPort2(event.data.property).postMessage({
                         view:true,
                         propery:`${emoji('fire')} blockchain-dex response >>>>>`,
@@ -42,7 +43,7 @@
                         relation:event.data.relation
                     })
             })
-            console.log(`<<<<< request waves-game ${emoji('fire')}`,event.data)
+            console.log(`<<<<< request blockchain-dex ${emoji('fire')}`,event.data)
             let response = await events.customEvent(event.data.view,event.data.property,event.data.color,event.data.substrate,event.data.relation)
             iframe.getPort2(event.origin).postMessage({
                 view:true,
