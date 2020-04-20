@@ -1,3 +1,3 @@
 import app from './index.mjs'
 
-app.listen(3070, function () { console.log('listening on *:3070'); });
+app.listen(3070, function () { console.log('listening on http://localhost:3070'); });
