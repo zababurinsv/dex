@@ -1,6 +1,9 @@
 import dex from '/static/html/components/component_modules/dex/dex.mjs'
 import classDex from '/static/html/components/component_modules/dex/dex_c.mjs'
 import Waves from '/static/html/components/component_modules/waves/waves.mjs'
+import iframe from '/static/html/components/component_modules/iframe/iframe.mjs'
+import isEmpty from '/static/html/components/component_modules/isEmpty/isEmpty.mjs'
+import emoji from '/static/html/components/component_modules/emoji/emoji.mjs'
 customElements.define('crypto-dex',
     class extends HTMLElement {
         static get observedAttributes () {
@@ -687,7 +690,52 @@ customElements.define('crypto-dex',
                 let methods = await classDex()
                 let waves = await Waves()
                 let relation = {}
+                let wallet = {}
+                document.addEventListener('iframe',async (event)=>{
+                    if(event.detail === 'http://localhost:4999'){
+                            iframe.post(event.detail, {
+                                view:true,
+                                property:'прослушиваем получение кошелька',
+                                color:'6',
+                                substrate:{},
+                                relation:'await-wallet'
+                            },async (event)=>{
+                            if(!isEmpty(event.data.substrate)){
+                                wallet = event.data.substrate
+                                const params = {
+                                    amount: 800000000,
+                                    price:  510000,
+                                    amountAsset: 'WAVES',
+                                    priceAsset: '3KFXBGGLCjA5Z2DuW4Dq9fDDrHjJJP1ZEkaoajSzuKsC',
+                                    matcherPublicKey: "8QUAqtTckM5B8gvcuP7mMswat9SjKUuafJMusEoSn1Gy",
+                                    orderType: 'sell'
+                                }
+                                let response = waves.self.order(params, wallet['private']['seed'])
+                                let order = await waves.order(true, 'test', '3', JSON.stringify(response), 'order')
+                                //
+                                // console.log('~~~~~~~~~~~~~>>', wallet)
+                                // let orders = await waves.getOrders(true, 'получение ордеров','3', wallet['public']['key'],wallet['type'] )
+                                // console.log(`${emoji('astonished')} --->`, orders)
+                                // console.log(`${emoji('alien')} --->`)
+                            }
+                        })
+                    }
+                })
+                // Base58.encode(cipher.calculateSignature(getPrivateKey(), bytes));
+                let publicKey = waves.self.base58Decode('HrMWJVXDkjpzkMA3LnzurfmXMtRTtip4uS2236NvW6AR')
+                let timestamp = (Date.now()).toString()
+                console.assert(false, waves.self)
+                timestamp = waves.self.stringToBytes(timestamp)
+              
+                let concat = waves.self.concat(publicKey, timestamp)
     
+                let seed = "tone leg hidden system tenant aware desk clap body robust debris puppy ecology scan runway thing second metal cousin ocean liberty banner garment rice feel"
+                let sign = waves.self.signBytes(seed,concat)
+                let signature = waves.self.base58Encode(sign)
+                console.assert(false, signature, timestamp)
+                let orders = await waves.getOrders(true, 'получение ордеров','3', {},'t')
+                console.log(`${emoji('astonished')} --->`, orders)
+                
                 obj['this'].shadowRoot.querySelector('#fswe').addEventListener('click',async (event)=>{
                     event.currentTarget.style.background = '#faf671'
                     let value =  event.currentTarget.innerHTML
@@ -697,7 +745,7 @@ customElements.define('crypto-dex',
                         obj['this'].shadowRoot.querySelector('#fswe').style.background = 'transparent'
                         clearTimeout(timer);
                     }, 250);
-                })
+                },{passive:true})
                 obj['this'].shadowRoot.querySelector('#fbwe').addEventListener('click',async (event)=>{
                     event.currentTarget.style.background = '#faf671'
                     let value =  event.currentTarget.innerHTML
@@ -707,7 +755,7 @@ customElements.define('crypto-dex',
                         obj['this'].shadowRoot.querySelector('#fbwe').style.background = 'transparent'
                         clearTimeout(timer);
                     }, 250);
-                })
+                },{passive:true})
                 obj['this'].shadowRoot.querySelector('#fbue').addEventListener('click',async (event)=>{
                     event.currentTarget.style.background = '#faf671'
                     let value =  event.currentTarget.innerHTML
@@ -738,7 +786,7 @@ customElements.define('crypto-dex',
                         obj['this'].shadowRoot.querySelector('#fbwu').style.background = 'transparent'
                         clearTimeout(timer);
                     }, 250);
-                })
+                },{passive:true})
                 obj['this'].shadowRoot.querySelector('#fswu').addEventListener('click',async (event)=>{
                     event.currentTarget.style.background = '#faf671'
                     let value =  event.currentTarget.innerHTML
@@ -748,7 +796,7 @@ customElements.define('crypto-dex',
                         obj['this'].shadowRoot.querySelector('#fswu').style.background = 'transparent'
                         clearTimeout(timer);
                     }, 250);
-                })
+                },{passive:true})
                 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 obj['this'].shadowRoot.querySelector('#sbew').addEventListener('click',async (event)=>{
                     event.currentTarget.style.background = '#faf671'
@@ -759,7 +807,7 @@ customElements.define('crypto-dex',
                         obj['this'].shadowRoot.querySelector('#sbew').style.background = 'transparent'
                         clearTimeout(timer);
                     }, 250);
-                })
+                },{passive:true})
                 obj['this'].shadowRoot.querySelector('#sbwe').addEventListener('click',async (event)=>{
                     event.currentTarget.style.background = '#faf671'
                     let value =  event.currentTarget.innerHTML
@@ -769,7 +817,7 @@ customElements.define('crypto-dex',
                         obj['this'].shadowRoot.querySelector('#sbwe').style.background = 'transparent'
                         clearTimeout(timer);
                     }, 250);
-                })
+                },{passive:true})
                 obj['this'].shadowRoot.querySelector('#sseu').addEventListener('click',async (event)=>{
                     event.currentTarget.style.background = '#faf671'
                     let value =  event.currentTarget.innerHTML
@@ -779,7 +827,7 @@ customElements.define('crypto-dex',
                         obj['this'].shadowRoot.querySelector('#sseu').style.background = 'transparent'
                         clearTimeout(timer);
                     }, 250);
-                })
+                },{passive:true})
                 obj['this'].shadowRoot.querySelector('#ssue').addEventListener('click',async (event)=>{
                     event.currentTarget.style.background = '#faf671'
                     let value =  event.currentTarget.innerHTML
@@ -789,7 +837,7 @@ customElements.define('crypto-dex',
                         obj['this'].shadowRoot.querySelector('#ssue').style.background = 'transparent'
                         clearTimeout(timer);
                     }, 250);
-                })
+                },{passive:true})
                 obj['this'].shadowRoot.querySelector('#sbwu').addEventListener('click',async (event)=>{
                     event.currentTarget.style.background = '#faf671'
                     let value =  event.currentTarget.innerHTML
@@ -799,7 +847,7 @@ customElements.define('crypto-dex',
                         obj['this'].shadowRoot.querySelector('#sbwu').style.background = 'transparent'
                         clearTimeout(timer);
                     }, 250);
-                })
+                },{passive:true})
                 obj['this'].shadowRoot.querySelector('#sbuw').addEventListener('click',async (event)=>{
                     event.currentTarget.style.background = '#faf671'
                     let value =  event.currentTarget.innerHTML
@@ -809,16 +857,16 @@ customElements.define('crypto-dex',
                         obj['this'].shadowRoot.querySelector('#sbuw').style.background = 'transparent'
                         clearTimeout(timer);
                     }, 250);
-                })
+                },{passive:true})
                 obj['this'].shadowRoot.querySelector('#left').addEventListener('input',async (e)=>{
                     relation['w'] =  e.target.value
-                })
+                },{passive:true})
                 obj['this'].shadowRoot.querySelector('#center').addEventListener('input',async (e)=>{
                     relation['u'] =  e.target.value
-                })
+                },{passive:true})
                 obj['this'].shadowRoot.querySelector('#right').addEventListener('input',async (e)=>{
                     relation['e'] =  e.target.value
-                })
+                },{passive:true})
 
                 let description = {
                     wavesEuro:{
@@ -892,6 +940,7 @@ customElements.define('crypto-dex',
                 let priceAssetDecimals =  {}
                 let amountAssetDecimals = {}
                 let timerId = setTimeout(async  function tick() {
+                    // console.log('~~~~~~~~~~~~~~~~~~>',wallet)
                     let wavesEuro = await dex['get']({type:'wavesEuro',pair:description['wavesEuro']}, obj)
                     let euroWaves = wavesEuro
                     let wavesUsd = await  dex['get']({type:'wavesUsd',pair:description['wavesUsd']}, obj)
@@ -1014,7 +1063,7 @@ customElements.define('crypto-dex',
                         obj['this'].shadowRoot.querySelector('div.ssue').style.background ='#7694f473'
                         obj['this'].shadowRoot.querySelector('div.sbwe').style.background ='#7694f473'
                     }
-                    console.log('~~~~>>', relation)
+                    // console.log('~~~~>>', relation)
                     // relation.timestamp =  new Date();
                     // if((relation['buy(usdEuro)'] - relation['u']) > 0){
 

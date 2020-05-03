@@ -3,8 +3,8 @@ let iframe = {}
 iframe.staticProperty = {}
 iframe.staticProperty.count = -1
 export default {
-    set:(host='', object= {}, chanel = {}, self,alias=undefined)=>{
-        
+    set:(host='', object= {}, self,alias=undefined)=>{
+        let channel = new MessageChannel();
         let name = {}
         if(alias === undefined){
             name = host
@@ -13,7 +13,7 @@ export default {
         }
         iframe.staticProperty[`${name}`] = {}
         iframe.staticProperty[`${name}`]['window'] = object
-        iframe.staticProperty[`${name}`]['port'] = chanel
+        iframe.staticProperty[`${name}`]['port'] = channel
         iframe.staticProperty[`${name}`]['component'] = self
         iframe.staticProperty[`${name}`]['init'] = false
     },

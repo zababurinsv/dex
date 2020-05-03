@@ -1,5 +1,7 @@
 import PluginError from "plugin-error";
 import through from "through2";
+import dotenv from "dotenv"
+dotenv.config()
 
 export default (event, context, callback) => {
     if(!context) {
@@ -15,7 +17,7 @@ export default (event, context, callback) => {
 
                 let content = file.contents.toString('utf8');
 
-                content = content.replace(`var waves =`, 'export default')
+                content = content.replace(`var ${process.env.BUNDLE} =`, 'export default')
 
                 file.contents = new Buffer(content, 'utf8');
                 callback({

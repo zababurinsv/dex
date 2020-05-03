@@ -775,14 +775,15 @@ div#external{
           })
           this.app = app
           obj['function']['create'](obj)
-            let channel = new MessageChannel();
             let host = this.dataset.url.replace('/import','')
             let ifr = obj['this'].querySelector('iframe')
-            iframe.set(host, ifr, channel, obj['this'])
+            iframe.set(host, ifr, obj['this'])
             ifr.onload = function () {
-              document.dispatchEvent( new CustomEvent(`iframe`,{
-                detail:host
-              }))
+              setTimeout(function() {
+                document.dispatchEvent( new CustomEvent(`iframe`,{
+                  detail:host
+                }))
+              }, 0);
             }
         })(this)
       }

@@ -196,7 +196,10 @@ section{
   }
   div#total{
     display: flex;
-    width: 99%;
+    height: 30vw;
+    overflow: overlay;
+    border-radius: 0.5vw;
+    width: 100%;
     white-space: pre-wrap;
     flex-direction: row;
     flex-wrap: wrap;

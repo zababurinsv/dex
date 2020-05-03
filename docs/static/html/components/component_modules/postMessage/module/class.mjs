@@ -78,8 +78,7 @@ let Class = class Post {
             }else if(location.pathname === '/import'){
                 window.addEventListener ("message", async (event) => {
                     if(event.origin === access){
-    
-                        console.log('3333333333333',event)
+                    
                     }
                 })
                 window.parent.postMessage(true, `http://localhost:6040`)

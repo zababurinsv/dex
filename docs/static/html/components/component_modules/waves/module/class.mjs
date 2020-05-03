@@ -1,6 +1,6 @@
 import colorlog from '/static/html/components/component_modules/colorLog/colorLog.mjs'
 import queue from '/static/html/components/component_modules/queue/queue.mjs'
-import bundle from '/static/html/components/component_modules/waves/module/waves-bundle.mjs'
+import bundle from '/static/html/components/component_modules/bundle/waves/waves.mjs'
 let Class = class Waves {
     constructor(self) {
         this.bank = this.bank.bind(this)
@@ -9,12 +9,45 @@ let Class = class Waves {
         this.faucet = this.faucet.bind(this)
         this.transfer = this.transfer.bind(this)
         this.nft = this.nft.bind(this)
+        this.order = this.order.bind(this)
+        this.getOrders = this.getOrders.bind(this)
         this.getNft = this.getNft.bind(this)
         this.denormalize = this.denormalize.bind(this)
         this.details = this.details.bind(this)
         this.waitForTx = this.waitForTx.bind(this)
         this.end = this.end.bind(this)
         document.addEventListener('typeScript-end', this.end)
+    }
+    order(view = true,property='',color = 'black', substrate={_:'order'},relation='order'  ){
+        return new Promise(async (resolve, reject)=>{
+            let order = {}
+            let request = {
+                method: 'POST',
+                body:substrate,
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+            }
+                order = await fetch(`https://matcher.testnet.wavesnodes.com/matcher/orderbook`,request)
+                resolve(await order.json())
+        })
+    }
+    getOrders(view = true,property='',color = 'black', substrate={_:'order'},relation='order'  ){
+        return new Promise(async (resolve, reject)=>{
+            if(relation === 't'){
+                let order = {}
+                try{
+                    order = await fetch(`https://matcher-testnet.wavesnodes.com/matcher/orderbook/HrMWJVXDkjpzkMA3LnzurfmXMtRTtip4uS2236NvW6AR?activeOnly=true`)
+                    order = await order.text()
+                }catch (e) {
+                    order = e
+                }
+            
+                console.assert(false, order)
+                resolve(order)
+            }
+       
+        })
     }
     denormalize(price, priceAssetDecimals, amountAssetDecimals){
         let wvsPrice = 10 ** (priceAssetDecimals - amountAssetDecimals + 8)
@@ -71,7 +104,7 @@ let Class = class Waves {
         })
     }
     get self() {
-        return object
+        return bundle['default']
     }
 }
 

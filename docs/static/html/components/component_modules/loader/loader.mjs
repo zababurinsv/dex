@@ -59,7 +59,6 @@ export let add = (url, target)=>{
 
 export default (url, name)=>{
     return new Promise(function (resolve, reject) {
-        console.log('333333333333', name)
         let verifyScript = true
         let verifyName = name.toLowerCase()
         let Script = {}
@@ -87,7 +86,6 @@ export default (url, name)=>{
                   resolve(window[name])
               })
             }else{
-                console.log('#####3#######', window[name])
                 resolve(window[name])
             }
         }
