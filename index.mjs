@@ -35,40 +35,6 @@ let corsOptions = {
     }
 }
 
-app.options('/dex', cors(corsOptions))
-app.post('/dex', cors(corsOptions),async (req, res) => {
-    let item = await mongo['set']({
-        input:'mongo',
-        model:'dex',
-        type:'item',
-        data: {
-            id:req.fields['id'],
-            object:req.fields['object'],
-            dex:JSON.parse(req.fields['dex'])
-        }
-    },'set', 'type')
-    res.json(item)
-})
-app.options('/dex', cors(corsOptions))
-app.get('/dex',   cors(corsOptions), async (req, res) => {
-    let dex = await mongo['get']({
-        input:'mongo',
-        model:'dex',
-        type:'items'
-    },'get', 'type')
-
-    res.send(dex);
-})
-app.options('/delete-item', cors(corsOptions))
-app.delete('/delete-item', cors(corsOptions), async (req, res) => {
-    let del = await mongo({
-        input:'mongo',
-        model:'dex',
-        type:'items'
-    },'delete', 'type')
-    res.json('true')
-})
-
 
 app.use( express.static('docs'));
 app.use( express.static('static'));

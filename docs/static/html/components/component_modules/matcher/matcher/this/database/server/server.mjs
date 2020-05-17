@@ -6,7 +6,7 @@ function server(obj, path,node, method) {
             function setData( data) {
                 return new Promise((resolve, reject) => {
                     let formData  = new FormData();
-                    for(let name in data) {
+                   for(let name in data) {
                         formData.append(name, data[name]);
                     }
                     resolve(formData)
@@ -128,7 +128,7 @@ export default  (obj, func, ...args)=>{
                         // console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
                         switch (obj[props]) {
                             case 'auction':
-                                (async (obj, props,data) => {
+                               await (async (obj, props,data) => {
                                     try {
                                         if(!obj['path']){
                                             console.assert(false, 'Должно бытьсвойтсво obj["path""]')
@@ -158,7 +158,7 @@ export default  (obj, func, ...args)=>{
                             // console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
                             switch (obj[props]) {
                                 case 'account':
-                                    (async (obj, props,data) => {
+                                  await  (async (obj, props,data) => {
                                         try {
                                             out(obj)
                                         } catch (e) { err(e) }
@@ -178,7 +178,7 @@ export default  (obj, func, ...args)=>{
                         // console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
                         switch (obj[props]) {
                             case 'auctions':
-                                (async (obj, props,data) => {
+                                await   (async (obj, props,data) => {
                                     try {
                                         if(!obj['path']){
                                             console.assert(false, 'Должно бытьсвойтсво obj["path""]')
@@ -189,7 +189,7 @@ export default  (obj, func, ...args)=>{
                                 })(obj, args[0], args[1], args[2], args[3])
                                 break
                             case 'winner':
-                                (async (obj, props,data) => {
+                                await  (async (obj, props,data) => {
                                     try {
                                         if(!obj['path']){
                                             console.assert(false, 'Должно бытьсвойтсво obj["path""]')
@@ -200,7 +200,7 @@ export default  (obj, func, ...args)=>{
                                 })(obj, args[0], args[1], args[2], args[3])
                                 break
                             case 'timer':
-                                (async (obj, props,data) => {
+                                await   (async (obj, props,data) => {
                                     try {
                                         if(!obj['path']){
                                             console.assert(false, 'Должно бытьсвойтсво obj["path""]')
@@ -211,7 +211,7 @@ export default  (obj, func, ...args)=>{
                                 })(obj, args[0], args[1], args[2], args[3])
                                 break
                             case 'nft':
-                                (async (obj, props,data) => {
+                              await  (async (obj, props,data) => {
                                     try {
                                         if(!obj['path']){
                                             console.assert(false, 'Должно бытьсвойтсво obj["path""]')

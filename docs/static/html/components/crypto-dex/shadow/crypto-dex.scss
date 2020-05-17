@@ -1,6 +1,6 @@
-@import "/home/sergey/Desktop/telegram/css/fonts_new.scss";
-@import "/home/sergey/Desktop/telegram/css/util/media_new.scss";
-@import "/home/sergey/Desktop/telegram/css/util/interface";
+@import "/home/sergey/Desktop/system/css/fonts_new.scss";
+@import "/home/sergey/Desktop/system/css/util/media_new.scss";
+@import "/home/sergey/Desktop/system/css/util/interface";
 @mixin h3(){
   @include border();
   display: flex;
@@ -214,6 +214,7 @@ section{
       box-sizing: border-box;
       padding: 0.25vw;
       margin: 1vw;
+      align-self: self-start;
       box-shadow: inset 0vw 0vw 1vw 0px #5090454a;
       background-color: #76f4dd21;
     }

@@ -1,5 +1,5 @@
 import connection from "./connection.mjs";
-import empty from "is-empty";
+import empty from "./isEmpty/isEmpty.mjs";
 import mongo from "mongoose";
 
 let conn = null;

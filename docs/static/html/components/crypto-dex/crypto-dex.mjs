@@ -1,9 +1,10 @@
 import dex from '/static/html/components/component_modules/dex/dex.mjs'
 import classDex from '/static/html/components/component_modules/dex/dex_c.mjs'
-import Waves from '/static/html/components/component_modules/waves/waves.mjs'
 import iframe from '/static/html/components/component_modules/iframe/iframe.mjs'
 import isEmpty from '/static/html/components/component_modules/isEmpty/isEmpty.mjs'
 import emoji from '/static/html/components/component_modules/emoji/emoji.mjs'
+import events from '/static/html/components/component_modules/CustomEvent/index.mjs'
+import Waves from '/static/html/components/component_modules/waves/waves.mjs'
 customElements.define('crypto-dex',
     class extends HTMLElement {
         static get observedAttributes () {
@@ -688,54 +689,25 @@ customElements.define('crypto-dex',
                 })
             async function modules (obj) {
                 let methods = await classDex()
-                let waves = await Waves()
                 let relation = {}
                 let wallet = {}
+                let waves = await (await Waves())
+
                 document.addEventListener('iframe',async (event)=>{
                     if(event.detail === 'http://localhost:4999'){
-                            iframe.post(event.detail, {
-                                view:true,
-                                property:'прослушиваем получение кошелька',
-                                color:'6',
-                                substrate:{},
-                                relation:'await-wallet'
-                            },async (event)=>{
-                            if(!isEmpty(event.data.substrate)){
-                                wallet = event.data.substrate
-                                const params = {
-                                    amount: 800000000,
-                                    price:  510000,
-                                    amountAsset: 'WAVES',
-                                    priceAsset: '3KFXBGGLCjA5Z2DuW4Dq9fDDrHjJJP1ZEkaoajSzuKsC',
-                                    matcherPublicKey: "8QUAqtTckM5B8gvcuP7mMswat9SjKUuafJMusEoSn1Gy",
-                                    orderType: 'sell'
-                                }
-                                let response = waves.self.order(params, wallet['private']['seed'])
-                                let order = await waves.order(true, 'test', '3', JSON.stringify(response), 'order')
-                                //
-                                // console.log('~~~~~~~~~~~~~>>', wallet)
-                                // let orders = await waves.getOrders(true, 'получение ордеров','3', wallet['public']['key'],wallet['type'] )
-                                // console.log(`${emoji('astonished')} --->`, orders)
-                                // console.log(`${emoji('alien')} --->`)
-                            }
+                        iframe.post(event.detail, {
+                            view:true,
+                            property:'прослушиваем получение кошелька',
+                            color:'6',
+                            substrate:{},
+                            relation:'await-wallet'
+                        },async (event)=>{
+
+                            console.log('--->>>>>', event)
                         })
                     }
                 })
-                // Base58.encode(cipher.calculateSignature(getPrivateKey(), bytes));
-                let publicKey = waves.self.base58Decode('HrMWJVXDkjpzkMA3LnzurfmXMtRTtip4uS2236NvW6AR')
-                let timestamp = (Date.now()).toString()
-                console.assert(false, waves.self)
-                timestamp = waves.self.stringToBytes(timestamp)
-              
-                let concat = waves.self.concat(publicKey, timestamp)
-    
-                let seed = "tone leg hidden system tenant aware desk clap body robust debris puppy ecology scan runway thing second metal cousin ocean liberty banner garment rice feel"
-                let sign = waves.self.signBytes(seed,concat)
-                let signature = waves.self.base58Encode(sign)
-                console.assert(false, signature, timestamp)
-                let orders = await waves.getOrders(true, 'получение ордеров','3', {},'t')
-                console.log(`${emoji('astonished')} --->`, orders)
-                
+
                 obj['this'].shadowRoot.querySelector('#fswe').addEventListener('click',async (event)=>{
                     event.currentTarget.style.background = '#faf671'
                     let value =  event.currentTarget.innerHTML
@@ -889,41 +861,41 @@ customElements.define('crypto-dex',
                     fee:{},
                     assetId:['474jTeYx2r2Va35794tCScAXWJG9hU2HcgxzMowaZUnu','DG2xFkPdDwKUoBkzGAhQtLpSGzfXLiCYPEzeKH2Ad24p']
                 }
-
+                let itemDetails = {}
                 for(let item of description['assetId']){
-                    let itemDetails = await waves.details(item)
-                    description['details'][`${item}`] = (await waves.details(item))['decimals']
-                    description['name'][`${item}`] = (await waves.details(item))['name']
+                    itemDetails[`${item}`] = await events.eventListener.set(true,'w','8',item,'/assets/details/{assetId}')
+                    description['details'][`${item}`] = itemDetails[`${item}`]['decimals']
+                    description['name'][`${item}`] = itemDetails[`${item}`]['name']
                 }
                 description['details'][`WAVES`] = 8
                 description['name'][`WAVES`] = `WAVES`
-    
-    
+
                 for(let key in description){
-                          switch (key) {
-                              case 'wavesEuro':
-                                  obj['this'].shadowRoot.querySelector('[for="left"]').insertAdjacentHTML('beforeend', `${description['name'][`${description[key]['amountAsset']}`]}`)
-                                  obj['this'].shadowRoot.querySelector('#preview-left').innerText =`${description['name'][`${description[key]['amountAsset']}`]}/${description['name'][`${description[key]['priceAsset']}`]}`
-                                  break
-                              case 'euroUsd':
-                                  obj['this'].shadowRoot.querySelector('[for="center"]').insertAdjacentHTML('beforeend', `${description['name'][`${description[key]['priceAsset']}`]}`)
-                                  obj['this'].shadowRoot.querySelector('#preview-center').innerText =`${description['name'][`${description[key]['amountAsset']}`]}/${description['name'][`${description[key]['priceAsset']}`]}`
-                                  break
-                              case 'wavesUsd':
-                                  obj['this'].shadowRoot.querySelector('[for="right"]').insertAdjacentHTML('beforeend', `${description['name'][`${description[key]['priceAsset']}`]}`)
-                                  obj['this'].shadowRoot.querySelector('#preview-right').innerText =`${description['name'][`${description[key]['amountAsset']}`]}/${description['name'][`${description[key]['priceAsset']}`]}`
-                                  break
-                              default:
-                                  break
-                          }
+                  switch (key) {
+                      case 'wavesEuro':
+                          obj['this'].shadowRoot.querySelector('[for="left"]').insertAdjacentHTML('beforeend', `${description['name'][`${description[key]['amountAsset']}`]}`)
+                          obj['this'].shadowRoot.querySelector('#preview-left').innerText =`${description['name'][`${description[key]['amountAsset']}`]}/${description['name'][`${description[key]['priceAsset']}`]}`
+                          break
+                      case 'euroUsd':
+                          obj['this'].shadowRoot.querySelector('[for="center"]').insertAdjacentHTML('beforeend', `${description['name'][`${description[key]['priceAsset']}`]}`)
+                          obj['this'].shadowRoot.querySelector('#preview-center').innerText =`${description['name'][`${description[key]['amountAsset']}`]}/${description['name'][`${description[key]['priceAsset']}`]}`
+                          break
+                      case 'wavesUsd':
+                          obj['this'].shadowRoot.querySelector('[for="right"]').insertAdjacentHTML('beforeend', `${description['name'][`${description[key]['priceAsset']}`]}`)
+                          obj['this'].shadowRoot.querySelector('#preview-right').innerText =`${description['name'][`${description[key]['amountAsset']}`]}/${description['name'][`${description[key]['priceAsset']}`]}`
+                          break
+                      default:
+                          break
+                  }
                 }
                 
-                relation['w'] = 100
-                relation['u'] = 100
-                relation['e'] = 0.5
+                relation['w'] = 10
+                relation['u'] = 10
+                relation['e'] = 0.1
                 relation['decimals'] = description['details']
                 relation['fee'] = {}
                 relation['description'] = []
+
                     // let wavesEuro = await dex['get']({type:'wavesEuro',pair:description['wavesEuro']}, obj)
                 // let euroWaves = wavesEuro
                 // let wavesUsd = await  dex['get']({type:'wavesUsd',pair:description['wavesUsd']}, obj)
@@ -940,15 +912,18 @@ customElements.define('crypto-dex',
                 let priceAssetDecimals =  {}
                 let amountAssetDecimals = {}
                 let timerId = setTimeout(async  function tick() {
-                    // console.log('~~~~~~~~~~~~~~~~~~>',wallet)
+                    relation['eue'] = undefined
+                    relation['ueu'] = undefined
+                    relation['wew'] = undefined
+                    relation['wuw'] = undefined
+
                     let wavesEuro = await dex['get']({type:'wavesEuro',pair:description['wavesEuro']}, obj)
                     let euroWaves = wavesEuro
                     let wavesUsd = await  dex['get']({type:'wavesUsd',pair:description['wavesUsd']}, obj)
                     let usdWaves = wavesUsd
                     let euroUsd =  await  dex['get']({type:'eurUsd',pair:description['euroUsd']}, obj)
                     let usdEuro =  euroUsd
-    
-    
+
                     let priceAssetDecimalsEuro =  description['details'][`${wavesEuro['pair']['priceAsset']}`]
                     let amountAssetDecimalsEuro = description['details'][`${wavesEuro['pair']['amountAsset']}`]
                     let priceAssetDecimalsUsd =  description['details'][`${wavesUsd['pair']['priceAsset']}`]
@@ -962,6 +937,8 @@ customElements.define('crypto-dex',
                     obj['this'].shadowRoot.querySelector('#fswe').innerHTML = `${description['name'][`${wavesEuro.pair.priceAsset}`]}=>${description['name'][`${wavesEuro.pair.amountAsset}`]}[(${relation['buy(wavesUsd)']}*)${relation['sell(wavesEuro)']}]`
                     relation = await methods.buy(usdEuro, relation['sell(wavesEuro)'], relation, 'usdEuro')
                     obj['this'].shadowRoot.querySelector('#fbue').innerHTML = `${description['name'][`${usdEuro.pair.amountAsset}`]}=>${description['name'][`${usdEuro.pair.priceAsset}`]}[(${relation['sell(wavesEuro)']}*)${relation['buy(usdEuro)']}]`
+
+                    // console.assert(false, relation)
                     relation['description']['ueu'] = []
                     relation['description']['ueu'].push(relation['u'])
                     relation['description']['ueu'].push(relation['buy(wavesUsd)'])
@@ -976,6 +953,7 @@ customElements.define('crypto-dex',
                     obj['this'].shadowRoot.querySelector('#fswu').innerHTML = `${description['name'][`${wavesUsd.pair.amountAsset}`]}=>${description['name'][`${wavesUsd.pair.priceAsset}`]}[(${relation['buy(wavesEuro)']}*)${relation['sell(wavesUsd)']}]`
                     relation = await methods.buy(euroUsd,relation['sell(wavesUsd)'], relation, 'euroUsd')
                     obj['this'].shadowRoot.querySelector('#fbeu').innerHTML = `${description['name'][`${euroUsd.pair.priceAsset}`]}=>${description['name'][`${euroUsd.pair.amountAsset}`]}[(${relation['sell(wavesUsd)']}*)${relation['buy(euroUsd)']}]`
+
                     relation['description']['eue'] = []
                     relation['description']['eue'].push(relation['e'])
                     relation['description']['eue'].push(relation['buy(wavesEuro)'])
@@ -990,6 +968,7 @@ customElements.define('crypto-dex',
                     obj['this'].shadowRoot.querySelector('#sseu').innerHTML = `${description['name'][`${euroUsd.pair.amountAsset}`]}=>${description['name'][`${euroUsd.pair.priceAsset}`]}[(${relation['buy(euroWaves)']}*)${relation['sell(euroUsd)']}]`
                     relation = await methods.buy(wavesUsd,relation['sell(euroUsd)'], relation, 'wavesUsd')
                     obj['this'].shadowRoot.querySelector('#sbwu').innerHTML = `${description['name'][`${wavesUsd.pair.priceAsset}`]}=>${description['name'][`${wavesUsd.pair.amountAsset}`]}[(${relation['sell(euroUsd)']}*)${relation['buy(wavesUsd)']}]`
+
                     relation['description']['wuw'] = []
                     relation['description']['wuw'].push(relation['w'])
                     relation['description']['wuw'].push(relation['buy(euroWaves)'])
@@ -998,12 +977,14 @@ customElements.define('crypto-dex',
                     relation['buy(euroWaves)'] = {}
                     relation['sell(euroUsd)'] ={}
                     relation['buy(wavesUsd)'] = {}
+
                     relation = await methods.buy(usdWaves, relation['w'], relation, 'usdWaves')
                     obj['this'].shadowRoot.querySelector('#sbuw').innerHTML = `${description['name'][`${usdWaves.pair.amountAsset}`]}=>${description['name'][`${usdWaves.pair.priceAsset}`]}[(${relation['w']}*)${relation['buy(usdWaves)']}]`
                     relation = await methods.sell(usdEuro,relation['buy(usdWaves)'], relation, 'usdEuro')
                     obj['this'].shadowRoot.querySelector('#ssue').innerHTML = `${description['name'][`${usdEuro.pair.priceAsset}`]}=>${description['name'][`${usdEuro.pair.amountAsset}`]}[(${relation['buy(usdWaves)']}*)${relation['sell(usdEuro)']}]`
                     relation = await methods.buy(wavesEuro,relation['sell(usdEuro)'], relation, 'wavesEuro')
                     obj['this'].shadowRoot.querySelector('#sbwe').innerHTML = `${description['name'][`${wavesEuro.pair.amountAsset}`]}=>${description['name'][`${wavesEuro.pair.priceAsset}`]}[(${relation['sell(usdEuro)']}*)${relation['buy(wavesEuro)']}]`
+
                     relation['description']['wew'] = []
                     relation['description']['wew'].push(relation['w'])
                     relation['description']['wew'].push(relation['buy(usdWaves)'])
@@ -1012,9 +993,43 @@ customElements.define('crypto-dex',
                     relation['buy(usdWaves)'] = {}
                     relation['sell(usdEuro)'] ={}
                     relation['buy(wavesEuro)'] = {}
-    
-                 
-                 
+
+                    let seed = 'tone leg hidden system tenant aware desk clap body robust debris puppy ecology scan runway thing second metal cousin ocean liberty banner garment rice feel'
+                    let publicKey = 'HrMWJVXDkjpzkMA3LnzurfmXMtRTtip4uS2236NvW6AR'
+                    let timestamp = Date.now();
+                    let signature = await events.eventListener.set(true,'w','8',{
+                        seed:seed,
+                        publicKey:publicKey,
+                        timestamp:timestamp
+                    },'/assets/signature/{assetId}')
+
+                    let getOrders = await  events.eventListener.set(true, {
+                        timestamp:timestamp,
+                        signature:signature
+                    },'7',{
+                        property:'получаем ордера',
+                        publicKey:publicKey,
+                        substrate:publicKey,
+                        relation:'t'
+                    },'/matcher/orderbook/{publicKey}')
+
+
+
+                    let idbOrders = await events.eventListener.set(true, 't','7','monopoly','/storage/get/all')
+                    if(getOrders.length > 10){
+                        let object = JSON.stringify({
+                            sender: publicKey,
+                            timestamp: timestamp,
+                            signature: signature,
+                            orderId: null
+                        })
+                        await events.eventListener.set(true, 't','7',object,'/matcher/orderbook/cancel')
+                        await events.eventListener.set(true, 't','7',{},'/storage/delete/all')
+                    }else{
+                            let order = await events.eventListener.set(true,'t','8',relation['system']['items']['eue']['substrate'],'/matcher/orderbook/set')
+                          await events.eventListener.set(true, 't','7',order,'/storage/set/item')
+                    }
+                    //  console.log('###################', requestSet)
                     if(relation['description']['ueu'][0] - relation['description']['ueu'][3] < 0){
                         relation['description']['ueu'].push(new Date().toString())
                         relation['description']['ueu'].push('first')
@@ -1073,7 +1088,7 @@ customElements.define('crypto-dex',
                     //          <p class="euroUsd">${JSON.stringify(relation, null, 2)}</p> `)
                     // }
                     // methods.buy(euroUsd)
-    
+
     
     
                     for(let i=0; i < 10;i++){

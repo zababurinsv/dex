@@ -5,26 +5,37 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 </head>
 <body>
-<!--<page-external data-url="http://localhost:4444/import" data-height=27></page-external>-->
+<router-api data-template></router-api>
+<page-external data-url="http://localhost:4444/import" data-height=27></page-external>
 <!--        <crypto-graph slot="left"></crypto-graph>-->
 <!--        <crypto-graph slot="center"></crypto-graph>-->
 <!--        <crypto-graph slot="right"></crypto-graph>-->
 <!--<crypto-dex></crypto-dex>-->
-<player-faucet>
-    <page-external slot ="faucet" data-url="http://localhost:8020/import" data-height=37.6  data-width=30></page-external>
-    <card-player slot="player-2df5hhjf" preset="full"></card-player>
-    <card-player slot="player-2dfdfsg5hhjf" preset="full"></card-player>
-    <card-player slot="player-2dfd5hhjf" preset="full"></card-player>
-    <card-player slot="player-2dfdffsg5hhjf" preset="full"></card-player>
-    <card-player slot="player-2df5hghjf" preset="full"></card-player>
-    <card-player slot="player-2dfdfvsg5hhjf" preset="full"></card-player>
-    <card-player slot="player-2df5hhajf" preset="full"></card-player>
-    <card-player slot="player-2dfdfsg35hhjf" preset="full"></card-player>
-</player-faucet>
+<!--<player-faucet>-->
+<!--    <page-external slot ="faucet" data-url="http://localhost:8020/import" data-height=37.6  data-width=30></page-external>-->
+<!--    <card-player slot="player-2df5hhjf" preset="full"></card-player>-->
+<!--    <card-player slot="player-2dfdfsg5hhjf" preset="full"></card-player>-->
+<!--    <card-player slot="player-2dfd5hhjf" preset="full"></card-player>-->
+<!--    <card-player slot="player-2dfdffsg5hhjf" preset="full"></card-player>-->
+<!--    <card-player slot="player-2df5hghjf" preset="full"></card-player>-->
+<!--    <card-player slot="player-2dfdfvsg5hhjf" preset="full"></card-player>-->
+<!--    <card-player slot="player-2df5hhajf" preset="full"></card-player>-->
+<!--    <card-player slot="player-2dfdfsg35hhjf" preset="full"></card-player>-->
+<!--</player-faucet>-->
+<!--<page-external data-url="http://localhost:4999/import" data-height=104></page-external>-->
+<!--        <page-external data-url="http://localhost:4444/import" data-height=26></page-external>-->
+<crypto-dex></crypto-dex>
+<!--        <crypto-graph slot="left"></crypto-graph>-->
+<!--        <crypto-graph slot="center"></crypto-graph>-->
+<!--        <crypto-graph slot="right" data-width="50"></crypto-graph>-->
+
+
+
 </body>
-<script type="module" src="./static/html/components/crypto-dex/crypto-dex.mjs" async></script>
-<script type="module" src="./static/html/components/player-faucet/player-faucet.mjs" async></script>
-<script type="module" src="./static/html/components/page-external/page-external.mjs" async></script>
+<script type="module" src="/static/html/components/router-api/router-api.mjs" async></script>
+<script type="module" src="/static/html/components/crypto-dex/crypto-dex.mjs" async></script>
+<script type="module" src="/static/html/components/player-faucet/player-faucet.mjs" async></script>
+<script type="module" src="/static/html/components/page-external/page-external.mjs" async></script>
 <script type="module">
     import emoji from '/static/html/components/component_modules/emoji/emoji.mjs'
     import white from '/static/html/components/component_modules/white/white.mjs'

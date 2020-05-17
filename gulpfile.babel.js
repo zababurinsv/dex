@@ -3,6 +3,7 @@ import sass from "gulp-sass";
 import node from 'node-sass';
 import autoprefixer from "gulp-autoprefixer";
 import replace from './gulp-modules/replace.js'
+import replaceCss from './gulp-modules/replace.css.js'
 import {exec} from "child_process";
 import minify from "gulp-minify";
 import del from "del";
@@ -28,7 +29,7 @@ gulp.task('sass:watch', function () {
 });
 
 gulp.task('gulp.build', function (cb) {
-    exec('npm run build-bundle', function (err, stdout, stderr) {
+    exec('npm run build', function (err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
         cb(err);
@@ -40,7 +41,11 @@ gulp.task(`gulp.replace`, function () {
         .pipe(replace('','', callback))
         .pipe(gulp.dest(`./temp`));
 });
-
+gulp.task(`gulp.replace.css`, function () {
+    return  gulp.src('./docs/static/html/components/**/*.scss')
+        .pipe(replaceCss('','', callback))
+        .pipe(gulp.dest('./docs/static/html/components/'));
+});
 gulp.task('gulp.minify', function() {
     return  gulp.src([`./temp/${bundle}.mjs`])
         .pipe(minify({
@@ -56,7 +61,7 @@ gulp.task('gulp.minify', function() {
 gulp.task('gulp.remove.temp', function(){
         return del('./temp', {force:true});
     });
-
+gulp.task('gulp-replace-path', gulp.series('gulp.replace.css'))
 gulp.task('gulp-bundle', gulp.series('gulp.build', 'gulp.replace', 'gulp.minify', 'gulp.remove.temp'))
-gulp.task('gulp-watch-slyle', gulp.series('sass','sass:watch'))
+gulp.task('gulp-watch-slyle', gulp.series('gulp.replace.css','sass','sass:watch'))
 gulp.task('default', gulp.parallel('gulp-watch-slyle', 'gulp-bundle'))
