@@ -1016,7 +1016,7 @@ customElements.define('crypto-dex',
 
 
                     let idbOrders = await events.eventListener.set(true, 't','7','monopoly','/storage/get/all')
-                    if(getOrders.length > 10){
+                    if(getOrders.length > 2){
                         let object = JSON.stringify({
                             sender: publicKey,
                             timestamp: timestamp,

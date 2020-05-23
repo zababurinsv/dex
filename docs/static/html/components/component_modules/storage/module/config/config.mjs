@@ -40,8 +40,16 @@ config['account']['testnodes'] = 'https://pool.testnet.wavesnodes.com'
 config['account']['sse'] = 'https://account.zababurinsv.now.sh/stream'
 
 
-config['dex'] = 'http://localhost:3003'
-config['webdav'] = 'http://localhost:4000'
+// config['dex'] = 'http://localhost:3003'
+// config['webdav'] = 'http://localhost:4051/api'
+// config['archive'] = 'http://localhost:4222/api'
+config['archive'] = 'https://server-demon.herokuapp.com/api'
+
+
+// config['dex'] = 'http://localhost:3000/api'
+config['dex'] = 'https://mongo.zababurinsv.now.sh/api'
+config['webdav'] = 'https://webdav.zababurinsv.now.sh/api'
+// config['webdav'] = 'http://localhost:3000'
 export default{
   local: config['local'],
   now: config['now'],
@@ -53,7 +61,8 @@ export default{
   mongo:config['mongo'],
   account:config['account'],
   dex:config['dex'],
-  webdav:config['webdav']
+  webdav:config['webdav'],
+  archive:config['archive']
 }
 /*
 let config = {}

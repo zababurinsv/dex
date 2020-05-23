@@ -36,6 +36,11 @@ let Class = class Storage {
             await database.delete(object.view, object.relation, object.color, object.substrate, object.property)
             return   object.callback(object)
         })
+        events.eventListener.get(true, 'await', '5', '','/storage/delete/all/items', async (object)=>{
+            await database.delete(object.view, object.relation, object.color, object.substrate, object.property)
+            return   object.callback(object)
+        })
+
     }
 
     get self() {
