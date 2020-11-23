@@ -2,8 +2,8 @@ import gulp from 'gulp';
 import sass from "gulp-sass";
 import node from 'node-sass';
 import autoprefixer from "gulp-autoprefixer";
-import replace from './gulp-modules/replace.js'
-import replaceCss from './gulp-modules/replace.css.js'
+import replace from './gulp_modules/replace.js'
+import replaceCss from './gulp_modules/replace.css.js'
 import {exec} from "child_process";
 import minify from "gulp-minify";
 import del from "del";
