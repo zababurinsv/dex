@@ -16,14 +16,11 @@ waves.then((waves)=> {
   object.testnodes = 'https://testnodes.wavesnodes.com'
   object.client = []
   object.client.alice = '3MvegjWphvbYgEgQmqJiJhYWXnqPNTpieVc'
-  describe('Account Test Suite', async function () {
+  describe('DEX', async function () {
     this.timeout(10000);
-
     before(async function () {
-      console.log('emoji', emoji('all'))
-      console.thinking('(((~~~))) waves (((~~~)))',emoji('thinking'), waves)
+      console.log('emoji', emoji('moon'))
     });
-
     it('Connect bank(подключение банка)', function () {
       return new Promise(async (resolve, reject) => {
         waves.bank(true, `${emoji('thinking')} какие то свойства`,'3', actions,'bank')
@@ -32,12 +29,6 @@ waves.then((waves)=> {
         resolve(bank.dAppData)
       })
     })
-  })
-  describe('DEX', async function () {
-    this.timeout(10000);
-    before(async function () {
-      console.log('emoji', emoji('moon'))
-    });
     describe('case №1', async function () {
       it('case №1 action 1', function () {
         return new Promise(async (resolve, reject) => {

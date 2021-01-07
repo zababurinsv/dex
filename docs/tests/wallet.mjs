@@ -17,8 +17,8 @@ waves.then((waves)=>{
         this.timeout(10000);
 
         before(async function () {
-            console.log('emoji', emoji('all'))
-            console.thinking('(((~~~))) waves (((~~~)))',emoji('thinking'), waves)
+            // console.log('emoji', emoji('all'))
+            // console.thinking('(((~~~))) waves (((~~~)))',emoji('thinking'), waves)
         });
 
         it('Connect bank(подключение банка)', function () {
