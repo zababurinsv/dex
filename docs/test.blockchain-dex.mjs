@@ -2,7 +2,8 @@ import emoji from '/static/html/components/component_modules/emoji/emoji.mjs';
 import task from '/static/html/components/component_modules/heap/index.mjs'
 import isEmpty from '/static/html/components/component_modules/isEmpty/isEmpty.mjs'
 import Waves from '/static/html/components/component_modules/waves/waves.mjs'
-import actions from '/static/html/components/component_modules/relation/waves.mjs'
+import actions from '/static/html/components/component_modules/action/waves.mjs'
+// import actions from '/static/html/components/component_modules/relation/waves.mjs'
 import events from '/static/html/components/component_modules/CustomEvent/index.mjs'
 import relations from '/static/html/components/component_modules/relation/index.mjs'
 let waves =  Waves()
@@ -23,8 +24,9 @@ waves.then((waves)=> {
     });
     it('Connect bank(подключение банка)', function () {
       return new Promise(async (resolve, reject) => {
-        waves.bank(true, `${emoji('thinking')} какие то свойства`,'3', actions,'bank')
-        let bank = await events.addEventListener(true, `${emoji('thinking')} какие то свойства`,'3', actions,'bank')
+        action
+        // waves.bank(true, `${emoji('thinking')} какие то свойства`,'3', actions,'bank')
+        // let bank = await events.addEventListener(true, `${emoji('thinking')} какие то свойства`,'3', actions,'bank')
         console.log(`${emoji('pray')}`,bank.dAppData)
         resolve(bank.dAppData)
       })
