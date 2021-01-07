@@ -41,7 +41,8 @@
 <script type="module">
   import UA from '/static/html/components/component_modules/bundle/ua/ua.index.mjs'
   import tests from  '/static/html/components/component_modules/tests/tests.mjs'
-  // import client from '/static/html/components/component_modules/client_reverse/client_reverse.mjs'
+  import actions from '/static/html/components/component_modules/action/waves.index.actions.mjs'
+
   let sys = {
     init:true,
     test: true
@@ -91,18 +92,6 @@
       navigator.serviceWorker.register('/sw.js');
     }
   }
-  /*
-    client.system()
-      .then((system)=>{
-        console.log('@@@@@@ system @@@@@@', system)
-        let sys = {
-          port: 9876,
-          localhost: `localhost:9876`,
-          wstunHost: 'ws://localhost:5000'
-        }
-        system.start('5005', sys.wstunHost, sys.localhost);
-    })
-   */
 </script>
 <style> @import url("/css/index.css");</style>
 </html>
