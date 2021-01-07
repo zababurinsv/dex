@@ -78,7 +78,7 @@
   }
   let userAgent = new UA['default']['user-agent']
   let type = userAgent.getResult().device.type
-  console.log('user-agent', JSON.stringify(userAgent.getResult(), null, 2));
+  // console.log('user-agent', JSON.stringify(userAgent.getResult(), null, 2));
   if(type === 'tablet' || type === 'mobile') {
     init(true).then(()=>{
       test(sys.test)

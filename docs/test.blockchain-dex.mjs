@@ -18,12 +18,12 @@ object.client.alice = '3MvegjWphvbYgEgQmqJiJhYWXnqPNTpieVc'
 describe('dex', async function () {
   this.timeout(10000);
   before(async function () {
-    console.log('emoji', emoji('moon'))
+    // console.log('emoji', emoji('moon'))
   });
-  it('connect account bank', function () {
+  it('connect account', function () {
     return new Promise(async (resolve, reject) => {
      let bank = await task.set(true, '','red', {}, '/waves/bank')
-      console.log('# bank', bank.data)
+      // console.log('# bank', bank.data)
       // waves.bank(true, `${emoji('thinking')} какие то свойства`,'3', actions,'bank')
       // let bank = await events.addEventListener(true, `${emoji('thinking')} какие то свойства`,'3', actions,'bank')
       // console.log(`${emoji('pray')}`,bank.dAppData)
