@@ -2,9 +2,9 @@ import emoji from '/static/html/components/component_modules/emoji/emoji.mjs';
 import task from '/static/html/components/component_modules/heap/index.mjs'
 import isEmpty from '/static/html/components/component_modules/isEmpty/isEmpty.mjs'
 import Waves from '/static/html/components/component_modules/waves/waves.mjs'
-// import actions from '/static/html/components/component_modules/relation/waves.mjs'
-import events from '/static/html/components/component_modules/CustomEvent/index.mjs'
-import relations from '/static/html/components/component_modules/relation/index.mjs'
+// import relation from '/static/html/components/component_modules/relation/waves.mjs'
+// import events from '/static/html/components/component_modules/CustomEvent/index.mjs'
+// import relations from '/static/html/components/component_modules/relation/index.mjs'
 let waves =  Waves()
 let testObject = {}
 testObject.staticProperty = {}
