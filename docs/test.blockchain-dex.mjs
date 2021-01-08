@@ -1,20 +1,18 @@
 import emoji from '/static/html/components/component_modules/emoji/emoji.mjs';
 import task from '/static/html/components/component_modules/heap/index.mjs'
 import isEmpty from '/static/html/components/component_modules/isEmpty/isEmpty.mjs'
+import Waves from '/static/html/components/component_modules/waves/index.mjs'
 // import Waves from '/static/html/components/component_modules/waves/waves.mjs'
 // import relation from '/static/html/components/component_modules/relation/waves.mjs'
 // import events from '/static/html/components/component_modules/CustomEvent/index.mjs'
 // import relations from '/static/html/components/component_modules/relation/index.mjs'
 // let waves =  Waves()
+let waves = new Waves()
 let testObject = {}
 testObject.staticProperty = {}
 testObject.staticProperty.wallet = []
 const wvs = 10 ** 8;
 let object = {}
-object.dapp = '3N8n4Lc8BMsPPyVHJXTivQWs7ER61bB7wQn'
-object.testnodes = 'https://testnodes.wavesnodes.com'
-object.client = []
-object.client.alice = '3MvegjWphvbYgEgQmqJiJhYWXnqPNTpieVc'
 describe('dex', async function () {
   this.timeout(10000);
   before(async function () {
@@ -22,51 +20,70 @@ describe('dex', async function () {
   });
   it('connect account', function () {
     return new Promise(async (resolve, reject) => {
-     let bank = await task.set(true, '','red', {}, '/waves/bank')
-      // console.log('# bank', bank.data)
-      // waves.bank(true, `${emoji('thinking')} какие то свойства`,'3', actions,'bank')
-      // let bank = await events.addEventListener(true, `${emoji('thinking')} какие то свойства`,'3', actions,'bank')
-      // console.log(`${emoji('pray')}`,bank.dAppData)
-      // resolve(bank.dAppData)
-      resolve( bank.data)
+      resolve(await task.set(true, '','red', {}, '/waves/bank'))
     })
   })
   describe('account', async function () {
     it('wallet', function () {
       return new Promise(async (resolve, reject) => {
-        // let wallet = await task.set(true, '','red', {}, '/waves/wallet')
-
-        resolve(true)
-      })
-    })
-    it('Create wallet(создание кошелька)', function () {
-      return new Promise(function (resolve, reject) {
-       /*
-        waves.wallet(true, `${emoji('thinking')} какие то свойства`, '3', actions, 'wallet')
-        document.addEventListener('created-wallet', async (event) => {
-          switch (event['detail']['/']) {
-            case 'wallet':
-              testObject.staticProperty.wallet = event.detail
-              console.log(`${emoji(`dancer`)}`, event.detail, `${emoji(`dancer`)}`)
-              break
-            default:
-              console.warn(`${emoji('thinking')}результат не обрабатывается${emoji('thinking')}`, event['detail']['/'], event['detail'])
-              break
-          }
-          resolve(event.detail.wallet)
-        })
-        */
+        let wallet = await task.set(true, '','red', {}, '/waves/create/wallet')
+        resolve(wallet)
       })
     })
     it('transfer', function () {
       return new Promise(async (resolve, reject) => {
-        let transfer = await task.set(true, '','red', {}, '/waves/transfer')
+        let transfer = await task.set(true, '','red', {
+          from:'bob',
+          to:'alice'
+        }, '/waves/transfer')
+        resolve(transfer)
+      })
+    })
+    it(' create nft', function () {
+      return new Promise(async (resolve, reject) => {
+        // let transfer = await task.set(true, '','red', {
+        //   from:'bob',
+        //   to:'alice'
+        // }, '/waves/transfer')
         resolve(true)
       })
     })
+    it('Set Script', function () {
+      return new Promise(async (resolve, reject) => {
+        // let transfer = await task.set(true, '','red', {
+        //   from:'bob',
+        //   to:'alice'
+        // }, '/waves/transfer')
+        resolve(true)
+      })
+    })
+    it('save account', function () {
+      return new Promise(async (resolve, reject) => {
+
+    let nft = await waves.getNft('3N8n4Lc8BMsPPyVHJXTivQWs7ER61bB7wQn', 12)
+    let object = {}
+        for(let key in nft) {
+            try{
+
+                let item = JSON.parse(nft[key].description)
+                console.log()
+                if(item.name === 'Olga Gavrilova'){
+                    object = nft[key]
+                    break
+                }
+
+            }catch (e) {
+
+            }
+        }
+        console.log('nft', object)
+        resolve(object)
+      })
+    })
+
   })
-  describe('Save wallet', async function () {
-    it('Send wallet(сохранение кошелька)', function () {
+  describe('wallet', async function () {
+    it('Send wallet', function () {
       return new Promise(async (resolve, reject)=>{
         /*
         let scrollWidth = Math.max(
@@ -84,11 +101,44 @@ describe('dex', async function () {
           }
         });
 */
+        resolve(true)
       })
     })
-    it('Faucet for wallet(перевод средств на кошелёк)', function () {
-      return new Promise(async (resolve, reject)=>{
-        //waves.faucet(true, `${emoji('thinking')} какие то свойства`, '3', actions, 'faucet')
+    it('Bank views(заполнение полей формы)', function () {
+      return new Promise(async function (resolve, reject) {
+        // try{
+        //   testObject.staticProperty.bank.balance = await waves.balance(testObject.staticProperty.bank['/'])
+        //   document.addEventListener('bank-form-end',async (event)=>{
+        //     if(event.detail.data){
+        //       resolve(true)
+        //     }else{
+        //       reject(true)
+        //     }
+        //   })
+        //   customEvents('bank-form', testObject.staticProperty.bank)
+        // }catch (e) {
+        //   reject(e)
+        // }
+        resolve(true)
+      })
+    })
+    it('input wallet(ввод кошелька)', function () {
+      return new Promise(async (resolve, reject)=> {
+        // try{
+        //   testObject.staticProperty.bank.clients[0].balance = await waves.balance(testObject.staticProperty.bank.clients[0].wallets.waves.address)
+        //   document.addEventListener('input-wallet-end',async (event)=>{
+        //     if(event.detail.data.status){
+        //       resolve(true)
+        //     }else{
+        //       reject( event.detail )
+        //     }
+        //
+        //   })
+        //   customEvents('input-wallet', testObject.staticProperty.bank.clients[0].balance)
+        // }catch (e) {
+        //   reject(e)
+        // }
+        resolve(true)
       })
     })
   })
