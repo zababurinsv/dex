@@ -43,8 +43,8 @@
 <script type="module">
   import UA from '/static/html/components/component_modules/bundle/ua/ua.index.mjs'
   import tests from  '/static/html/components/component_modules/tests/tests.mjs'
-  import actions from '/static/html/components/component_modules/action/waves.index.actions.mjs'
-
+  import('/static/html/components/component_modules/action/waves.index.actions.mjs')
+  import('/static/html/components/component_modules/action/waves.game.actions.mjs')
   let sys = {
     init:true,
     test: true

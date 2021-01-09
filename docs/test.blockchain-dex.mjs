@@ -1,13 +1,6 @@
 import emoji from '/static/html/components/component_modules/emoji/emoji.mjs';
 import task from '/static/html/components/component_modules/heap/index.mjs'
 import isEmpty from '/static/html/components/component_modules/isEmpty/isEmpty.mjs'
-import Waves from '/static/html/components/component_modules/waves/index.mjs'
-// import Waves from '/static/html/components/component_modules/waves/index.mjs'
-// import relation from '/static/html/components/component_modules/relation/waves.mjs'
-// import events from '/static/html/components/component_modules/CustomEvent/index.mjs'
-// import relations from '/static/html/components/component_modules/relation/index.mjs'
-// let waves =  Waves()
-let waves = new Waves()
 let testObject = {}
 testObject.staticProperty = {}
 testObject.staticProperty.wallet = []
@@ -20,14 +13,44 @@ describe('dex', async function () {
   });
   it('connect account', function () {
     return new Promise(async (resolve, reject) => {
-      resolve(await task.set(true, '','red', {}, '/waves/dApp'))
+      let dApp = await task.set(true, '','red', {}, '/waves/dApp');
+      (dApp.status && dApp.message)
+        ? resolve(dApp)
+        : reject(dApp)
     })
   })
-  describe('account', async function () {
+
+  describe('NFT', async function () {
+    it('get NFT token', function () {
+      return new Promise(async (resolve, reject) => {
+        let transfer = await task.set(true, '','red', {
+          name:'accompanist',
+          description:'olga',
+        }, '/get/nft');
+        (transfer.status && transfer.message)
+          ? resolve(transfer)
+          : reject(transfer)
+      })
+    })
+    it('create NFT', function () {
+      return new Promise(async (resolve, reject) => {
+        let nft = await task.set(true, '','red', {
+          name:'surok',
+          description:'веснадцать'
+        }, '/create/nft');
+        (nft.status && nft.message)
+          ? resolve(nft)
+          : reject(nft)
+      })
+    })
+  })
+  describe('waves', async function () {
     it('wallet', function () {
       return new Promise(async (resolve, reject) => {
-        let wallet = await task.set(true, '','red', {}, '/waves/create/wallet')
-        resolve(wallet)
+        let wallet = await task.set(true, '','red', {}, '/waves/create/wallet');
+        (wallet.status && wallet.message)
+          ? resolve(wallet)
+          : reject(wallet)
       })
     })
     it('transfer', function () {
@@ -35,52 +58,12 @@ describe('dex', async function () {
         let transfer = await task.set(true, '','red', {
           from:'bob',
           to:'alice'
-        }, '/waves/transfer')
-        resolve(transfer)
+        }, '/waves/transfer');
+        (transfer.status && transfer.message)
+          ? resolve(transfer)
+          : reject(transfer)
       })
     })
-    it(' create nft', function () {
-      return new Promise(async (resolve, reject) => {
-        // let transfer = await task.set(true, '','red', {
-        //   from:'bob',
-        //   to:'alice'
-        // }, '/waves/transfer')
-        resolve(true)
-      })
-    })
-    it('Set Script', function () {
-      return new Promise(async (resolve, reject) => {
-        // let transfer = await task.set(true, '','red', {
-        //   from:'bob',
-        //   to:'alice'
-        // }, '/waves/transfer')
-        resolve(true)
-      })
-    })
-    it('save account', function () {
-      return new Promise(async (resolve, reject) => {
-
-    let nft = await waves.getNft('3N8n4Lc8BMsPPyVHJXTivQWs7ER61bB7wQn', 12)
-    let object = {}
-        for(let key in nft) {
-            try{
-
-                let item = JSON.parse(nft[key].description)
-                console.log()
-                if(item.name === 'Olga Gavrilova'){
-                    object = nft[key]
-                    break
-                }
-
-            }catch (e) {
-
-            }
-        }
-        console.log('nft', object)
-        resolve(object)
-      })
-    })
-
   })
   describe('wallet', async function () {
     it('Send wallet', function () {
@@ -106,19 +89,19 @@ describe('dex', async function () {
     })
     it('Bank views(заполнение полей формы)', function () {
       return new Promise(async function (resolve, reject) {
-        // try{
-        //   testObject.staticProperty.bank.balance = await waves.balance(testObject.staticProperty.bank['/'])
-        //   document.addEventListener('bank-form-end',async (event)=>{
-        //     if(event.detail.data){
-        //       resolve(true)
-        //     }else{
-        //       reject(true)
-        //     }
-        //   })
-        //   customEvents('bank-form', testObject.staticProperty.bank)
-        // }catch (e) {
-        //   reject(e)
-        // }
+        try{
+          testObject.staticProperty.bank.balance = await waves.balance(testObject.staticProperty.bank['/'])
+          document.addEventListener('bank-form-end',async (event)=>{
+            if(event.detail.data){
+              resolve(true)
+            }else{
+              reject(true)
+            }
+          })
+          customEvents('bank-form', testObject.staticProperty.bank)
+        }catch (e) {
+          reject(e)
+        }
         resolve(true)
       })
     })
