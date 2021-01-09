@@ -34,7 +34,7 @@ describe('dex', async function () {
     })
     it('create NFT', function () {
       return new Promise(async (resolve, reject) => {
-        let nft = await task.set(true, '','red', {
+        let nft = await task.set(false, '','red', {
           name:'surok',
           description:'веснадцать'
         }, '/create/nft');
@@ -45,9 +45,9 @@ describe('dex', async function () {
     })
   })
   describe('waves', async function () {
-    it('wallet', function () {
+    it('create wallet', function () {
       return new Promise(async (resolve, reject) => {
-        let wallet = await task.set(true, '','red', {}, '/waves/create/wallet');
+        let wallet = await task.set(false, '','red', {}, '/waves/create/wallet');
         (wallet.status && wallet.message)
           ? resolve(wallet)
           : reject(wallet)
