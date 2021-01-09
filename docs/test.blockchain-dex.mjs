@@ -20,7 +20,7 @@ describe('dex', async function () {
   });
   it('connect account', function () {
     return new Promise(async (resolve, reject) => {
-      resolve(await task.set(true, '','red', {}, '/waves/bank'))
+      resolve(await task.set(true, '','red', {}, '/waves/dApp'))
     })
   })
   describe('account', async function () {
