@@ -1,4 +1,4 @@
-import Waves from '/static/html/components/component_modules/waves/waves.mjs'
+import Waves from '/static/html/components/component_modules/waves/index.mjs'
 customElements.define('web3-authorization-waves',
     class extends HTMLElement {
       static get observedAttributes () {

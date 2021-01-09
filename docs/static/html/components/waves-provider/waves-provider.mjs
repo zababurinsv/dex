@@ -2,7 +2,7 @@ import store from '/static/html/components/component_modules/staticProperty/stat
 import isEmpty from '/static/html/components/component_modules/isEmpty/isEmpty.mjs'
 import Account from '/static/html/components/component_modules/account/account.mjs'
 import walletTemplate from '/static/html/components/waves-provider/template/wallet.mjs'
-import Waves from '/static/html/components/component_modules/waves/waves.mjs'
+import Waves from '/static/html/components/component_modules/waves/index.mjs'
 import events from '/static/html/components/component_modules/CustomEvent/index.mjs'
 import templates from '/static/html/components/waves-provider/template/index.mjs'
 customElements.define('waves-provider',
