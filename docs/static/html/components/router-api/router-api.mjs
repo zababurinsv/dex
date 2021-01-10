@@ -734,7 +734,7 @@ customElements.define('router-api',
                 })
 
                 events.eventListener.get(true, 'await', '5', '','/matcher/get/order',async (object)=>{
-
+                        console.assert(false, object)
                     let seed = 'tone leg hidden system tenant aware desk clap body robust debris puppy ecology scan runway thing second metal cousin ocean liberty banner garment rice feel'
                     let response = waves.self.order(object.substrate, seed)
                     response = JSON.stringify(response)
