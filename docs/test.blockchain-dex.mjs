@@ -55,13 +55,52 @@ describe('dex', async function () {
     })
     it('transfer', function () {
       return new Promise(async (resolve, reject) => {
-        let transfer = await task.set(true, '','red', {
+        let transfer = await task.set(false, '','red', {
           from:'bob',
           to:'alice'
         }, '/waves/transfer');
         (transfer.status && transfer.message)
           ? resolve(transfer)
           : reject(transfer)
+      })
+    })
+  })
+  describe('form', async function () {
+    it('Bank views(заполнение полей формы)', function () {
+      return new Promise(async function (resolve, reject) {
+        // try{
+        //   testObject.staticProperty.bank.balance = await waves.balance(testObject.staticProperty.bank['/'])
+        //   document.addEventListener('bank-form-end',async (event)=>{
+        //     if(event.detail.data){
+        //       resolve(true)
+        //     }else{
+        //       reject(true)
+        //     }
+        //   })
+        //   customEvents('bank-form', testObject.staticProperty.bank)
+        // }catch (e) {
+        //   reject(e)
+        // }
+        resolve(true)
+      })
+    })
+    it('input wallet(ввод кошелька)', function () {
+      return new Promise(async (resolve, reject)=> {
+        // try{
+        //   testObject.staticProperty.bank.clients[0].balance = await waves.balance(testObject.staticProperty.bank.clients[0].wallets.waves.address)
+        //   document.addEventListener('input-wallet-end',async (event)=>{
+        //     if(event.detail.data.status){
+        //       resolve(true)
+        //     }else{
+        //       reject( event.detail )
+        //     }
+        //
+        //   })
+        //   customEvents('input-wallet', testObject.staticProperty.bank.clients[0].balance)
+        // }catch (e) {
+        //   reject(e)
+        // }
+        resolve(true)
       })
     })
   })
@@ -84,43 +123,6 @@ describe('dex', async function () {
           }
         });
 */
-        resolve(true)
-      })
-    })
-    it('Bank views(заполнение полей формы)', function () {
-      return new Promise(async function (resolve, reject) {
-        try{
-          testObject.staticProperty.bank.balance = await waves.balance(testObject.staticProperty.bank['/'])
-          document.addEventListener('bank-form-end',async (event)=>{
-            if(event.detail.data){
-              resolve(true)
-            }else{
-              reject(true)
-            }
-          })
-          customEvents('bank-form', testObject.staticProperty.bank)
-        }catch (e) {
-          reject(e)
-        }
-        resolve(true)
-      })
-    })
-    it('input wallet(ввод кошелька)', function () {
-      return new Promise(async (resolve, reject)=> {
-        // try{
-        //   testObject.staticProperty.bank.clients[0].balance = await waves.balance(testObject.staticProperty.bank.clients[0].wallets.waves.address)
-        //   document.addEventListener('input-wallet-end',async (event)=>{
-        //     if(event.detail.data.status){
-        //       resolve(true)
-        //     }else{
-        //       reject( event.detail )
-        //     }
-        //
-        //   })
-        //   customEvents('input-wallet', testObject.staticProperty.bank.clients[0].balance)
-        // }catch (e) {
-        //   reject(e)
-        // }
         resolve(true)
       })
     })
