@@ -997,7 +997,7 @@ customElements.define('crypto-dex',
                     let seed = 'tone leg hidden system tenant aware desk clap body robust debris puppy ecology scan runway thing second metal cousin ocean liberty banner garment rice feel'
                     let publicKey = 'HrMWJVXDkjpzkMA3LnzurfmXMtRTtip4uS2236NvW6AR'
                     let timestamp = Date.now();
-                    let signature = await events.eventListener.set(true,'w','8',{
+                    let signature = await events.eventListener.set(true,'W','8',{
                         seed:seed,
                         publicKey:publicKey,
                         timestamp:timestamp

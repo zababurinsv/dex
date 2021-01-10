@@ -23,7 +23,7 @@ describe('dex', async function () {
   describe('NFT', async function () {
     it('get NFT token', function () {
       return new Promise(async (resolve, reject) => {
-        let transfer = await task.set(true, '','red', {
+        let transfer = await task.set(true, 'T','red', {
           name:'accompanist',
           description:'olga',
         }, '/get/nft');
