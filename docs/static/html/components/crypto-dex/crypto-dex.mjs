@@ -1,5 +1,5 @@
 import dex from '/static/html/components/component_modules/dex/dex.mjs'
-import classDex from '/static/html/components/component_modules/dex/dex_c.mjs'
+import classDex from '/static/html/components/component_modules/dex/index.mjs'
 import iframe from '/static/html/components/component_modules/iframe/iframe.mjs'
 import isEmpty from '/static/html/components/component_modules/isEmpty/isEmpty.mjs'
 import emoji from '/static/html/components/component_modules/emoji/emoji.mjs'
