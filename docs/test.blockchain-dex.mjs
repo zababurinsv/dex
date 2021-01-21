@@ -27,7 +27,6 @@ describe('dex', async function () {
           name:'accompanist',
           description:'olga',
         }, '/get/nft');
-        console.log('transfer: ',transfer)
         (transfer.status && transfer.message)
           ? resolve(transfer)
           : reject(transfer)
