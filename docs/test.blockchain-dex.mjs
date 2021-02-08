@@ -1,4 +1,5 @@
 import emoji from '/static/html/components/component_modules/emoji/emoji.mjs';
+import routes from '/static/html/components/component_modules/bundle/router/router.index.mjs'
 import task from '/static/html/components/component_modules/heap/index.mjs'
 import isEmpty from '/static/html/components/component_modules/isEmpty/isEmpty.mjs'
 let testObject = {}
@@ -19,7 +20,15 @@ describe('dex', async function () {
         : reject(dApp)
     })
   })
-
+  describe('Router', async function () {
+    it('init router', function () {
+      return new Promise(async (resolve, reject) => {
+        ((await routes.get('/user/32')).success)
+          ? resolve(true)
+          : reject(false)
+      })
+    })
+  })
   describe('NFT', async function () {
     it('get NFT token', function () {
       return new Promise(async (resolve, reject) => {
