@@ -12,21 +12,31 @@ describe('dex', async function () {
   before(async function () {
     // console.log('emoji', emoji('moon'))
   });
+  describe('Router', async function () {
+    it('init router', function () {
+      return new Promise(async (resolve, reject) => {
+
+        await routes.push('/p/index')
+        await routes.push('/o/l/index')
+        await routes.push('/l/i/n/index')
+        await routes.push('/i/n/a/p/index')
+        await routes.push('/n/a/p/o/l/index')
+        await routes.push('/a/p/o/l/i/n/index')
+        await routes.push('/')
+        await routes.push('/index')
+       let res = await routes.push('/guide');
+        (res.success)
+          ? resolve(true)
+          : reject(false)
+      })
+    })
+  })
   it('connect account', function () {
     return new Promise(async (resolve, reject) => {
       let dApp = await task.set(true, '','red', {}, '/waves/dApp');
       (dApp.status && dApp.message)
         ? resolve(dApp)
         : reject(dApp)
-    })
-  })
-  describe('Router', async function () {
-    it('init router', function () {
-      return new Promise(async (resolve, reject) => {
-        ((await routes.get('/user/32')).success)
-          ? resolve(true)
-          : reject(false)
-      })
     })
   })
   describe('NFT', async function () {
