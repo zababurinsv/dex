@@ -15,16 +15,16 @@ describe('dex', async function () {
   describe('Router', async function () {
     it('init router', function () {
       return new Promise(async (resolve, reject) => {
-
+        let res = await routes.push('/index');
         await routes.push('/p/index')
         await routes.push('/o/l/index')
         await routes.push('/l/i/n/index')
         await routes.push('/i/n/a/p/index')
         await routes.push('/n/a/p/o/l/index')
         await routes.push('/a/p/o/l/i/n/index')
-        await routes.push('/')
-        await routes.push('/index')
-       let res = await routes.push('/guide');
+        await routes.push('/guide');
+        await routes.push('/');
+
         (res.success)
           ? resolve(true)
           : reject(false)
